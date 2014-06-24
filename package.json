@@ -7,10 +7,15 @@
     "ejs": "",
     "ejs-locals": "^1.0.2",
     "express": "^4.0.0",
+    "express.io": "",
     "http": "",
     "mime": "",
     "path": "",
-    "request":""
+    "request":"",
+    "lodash":"",
+    "socket.io": "0.9.x",
+    "moment":"",
+    "geolib":""
   },
   "description": "parkour",
   "main": "index.js",
