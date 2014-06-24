@@ -3,12 +3,13 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "express": "latest",
-    "ejs" : "latest",
-    "mongoose": "latest",
-    "mime": "latest",
-    "connect": "latest",
-    "sendgrid": "latest"
+    "connect": "",
+    "ejs": "",
+    "ejs-locals": "^1.0.2",
+    "express": "^4.0.0",
+    "http": "",
+    "mime": "",
+    "path": ""
   },
   "description": "parkour",
   "main": "index.js",
