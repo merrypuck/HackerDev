@@ -42,11 +42,26 @@
         top:45px;
         background-color: #fff;
       }
+      #targetedLocation {
+        text-align: center;
+        font-size: 13px;
+        font-family: 'Droid Sans';
+        color:#27aa0b;
+        line-height: 30px;
+      }
+      #myLocation {
+         text-align: center;
+        font-size: 18px;
+        font-family: 'Droid Sans';
+        color:#000;
+        line-height: 9px;
+
+      }
       
       #map-footer {
         position: absolute;
         bottom:0;
-        height:80px;
+        height:100px;
         width:100%;
         background-color: #fff;
       }
@@ -75,8 +90,33 @@
 
     
     <script>
+    
+  
+
+
+    </script>
+  </head>
+  <body>
+    <div id="map-canvas"></div>
+    <div id='map-logo-header'>
+      <div id='logo'>Parkour</div>
+    </div>
+    <div id='map-info-header'>
+      <div id='targetedLocation'>TARGETED LOCATION</div>
+      <div id='myLocation'>No Location</div>
+    </div>
+    <div id='map-footer'>
+      <div id=''></div>
+    </div>
+    <div id='marker'> <img src='/images/flag_icon.svg'/></div>
+  </body>
+
+  <script>
+
+    var map, GeoMarker;
+    var myLocation = document.getElementById('myLocation');
     function initialize() {
-        var map, GeoMarker;
+      
       // var myLatlng = new google.maps.LatLng(37.790234970864, -122.39031314844);
       var mapOptions = {
           center: new google.maps.LatLng(37.790234970864, -122.39031314844),
@@ -84,7 +124,7 @@
           mapTypeId: google.maps.MapTypeId.ROADMAP,
           disableDefaultUI: true
       };
-      var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+      map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
       var GeoMarker = new GeolocationMarker(map);
 
        GeoMarker = new GeolocationMarker();
@@ -93,6 +133,7 @@
         google.maps.event.addListenerOnce(GeoMarker, 'position_changed', function() {
           map.setCenter(this.getPosition());
           map.fitBounds(this.getBounds());
+          console.log('position changed.')
         });
 
         google.maps.event.addListener(GeoMarker, 'geolocation_error', function(e) {
@@ -100,16 +141,18 @@
         });
 
         GeoMarker.setMap(map);
+
+        
 /*
       var marker = new google.maps.Marker({
           position: myLatlng,
           map: map,
           title: 'Hello World!'
       });    
-    
+        
 */
     }
-function add_marker( event ) {
+  function add_marker( event ) {
     lat = event.latLng.lat;
     lng = event.latLng.lng;
     console.log(lat);
@@ -120,7 +163,11 @@ function add_marker( event ) {
         position: event.latLng,
         map: map // put the handle of your map here
     });
+
+
 }
+
+
 
 google.maps.event.addDomListener(window, 'load', initialize);
   if(!navigator.geolocation) {
@@ -128,16 +175,43 @@ google.maps.event.addDomListener(window, 'load', initialize);
       }
 //google.maps.event.addListener(this.map, 'click', add_marker);
 
-    </script>
-  </head>
-  <body>
-    <div id="map-canvas"></div>
-    <div id='map-logo-header'>
-      <div id='logo'>Parkour</div>
-    </div>
-    <div id='map-info-header'></div>
-    <div id='map-footer'>
-    </div>
-    <div id='marker'> <img src='/images/flag_icon.svg'/></div>
-  </body>
+
+    var timer1Available = true;
+    // var timer2Available = false;
+    var lastLatLng = "";
+    function reverse_geocode () {
+      var lat = map.getCenter().k;
+      var lng = map.getCenter().A;
+      var thisLatLng = lat + ", " + lng;
+      if(timer1Available && thisLatLng !== lastLatLng) {
+        var url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + ", " + lng;
+        console.log(url);
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4) {
+                var response = JSON.parse(xhr.responseText);
+                myLocation.innerHTML = response.results[0].formatted_address;
+            }
+        }
+        xhr.open("GET", url ,true);
+        xhr.send();
+        lastLatLng = thisLatLng;
+        timer1Available = false;
+        setTimeout(function() { timer1Available = true;}, 3000)
+      }
+    }
+
+    setInterval(
+      reverse_geocode, 2000);
+
+      
+     /*google.maps.event.addListener(map, "center_changed", function() {
+       console.log('center changed.');
+      var mapCenter = map.getCenter();
+      reverse_geocode(mapCenter.k, mapCenter.A);
+     
+    });
+     */
+
+  </script>
 </html>
