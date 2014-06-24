@@ -20,6 +20,8 @@ City: תל אביב - כל העיר
 
 Registration URL:
 
+Registering a new user:
+
 http://ipango.itip.co.il/iphoneregstage1new/
 strEmail=parkourtelaviv%40gmail.com
 intNewCarReminderService=0
@@ -37,3 +39,6 @@ strCarNumber=2952165
 %D7%AA%D7%9C%20%D7%90%D7%91%D7%99%D7%91%20-%20%D7%9B%D7%9C%20%D7%94%D7%A2%D7%99%D7%A8
 
 curl "http://ipango.itip.co.il/iphoneregstage1new/?strEmail=parkourtelaviv%40gmail.com&intNewCarReminderService=0&AccountType=1&StrSessionId=42342342&p_strCity=&p_intMarketingEmails=0&intOwnershipVerification=1&intNewCarReminderService=0&p_strStaticPassword=A2nD6ro4id143Tf&p_registrationSource=11&p_strUserName=AnDroidPr43&p_strPassword=AnDroidPr43062014P5a4n8g2o0&p_strPhoneNumber=035551234&p_strCarNumber=2952165&strPhoneNumber=035551234&strCarNumber=2952165"
+
+Registration Step 2:
+
