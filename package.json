@@ -1,34 +1,21 @@
 {
-  "name": "Parkour",
-  "version": "0.1.0",
-  "description": "An interactive parking app.",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js"
-  },
+  "name": "parkour",
+  "version": "0.0.1",
+  "private": true,
   "dependencies": {
-    "express": "^4.0.0",
-     "ejs": "latest",
-     "mime" : "latest",
-     
-
+    "express": "latest",
+    "ejs" : "latest",
+    "mongoose": "latest",
+    "mime": "latest",
+    "connect": "latest",
+    "sendgrid": "latest"
   },
-  "engines": {
-    "node": "0.10.x"
-
+  "description": "parkour",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/heroku/node-js-sample"
-  },
-  "keywords": [
-    "node",
-    "heroku",
-    "express"
-  ],
-  "author": "Mark Pundsack",
-  "contributors": [
-    "Zeke Sikelianos <zeke@sikelianos.com> (http://zeke.sikelianos.com)"
-  ],
-  "license": "MIT"
+  "devDependencies": {},
+  "author": "Aaron Landy",
+  "license": "BSD"
 }
