@@ -1,7 +1,7 @@
 {
-  "name": "node-js-sample",
+  "name": "Parkour",
   "version": "0.1.0",
-  "description": "A sample Node.js app using Express 4",
+  "description": "An interactive parking app.",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
@@ -16,6 +16,7 @@
   },
   "engines": {
     "node": "0.10.x"
+
   },
   "repository": {
     "type": "git",
