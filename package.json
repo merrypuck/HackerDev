@@ -7,7 +7,12 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "express": "^4.0.0"
+    "express": "^4.0.0",
+    "ejs":"",
+    "connect":"",
+    "http":"",
+    "mime":"",
+    "path":""
   },
   "engines": {
     "node": "0.10.x"
