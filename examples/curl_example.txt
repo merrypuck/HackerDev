@@ -1,0 +1,5 @@
+p_strStaticPassword=A2nD6ro4id143Tf&p_registrationSource=11&p_strUserName=AnDroidPr43&p_strPassword=AnDroidPr43062014P5a4n8g2o0
+
+https://www.mcpsmartphonews.4500.co.il/PangoSmartPhoneWs_prod/PangoServices.asmx/sp_Smart_IPHONE_Get_Params_JSON
+
+https://www.mcpsmartphonews.4500.co.il/PangoSmartPhoneWs_prod/PangoServices.asmx/sp_Smart_IPHONE_Get_Parking_Lots_JSON
