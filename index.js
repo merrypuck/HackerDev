@@ -12,13 +12,30 @@ app.get('/', function(req, res) {
   res.render('index');
 });
 
+app.get('/park_here', function(req, res) {
+  res.render('park_here');
+});
+
 app.get('/map', function(req, res) {
 	res.render('map');
 });
 
 app.get('/direct', function(req, res) {
-
+	res.redirect("/");
 });
+
+app.get('proto/screen1', function(req, res){
+	res.render('screen1');
+});
+
+app.get('proto/screen2', function(req, res){
+	res.render('screen2');
+})
+
+app.get('proto/screen3', function(req, res){
+	res.render('screen3');
+})
+
 app.post('/direct', function(req, res) {
 	var starting_location = req.body.starting_location;
 	var end_location = req.body.end_location;
