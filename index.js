@@ -108,15 +108,15 @@ app.get('/api/parking-nearby', function(req, res){
 	}
 });
 
-app.get('proto/screen1', function(req, res){
+app.get('/screen1', function(req, res){
 	res.render('screen1');
 });
 
-app.get('proto/screen2', function(req, res){
+app.get('/screen2', function(req, res){
 	res.render('screen2');
 });
 
-app.get('proto/screen3', function(req, res){
+app.get('/screen3', function(req, res){
 	res.render('screen3');
 });
 
