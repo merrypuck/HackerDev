@@ -19,7 +19,7 @@ function initialize() {
   // var myLatlng = new google.maps.LatLng(37.790234970864, -122.39031314844);
   var mapOptions = {
       center: new google.maps.LatLng(34.793978899999956, 32.06997550635381),
-      zoom: 16,
+      zoom: 14,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       disableDefaultUI: true
   };
@@ -121,11 +121,34 @@ google.maps.event.addDomListener(window, 'load', initialize);
     });
      */
 
+var options = {
+  enableHighAccuracy: true,
+  timeout: 5000,
+  maximumAge: 0
+};
+
+function success(pos) {
+  var crd = pos.coords;
+
+  console.log('Your current position is:');
+  console.log('Latitude : ' + crd.latitude);
+  console.log('Longitude: ' + crd.longitude);
+  console.log('More or less ' + crd.accuracy + ' meters.');
+};
+
+function error(err) {
+  console.warn('ERROR(' + err.code + '): ' + err.message);
+};
+
+navigator.geolocation.getCurrentPosition(success, error, options);
+
 
 var findMyLocation = document.getElementById('findMyLocation');
 if(navigator.geolocation) {
     browserSupportFlag = true;
     navigator.geolocation.getCurrentPosition(function(position) {
+      console.log('asdsda');
+      console.log(position);
       initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
       map.setCenter(initialLocation);
     }, function() {
