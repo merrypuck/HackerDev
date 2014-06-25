@@ -1,7 +1,8 @@
 /***** GLOBALS *****/
 var previousPage = "";
 var map, GeoMarker;
-var myLocation = document.getElementById('markerLocation');
+var markerLocation = document.getElementById('markerLocation');
+
 
 // page switching
  var switchPage = function(currentPage, newPage) {
@@ -12,9 +13,6 @@ var myLocation = document.getElementById('markerLocation');
     newPage.style.display = 'block';
     previousPage = currentPage;
  }
-
-
-
 
 function initialize() {
   
@@ -30,7 +28,7 @@ function initialize() {
   var GeoMarker = new GeolocationMarker(map);
 
    GeoMarker = new GeolocationMarker();
-    GeoMarker.setCircleOptions({visible: 'false', strokeOpacity : 0});
+//    GeoMarker.setCircleOptions(
 
     google.maps.event.addListenerOnce(GeoMarker, 'position_changed', function() {
       map.setCenter(this.getPosition());
@@ -81,6 +79,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
     var timer1Available = true;
     // var timer2Available = false;
     var lastLatLng = "";
+
     function reverse_geocode () {
       var lat = map.getCenter().k;
       var lng = map.getCenter().A;
@@ -93,12 +92,12 @@ google.maps.event.addDomListener(window, 'load', initialize);
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4) {
 
-                var response = JSON.parse(xhr.responseText);
+              var response = JSON.parse(xhr.responseText);
                 var rawLocation = response.results[0].formatted_address.split(',');
                 var basicAddress = rawLocation[0] + ", " + rawLocation[1]
                 // + ", " + rawLocation[2].match(/\d+\.?\d*/g);
                 if(basicAddress) {
-                 myLocation.innerHTML = basicAddress
+                 markerLocation.innerHTML = basicAddress
                 }
             }
         }
@@ -106,7 +105,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
         xhr.send();
         lastLatLng = thisLatLng;
         timer1Avasilable = false;
-        myLocation.innerHTML = "";
+        markerLocation.innerHTML = "";
         setTimeout(function() { timer1Available = true;}, 2000);
       }
     }
@@ -122,14 +121,31 @@ google.maps.event.addDomListener(window, 'load', initialize);
     });
      */
 
-/****** EVENT LISTENERS **********/
-var homePage = document.getElementById('homePage');
-var page1 = document.getElementById('page1');
-var mapCanvas = document.getElementById('map-canvas');
-homePage.addEventListener('click', function() { 
-  //alert('asd');
-  //switchPage('homePage', 'page1');
-  //mapCanvas.style.visiblity = 'visible';
+
+var findMyLocation = document.getElementById('findMyLocation');
+if(navigator.geolocation) {
+    browserSupportFlag = true;
+    navigator.geolocation.getCurrentPosition(function(position) {
+      initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+      map.setCenter(initialLocation);
+    }, function() {
+      handleNoGeolocation(browserSupportFlag);
+    });
+  }
+  // Browser doesn't support Geolocation
+  else {
+    browserSupportFlag = false;
+    handleNoGeolocation(browserSupportFlag);
+  }
+
+  function handleNoGeolocation(errorFlag) {
+    if (errorFlag == true) {
+      alert("Geolocation service failed.");
+    } else {
+      alert("Your browser doesn't support geolocation. We've placed you in Siberia.");
+    }
+    map.setCenter(initialLocation);
+  }
 
 
-}, false);
+

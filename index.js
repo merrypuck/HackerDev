@@ -29,7 +29,7 @@ var parking_file = "./examples/get_parking_lots.txt";
 /////////////////////////////////
 
 app.get('/', function(req, res) {
-  res.render('index');
+  res.render('home');
 });
 
 app.get('/park_here', function(req, res) {
@@ -37,7 +37,7 @@ app.get('/park_here', function(req, res) {
 });
 
 app.get('/map', function(req, res) {
-	res.render('map');
+	res.render('map1');
 });
 
 app.get('/direct', function(req, res) {
