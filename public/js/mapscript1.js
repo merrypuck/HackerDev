@@ -121,7 +121,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
     });
      */
 
-
+/*
 var findMyLocation = document.getElementById('findMyLocation');
 if(navigator.geolocation) {
     browserSupportFlag = true;
@@ -147,5 +147,5 @@ if(navigator.geolocation) {
     map.setCenter(initialLocation);
   }
 
-
+*/
 

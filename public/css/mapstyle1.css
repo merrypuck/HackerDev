@@ -84,21 +84,22 @@
       }
       
       #goBtn {
-        width:150px;
-        height:45px;
+        width: 150px;
+        height: 45px;
         text-decoration: none;
-        color:#fff;
+        color: #fff;
         background-color: #f0ad4e;
-        border-color:#eea236;
+        border-color: #eea236;
         font-weight: 400;
-        padding:10px 16px;
+        padding: 10px 16px;
         font-size: 24px;
-        padding:18px 80px;
+        padding: 18px 80px;
         line-height: 4.2;
         border-radius: 6px;
         text-align: center;
         cursor: pointer;
         font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+        
       }
       #questionMark {
         position: absolute;
