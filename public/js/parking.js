@@ -15,8 +15,11 @@ function transitionUI() {
   var foundBtn = document.getElementById('foundBtn');
   var distanceFromDestination = document.getElementById('distanceFromDestination');
   
-  foundBtn.style.display = 'block';
-  distanceFromDestination.style.display = 'block';
+  if(foundBtn)
+  {
+  	foundBtn.style.display = 'block';
+  	distanceFromDestination.style.display = 'block';
+	}
   
 
 }
@@ -31,7 +34,7 @@ function setTimeAndDistance(time, meters) {
 var goBtn = document.getElementById('goBtn');
 
 goBtn.addEventListener('click', function() { 
-	map.setCenter(new google.maps.LatLng(32.0777415,34.7810515));
+	//map.setCenter(new google.maps.LatLng(32.0777415,34.7810515));
 
 	//var lat = map.getCenter().lat();
 	//var lng = map.getCenter().lng();
@@ -47,17 +50,18 @@ goBtn.addEventListener('click', function() {
 
         if (xhr.readyState == 4) {
 
-        	/*
 
           var response = JSON.parse(xhr.responseText);
+          console.log("Response = " );
           console.log(response);
 
           var startPt = new google.maps.LatLng(32.070276,34.794166);
           var endPt = new google.maps.LatLng(32.077535,34.788547);
 
           var request = getDirectionsCycleRequest(startPt, endPt, response);
+          console.log("request = " );
+        	console.log(request);
           getSmartDirections(map, startPt, endPt, request);
-          */
 
           // get walking directions
 //          var lastResponse = response[response.length-1];
