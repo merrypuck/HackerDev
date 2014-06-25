@@ -1,7 +1,7 @@
 var goBtn = document.getElementById('goBtn');
 
 goBtn.addEventListener('click', function() { 
-	map.setCenter(new google.maps.LatLng(32.0777415,34.7810515));
+	//map.setCenter(new google.maps.LatLng(32.0777415,34.7810515));
 
 	var lat = map.getCenter().lat();
 	var lng = map.getCenter().lng();
