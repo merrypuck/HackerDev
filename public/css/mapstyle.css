@@ -65,6 +65,7 @@
         width:150px;
         height:150px;
         padding:40px 0 0 60px;
+        pointer-events: none;
 
       }
       #marker img {
