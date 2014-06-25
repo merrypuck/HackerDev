@@ -6,6 +6,7 @@ var _ 				= require('lodash');
 var io 				= require('socket.io').listen(app);
 var fs				= require('fs');
 var geolib 			= require('geolib');
+var cycleCalculator	= require('./search_algorithm/calculate_cycles.js');
 
 
 //////////////////////////////////
@@ -28,19 +29,36 @@ var parking_file = "./examples/get_parking_lots.txt";
 /////////////////////////////////
 
 app.get('/', function(req, res) {
-  res.render('index');
+  res.render('home');
 });
 
 app.get('/park_here', function(req, res) {
   res.render('park_here');
 });
 
-app.get('/map1', function(req, res) {
+app.get('/map', function(req, res) {
 	res.render('map1');
 });
 
 app.get('/direct', function(req, res) {
 	res.redirect("/");
+});
+
+app.get('/api/do-parkour', function(req, res){
+	var loc = {
+		lat: Number(req.query.lat),
+		lon: Number(req.query.lon),
+	};
+
+	if(loc.lat && loc.lon)
+	{
+		var result = cycleCalculator.do_parkour(loc, 500);
+		res.send(result);
+	}
+	else
+	{
+		res.send([]);
+	}
 });
 
 app.get('/api/parking-nearby', function(req, res){

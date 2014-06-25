@@ -9,13 +9,16 @@
         padding: 0px;
       }
       #homePage {
-        display: none;
+        display: block;
       }
       #page1 {
-        display: block;
+        display: none;
       }
       #page2 {
         display: none;
+      }
+      #parkNowLink {
+        text-decoration: none;
       }
       #parkNow {
         width: 90%;

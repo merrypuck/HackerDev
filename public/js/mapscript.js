@@ -127,9 +127,9 @@ var homePage = document.getElementById('homePage');
 var page1 = document.getElementById('page1');
 var mapCanvas = document.getElementById('map-canvas');
 homePage.addEventListener('click', function() { 
-  alert('asd');
-  switchPage('homePage', 'page1');
-  mapCanvas.style.visiblity = 'visible';
+  //alert('asd');
+  //switchPage('homePage', 'page1');
+  //mapCanvas.style.visiblity = 'visible';
 
 
 }, false);
