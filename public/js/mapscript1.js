@@ -18,7 +18,7 @@ function initialize() {
   
   // var myLatlng = new google.maps.LatLng(37.790234970864, -122.39031314844);
   var mapOptions = {
-      center: new google.maps.LatLng(37.790234970864, -122.39031314844),
+      center: new google.maps.LatLng(34.793978899999956, 32.06997550635381),
       zoom: 16,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       disableDefaultUI: true
@@ -146,6 +146,5 @@ if(navigator.geolocation) {
     }
     map.setCenter(initialLocation);
   }
-
 
 
