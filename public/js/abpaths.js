@@ -1,4 +1,3 @@
-// global vars
 var walkingManImage = {
     url: '/images/walking_man.png',
 		scaledSize: new google.maps.Size(25, 25),
@@ -8,6 +7,11 @@ var walkingManImage = {
     anchor: new google.maps.Point(0, 25)
   };
 
+function getSmartDirections(map, start, end, request) {
+    getDirections(google.maps.TravelMode.DRIVING, map, request);
+    getCarMarker(map, start);
+    getContinuationMarker(map, end);
+}
 
  function getDirections(travelMode, map, request) {
 	var directionsService = new google.maps.DirectionsService();
@@ -38,13 +42,13 @@ function handleDirectionsResponse(map, result, directionsDisplay, travelMode) {
 	// walking man icon
 	if (travelMode == google.maps.TravelMode.WALKING) {
 	  var marker = new MarkerWithLabel({
-	  	icon: walkingManImage,
-	    position: getLatLngAverage(map, route.legs[0].start_location, route.legs[0].end_location, 0.1),
-	    	title: 'Walking Distance',
-	    	labelContent: routeDurationMins + "m",
-				labelClass: "labels",
-		   	labelStyle: {opacity: 0.75},
-				map: map
+		icon: walkingManImage,
+		position: getLatLngAverage(map, route.legs[0].start_location, route.legs[0].end_location, 0.1),
+		title: 'Walking Distance',
+		labelContent: routeDurationMins + "m",
+		labelClass: "labels",
+		labelStyle: {opacity: 0.75},
+		map: map
 	  });
 	}
 }
@@ -88,6 +92,22 @@ function getWalkingDirections(fromParkingSpot, toDestination) {
 // specific parking spot
 function getParkourDirections(fromCurrent, toParkingSpot) {
 	return getDrivingRequest(google.maps.TravelMode.DRIVING, fromCurrent, toParkingSpot);
+}
+
+// waypoints should not include from and to points
+// for cycle, make from == to
+function getDirectionsCycleRequest(from, to, waypoints) {
+	return {
+		  travelMode: google.maps.TravelMode.DRIVING,
+		  unitSystem: google.maps.UnitSystem.METRIC,
+		  origin: from,
+		  destination: to,
+		  waypoints: waypoints,
+		  optimizeWaypoints: false,
+		  provideRouteAlternatives: false,
+		  durationInTraffic: true,
+		  region: 'IL'
+		}
 }
 
 function getDrivingRequest(travelMode, from, to) {

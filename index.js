@@ -154,7 +154,7 @@ app.io.route('ready', function(req) {
     })
 
     console.log("Got a ready message from client");
-})
+});
 
 io.sockets.on('connection', function (socket) {
 	console.log("Server received socket io request");
