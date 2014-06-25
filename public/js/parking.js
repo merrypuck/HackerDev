@@ -5,8 +5,11 @@ function transitionUI() {
   var goBtn = document.getElementById('goBtn');
   var targetedLocation = document.getElementById('targetedLocation');
   var markerLocation = document.getElementById('markerLocation');
-  goBtn.style.display = 'none';
-  targetedLocation.style.display = 'none';
+  // goBtn.style.display = 'none';
+  goBtn.style.backgroundColor = '#27aa0b';
+  goBtn.innerHTML = 'FOUND PARKING!'
+  //targetedLocation.style.display = 'none';
+  targetedLocation.innerHTML = 'DISTANCE FROM DESTINATION'
   markerLocation.style.display = 'none';
 
   var foundBtn = document.getElementById('foundBtn');
@@ -14,6 +17,7 @@ function transitionUI() {
   
   foundBtn.style.display = 'block';
   distanceFromDestination.style.display = 'block';
+  
 
 }
 function setTimeAndDistance(time, meters) {
@@ -53,8 +57,8 @@ goBtn.addEventListener('click', function() {
     xhr.open("GET", 'api/do-parkour?lat='+lat+'&lon='+lng ,true);
     xhr.send();
 
-    var dest_lat = 32.077535;
-    var dest_lon = 34.788547;
+    var dest_lat = startingLat;//32.077535;
+    var dest_lon = startingLon;//34.788547;
 
 
     var xhr_parking_garage = new XMLHttpRequest();

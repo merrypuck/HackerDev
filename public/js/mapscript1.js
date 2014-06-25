@@ -142,6 +142,8 @@ function error(err) {
 
 navigator.geolocation.getCurrentPosition(success, error, options);
 
+startingLat = 0;
+startingLon = 0;
 
 var findMyLocation = document.getElementById('findMyLocation');
 if(navigator.geolocation) {
@@ -150,6 +152,8 @@ if(navigator.geolocation) {
       console.log('asdsda');
       console.log(position);
       initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+      startingLat = position.coords.latitude;
+      startingLon = position.coords.longitude;
       map.setCenter(initialLocation);
     }, function() {
       handleNoGeolocation(browserSupportFlag);
