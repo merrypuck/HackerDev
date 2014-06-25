@@ -146,6 +146,7 @@ startingLat = 0;
 startingLon = 0;
 
 var findMyLocation = document.getElementById('findMyLocation');
+/*
 if(navigator.geolocation) {
     browserSupportFlag = true;
     navigator.geolocation.getCurrentPosition(function(position) {
@@ -164,7 +165,7 @@ if(navigator.geolocation) {
     browserSupportFlag = false;
     handleNoGeolocation(browserSupportFlag);
   }
-
+*/
   function handleNoGeolocation(errorFlag) {
     if (errorFlag == true) {
       alert("Geolocation service failed.");

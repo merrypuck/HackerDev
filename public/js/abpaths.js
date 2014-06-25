@@ -18,14 +18,17 @@ function addParkingStructures(map, markers){
 
 		var myLatlng = new google.maps.LatLng(server_marker.lat,server_marker.lon);
 
-		var marker = new google.maps.Marker({
+		/*var marker = new google.maps.Marker({
 		    position: myLatlng,
 		    title:server_marker.name
 		});
 		allMarkers.push(marker);
 		marker.setMap(map);
+		*/
 
-		console.log("Added marker to map at " + server_marker.lat);
+		getPricedMarker(map, server_marker.name, 5, myLatlng);
+
+		console.log("Added marker to map at " + myLatlng);
 	}
 }
 
@@ -36,6 +39,8 @@ function getSmartDirections(map, start, end, request) {
 }
 
  function getDirections(travelMode, map, request) {
+ 	try
+ 	{
 	var directionsService = new google.maps.DirectionsService();
 	var pathPolyline = getPathPolyline(travelMode);
 	var directionsDisplay;
@@ -48,14 +53,25 @@ function getSmartDirections(map, start, end, request) {
 	}
 	directionsDisplay.setMap(map);
 	
+	try
+	{
 	  directionsService.route(request, function(result, status) {
 	    if (status == google.maps.DirectionsStatus.OK) {
 	    	handleDirectionsResponse(map, result, directionsDisplay, travelMode);
 	    } 
-	  });		
+	  });
+	}catch(e){
+		console.log("error calling directionservice.route" + e);
+	}
+	} catch(e){
+		console.log("error calling overall getDirections" + e);
+	}
+
 }
 
 function handleDirectionsResponse(map, result, directionsDisplay, travelMode) {
+	try
+	{
   directionsDisplay.setDirections(result);
   console.log(result);
   var route = result.routes[0];
@@ -73,6 +89,9 @@ function handleDirectionsResponse(map, result, directionsDisplay, travelMode) {
 		map: map
 	  });
 	}
+}catch(e){
+	console.log("handleDirectionsResponse " + e);
+}
 }
 
 
@@ -119,12 +138,18 @@ function getParkourDirections(fromCurrent, toParkingSpot) {
 // waypoints should not include from and to points
 // for cycle, make from == to
 function getDirectionsCycleRequest(from, to, waypoints) {
+	console.log("waypoints before: " + waypoints);
+	var latLongWaypoints = [];
+	for (var i = 0; i < waypoints.length; i++) {
+		latLongWaypoints.push({location: new google.maps.LatLng(waypoints[i].lat, waypoints[i].lon)});
+	}
+	console.log("latLongWaypoints after: " + latLongWaypoints);
 	return {
 		  travelMode: google.maps.TravelMode.DRIVING,
 		  unitSystem: google.maps.UnitSystem.METRIC,
 		  origin: from,
 		  destination: to,
-		  waypoints: waypoints,
+		  waypoints: latLongWaypoints,
 		  optimizeWaypoints: false,
 		  provideRouteAlternatives: false,
 		  durationInTraffic: true,

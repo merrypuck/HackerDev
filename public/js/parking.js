@@ -15,8 +15,11 @@ function transitionUI() {
   var foundBtn = document.getElementById('foundBtn');
   var distanceFromDestination = document.getElementById('distanceFromDestination');
   
-  foundBtn.style.display = 'block';
-  distanceFromDestination.style.display = 'block';
+  if(foundBtn)
+  {
+  	foundBtn.style.display = 'block';
+  	distanceFromDestination.style.display = 'block';
+	}
   
 
 }
@@ -33,8 +36,11 @@ var goBtn = document.getElementById('goBtn');
 goBtn.addEventListener('click', function() { 
 	//map.setCenter(new google.maps.LatLng(32.0777415,34.7810515));
 
-	var lat = map.getCenter().lat();
-	var lng = map.getCenter().lng();
+	//var lat = map.getCenter().lat();
+	//var lng = map.getCenter().lng();
+
+	var lat = 32.077535;
+	var lng = 34.788547;
 
 	console.log("There is an event listener " + map.getCenter());
 
@@ -44,17 +50,32 @@ goBtn.addEventListener('click', function() {
 
         if (xhr.readyState == 4) {
 
+
           var response = JSON.parse(xhr.responseText);
+          console.log("Response = " );
           console.log(response);
 
           var startPt = new google.maps.LatLng(32.070276,34.794166);
           var endPt = new google.maps.LatLng(32.077535,34.788547);
 
           var request = getDirectionsCycleRequest(startPt, endPt, response);
+          console.log("request = " );
+        	console.log(request);
           getSmartDirections(map, startPt, endPt, request);
+
+          // get walking directions
+//          var lastResponse = response[response.length-1];
+
+/*          console.log("last response = ");
+          console.log(lastResponse);
+          var walkingRequest = getWalkingDirections(
+          	new google.maps.LatLng(lastResponse.lat, lastResponse.lon),
+          	endPt);
+          console.log("walking request " + walkingRequest);
+          getDirections(google.maps.TravelMode.WALKING, map, walkingRequest); */
         }
     }
-    xhr.open("GET", 'api/do-parkour?lat='+lat+'&lon='+lng ,true);
+    xhr.open("GET", 'api/do-parkour?lat='+lat+'&lon='+lng, true);
     xhr.send();
 
     var dest_lat = startingLat;//32.077535;
@@ -70,6 +91,7 @@ goBtn.addEventListener('click', function() {
           console.log(response);
 
           addParkingStructures(map, response);
+
         }
     }
     xhr_parking_garage.open("GET", 'api/parking-nearby?lat='+dest_lat+'&lon='+dest_lon ,true);
