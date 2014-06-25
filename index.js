@@ -35,8 +35,8 @@ app.get('/park_here', function(req, res) {
   res.render('park_here');
 });
 
-app.get('/map', function(req, res) {
-	res.render('map');
+app.get('/map1', function(req, res) {
+	res.render('map1');
 });
 
 app.get('/direct', function(req, res) {

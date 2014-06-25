@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -12,40 +13,11 @@
 
   </head>
   <body>
+    <div id="map-canvas"></div>
     <div id='map-logo-header'>
       <div id='logo'>Parkour</div>
     </div>
-
-    <div id='homePage'>
-      <div id='parkNow'>
-        <i class="fa fa-car fa-3x" style="padding-top:25px"> 
-          </i>
-          <br />
-        Park Now
-      </div>
-
-      <div id='driveAndPark'>
-        <i class="fa fa-compass fa-3x" style="padding-top:25px">
-          </i>
-          </i>
-          <br />
-        Drive and Park
-      </div>
-
-      <div class='questionMark' style='bottom:0; top: 450px;
-right: 30px;'>
-          <i class="fa fa-question"></i>
-        </div>
-
-        <div class='settings' style='bottom:0; left: 30px; top: 450px;'>
-          <i class="fa fa-cog"></i>
-        </div>
-    </div>
-    <div id='maps'>
-    <div id="map-canvas"></div>
-  </div>
-    
-    <div id='page1' style='display:block'>
+    <div id='page1'>
       <div id='map-info-header'>
         <div id='targetedLocation'>TARGETED LOCATION</div>
         <div id='markerLocation'>No Location</div>
@@ -53,8 +25,14 @@ right: 30px;'>
           <i class="fa fa-paper-plane-o"></i>
         </div>
       </div>
-      <div id='marker'> <img src='/images/flag_icon.svg'/>
-      </div>
+      <div id='marker'> <img src='/images/flag_icon.svg'/></div>
+
+
+      <!--<div id='map-notification'>
+        <div id='closeNotification'>
+          <i class="fa fa-times"></i>
+        </div>
+      </div>-->
 
       <div id='map-footer'>
         <a href="/screen2" id='goBtn' class="btn btn-warning btn-lg"><i class="fa fa-thumbs-up"></i> Go!</a>
@@ -66,18 +44,6 @@ right: 30px;'>
           <i class="fa fa-cog"></i>
         </div>
       </div>
-
-    </div>
-      <!--
-      <div id='map-notification'>
-        <div id='closeNotification'>
-          <i class="fa fa-times"></i>
-        </div>
-      </div>
-    -->
-
-
-      
       
     </div>
   </body>
