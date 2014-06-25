@@ -84,7 +84,7 @@
       }
       
       #goBtn {
-        
+
         width: 150px;
         height: 45px;
         text-decoration: none;
@@ -135,4 +135,15 @@
         position: absolute;
         height:100px;
         background-color: #CCCCCC;
+      }
+      #goBack {
+        position: absolute;
+        top: -36px;
+        left: 38px;
+        color: #fff;
+        cursor: hand;
+        cursor: pointer;
+      }
+      #goBack i {
+        font-size: 30px;
       }

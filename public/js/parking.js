@@ -7,9 +7,9 @@ function transitionUI() {
   var markerLocation = document.getElementById('markerLocation');
   // goBtn.style.display = 'none';
   goBtn.style.backgroundColor = '#27aa0b';
-  goBtn.innerHTML = 'FOUND PARKING!'
+  goBtn.innerHTML = 'I FOUND PARKING!'
   //targetedLocation.style.display = 'none';
-  targetedLocation.innerHTML = 'DISTANCE FROM DESTINATION'
+  targetedLocation.innerHTML = 'EXPECTED DISTANCE TO PARKING';
   markerLocation.style.display = 'none';
 
   var foundBtn = document.getElementById('foundBtn');

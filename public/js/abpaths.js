@@ -1,3 +1,5 @@
+allMarkers = [];
+
 var walkingManImage = {
     url: '/images/walking_man.png',
 		scaledSize: new google.maps.Size(25, 25),
@@ -10,6 +12,7 @@ var walkingManImage = {
 function addParkingStructures(map, markers){
 	for(var i = 0;i<markers.length;i++)
 	{
+
 		var server_marker = markers[i];
 		console.log(server_marker);
 
@@ -19,7 +22,7 @@ function addParkingStructures(map, markers){
 		    position: myLatlng,
 		    title:server_marker.name
 		});
-
+		allMarkers.push(marker);
 		marker.setMap(map);
 
 		console.log("Added marker to map at " + server_marker.lat);

@@ -173,5 +173,30 @@ if(navigator.geolocation) {
     }
     map.setCenter(initialLocation);
   }
+  function restart() {
+    
+    var goBtn = document.getElementById('goBtn');
+    var targetedLocation = document.getElementById('targetedLocation');
+    var markerLocation = document.getElementById('markerLocation');
+    // goBtn.style.display = 'none';
+    goBtn.style.backgroundColor = '#f0ad4e';
+    goBtn.innerHTML = '<i class="fa fa-thumbs-up"></i>GO!';
+    //targetedLocation.style.display = 'none';
+    targetedLocation.innerHTML = 'TARGETED LOCATION';
+    markerLocation.style.display = 'block';
 
+    //var foundBtn = document.getElementById('foundBtn');
+    //var distanceFromDestination = document.getElementById('distanceFromDestination');
+    
+    // foundBtn.style.display = 'block';
+    // distanceFromDestination.style.display = 'block';
+    for (var i = 0; i < allMarkers.length; i++) {
+      allMarkers[i].setMap(null);
+    }
+
+  }
+  var goBack = document.getElementById('goBack');
+  goBack.addEventListener('click', function() {
+    restart();
+  });
 
