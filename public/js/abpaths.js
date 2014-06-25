@@ -7,9 +7,10 @@ var walkingManImage = {
     anchor: new google.maps.Point(0, 25)
   };
 
-function getSmartDirections(map, request) {
-        getCarMarker(map, request.get('from'));
-        getDirections(google.maps.TravelMode.DRIVING, map, request);
+function getSmartDirections(map, start, end, request) {
+    getDirections(google.maps.TravelMode.DRIVING, map, request);
+    getCarMarker(map, start);
+    getContinuationMarker(map, end);
 }
 
  function getDirections(travelMode, map, request) {
