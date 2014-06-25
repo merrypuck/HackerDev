@@ -7,6 +7,25 @@ var walkingManImage = {
     anchor: new google.maps.Point(0, 25)
   };
 
+function addParkingStructures(map, markers){
+	for(var i = 0;i<markers.length;i++)
+	{
+		var server_marker = markers[i];
+		console.log(server_marker);
+
+		var myLatlng = new google.maps.LatLng(server_marker.lat,server_marker.lon);
+
+		var marker = new google.maps.Marker({
+		    position: myLatlng,
+		    title:server_marker.name
+		});
+
+		marker.setMap(map);
+
+		console.log("Added marker to map at " + server_marker.lat);
+	}
+}
+
 function getSmartDirections(map, start, end, request) {
     getDirections(google.maps.TravelMode.DRIVING, map, request);
     getCarMarker(map, start);
