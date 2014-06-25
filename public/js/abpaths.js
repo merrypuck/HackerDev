@@ -15,14 +15,17 @@ function addParkingStructures(map, markers){
 
 		var myLatlng = new google.maps.LatLng(server_marker.lat,server_marker.lon);
 
-		var marker = new google.maps.Marker({
+		/*var marker = new google.maps.Marker({
 		    position: myLatlng,
 		    title:server_marker.name
 		});
 
 		marker.setMap(map);
+		*/
 
-		console.log("Added marker to map at " + server_marker.lat);
+		getPricedMarker(map, server_marker.name, 5, myLatlng);
+
+		console.log("Added marker to map at " + myLatlng);
 	}
 }
 
@@ -116,12 +119,16 @@ function getParkourDirections(fromCurrent, toParkingSpot) {
 // waypoints should not include from and to points
 // for cycle, make from == to
 function getDirectionsCycleRequest(from, to, waypoints) {
+	var latLongWaypoints = [];
+	for (var i = 0; i < waypoints.length; i++) {
+		latLongWaypoints.push(new google.maps.LatLng(waypoints[i].lat, waypoints[i].lon));
+	}
 	return {
 		  travelMode: google.maps.TravelMode.DRIVING,
 		  unitSystem: google.maps.UnitSystem.METRIC,
 		  origin: from,
 		  destination: to,
-		  waypoints: waypoints,
+		  waypoints: latLongWaypoints,
 		  optimizeWaypoints: false,
 		  provideRouteAlternatives: false,
 		  durationInTraffic: true,

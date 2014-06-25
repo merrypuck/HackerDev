@@ -1,16 +1,21 @@
 var goBtn = document.getElementById('goBtn');
 
 goBtn.addEventListener('click', function() { 
-	//map.setCenter(new google.maps.LatLng(32.0777415,34.7810515));
+	map.setCenter(new google.maps.LatLng(32.0777415,34.7810515));
 
-	var lat = map.getCenter().lat();
-	var lng = map.getCenter().lng();
+	//var lat = map.getCenter().lat();
+	//var lng = map.getCenter().lng();
+
+	var lat = 32.077535;
+	var lng = 34.788547;
 
 	console.log("There is an event listener " + map.getCenter());
 
 	var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4) {
+
+        	/*
 
           var response = JSON.parse(xhr.responseText);
           console.log(response);
@@ -20,9 +25,21 @@ goBtn.addEventListener('click', function() {
 
           var request = getDirectionsCycleRequest(startPt, endPt, response);
           getSmartDirections(map, startPt, endPt, request);
+          */
+
+          // get walking directions
+//          var lastResponse = response[response.length-1];
+
+/*          console.log("last response = ");
+          console.log(lastResponse);
+          var walkingRequest = getWalkingDirections(
+          	new google.maps.LatLng(lastResponse.lat, lastResponse.lon),
+          	endPt);
+          console.log("walking request " + walkingRequest);
+          getDirections(google.maps.TravelMode.WALKING, map, walkingRequest); */
         }
     }
-    xhr.open("GET", 'api/do-parkour?lat='+lat+'&lon='+lng ,true);
+    xhr.open("GET", 'api/do-parkour?lat='+lat+'&lon='+lng, true);
     xhr.send();
 
     var dest_lat = 32.077535;
@@ -38,6 +55,7 @@ goBtn.addEventListener('click', function() {
           console.log(response);
 
           addParkingStructures(map, response);
+
         }
     }
     xhr_parking_garage.open("GET", 'api/parking-nearby?lat='+dest_lat+'&lon='+dest_lon ,true);
