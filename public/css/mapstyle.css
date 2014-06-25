@@ -8,6 +8,9 @@
         margin: 0px;
         padding: 0px;
       }
+      #homePage {
+        
+      }
       #map-logo-header {
         position: absolute;
         width:100%;
@@ -39,13 +42,24 @@
         color:#27aa0b;
         line-height: 30px;
       }
-      #myLocation {
+      #markerLocation {
          text-align: center;
-        font-size: 18px;
+        font-size: 16px;
         font-family: 'Droid Sans';
         color:#000;
         line-height: 9px;
+      }
+      #findMyLocation {
+        position: absolute;
+        top:15px;
+        right:15px;
+        color:rgb(66, 139, 202);
+        cursor: pointer;
+        cursor: hand;
 
+      }
+      #findMyLocation i {
+        font-size: 20px;
       }
       
       #map-footer {
@@ -122,4 +136,11 @@
         position: absolute;
         height:100px;
         background-color: #CCCCCC;
+      }
+
+      @media screen and (max-width: 350) {
+
+        #marker {
+          left:50%;
+        }
       }

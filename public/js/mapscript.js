@@ -1,16 +1,22 @@
 /***** GLOBALS *****/
+var previousPage = "";
+var map, GeoMarker;
+var myLocation = document.getElementById('markerLocation');
 
 // page switching
- var switchPage = function(thisPage, pageId) {
-  var page = document.getElementById(pageId);
-  var current = document.getElementById(currentPage);
-  current.style.display = 'none';
-  page.style.display = 'block';
+ var switchPages = function(currentPage, newPage) {
+  var currentPage = document.getElementById(currentPage);
+  var newPage = document.getElementById(newPage);
+  
+  if(newPage && currentPage) {
+    currentPage.style.display = 'none';
+    newPage.style.display = 'block';
+    previousPage = currentPage;
+  }
  }
 
 
-var map, GeoMarker;
-var myLocation = document.getElementById('myLocation');
+
 
 function initialize() {
   
@@ -77,7 +83,6 @@ google.maps.event.addDomListener(window, 'load', initialize);
     var timer1Available = true;
     // var timer2Available = false;
     var lastLatLng = "";
-
     function reverse_geocode () {
       var lat = map.getCenter().k;
       var lng = map.getCenter().A;
@@ -91,9 +96,12 @@ google.maps.event.addDomListener(window, 'load', initialize);
             if (xhr.readyState == 4) {
 
                 var response = JSON.parse(xhr.responseText);
-                var location = response.results[0].formatted_address;
-                if(location)
-                myLocation.innerHTML = response.results[0].formatted_address;
+                var rawLocation = response.results[0].formatted_address.split(',');
+                var basicAddress = rawLocation[0] + ", " + rawLocation[1]
+                // + ", " + rawLocation[2].match(/\d+\.?\d*/g);
+                if(basicAddress) {
+                 myLocation.innerHTML = basicAddress
+                }
             }
         }
         xhr.open("GET", url ,true);
