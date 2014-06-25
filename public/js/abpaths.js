@@ -1,4 +1,3 @@
-// global vars
 var walkingManImage = {
     url: '/images/walking_man.png',
 		scaledSize: new google.maps.Size(25, 25),
@@ -38,13 +37,13 @@ function handleDirectionsResponse(map, result, directionsDisplay, travelMode) {
 	// walking man icon
 	if (travelMode == google.maps.TravelMode.WALKING) {
 	  var marker = new MarkerWithLabel({
-	  	icon: walkingManImage,
-	    position: getLatLngAverage(map, route.legs[0].start_location, route.legs[0].end_location, 0.1),
-	    	title: 'Walking Distance',
-	    	labelContent: routeDurationMins + "m",
-				labelClass: "labels",
-		   	labelStyle: {opacity: 0.75},
-				map: map
+		icon: walkingManImage,
+		position: getLatLngAverage(map, route.legs[0].start_location, route.legs[0].end_location, 0.1),
+		title: 'Walking Distance',
+		labelContent: routeDurationMins + "m",
+		labelClass: "labels",
+		labelStyle: {opacity: 0.75},
+		map: map
 	  });
 	}
 }

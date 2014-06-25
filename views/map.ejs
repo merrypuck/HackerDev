@@ -6,7 +6,122 @@
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Sans|Droid+Sans:bold">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="/css/mapstyle.css">
+    <style>
+      
+      
+      * { 
+        box-sizing: border-box ;
+        margin: 0px;
+        padding: 0px;
+      }
+      html, body, #map-canvas {
+        height: 100%;
+        margin: 0px;
+        padding: 0px;
+      }
+      #map-logo-header {
+        position: absolute;
+        width:100%;
+        height:45px;
+        background-color: #111125;
+        opacity: 1;
+        top:0;
+      }
+      #logo {
+        color:#fff;
+        text-align: center;
+        font-size: 20px;
+        font-family: 'Droid Sans';
+        letter-spacing: 3px;
+        line-height: 45px;
+      }
+      
+      #map-info-header {
+        position: absolute;
+        width: 100%;
+        height:50px;
+        top:45px;
+        background-color: #fff;
+      }
+      #targetedLocation {
+        text-align: center;
+        font-size: 13px;
+        font-family: 'Droid Sans';
+        color:#27aa0b;
+        line-height: 30px;
+      }
+      #myLocation {
+         text-align: center;
+        font-size: 18px;
+        font-family: 'Droid Sans';
+        color:#000;
+        line-height: 9px;
+
+      }
+      
+      #map-footer {
+        position: absolute;
+        bottom:0;
+        height:100px;
+        width:100%;
+        background-color: #fff;
+        text-align: center;
+      }
+      #marker {
+        position: absolute;
+        top:35%;
+        left:37%;
+        border-radius: 90px;
+        border:4px solid blue;
+        width:150px;
+        height:150px;
+        padding:40px 0 0 60px;
+
+      }
+      #marker img {
+        height:40px;
+      }
+      
+      #goBtn {
+        width:150px;
+        height:45px;
+        text-decoration: none;
+        color:#fff;
+        background-color: #f0ad4e;
+        border-color:#eea236;
+        font-weight: 400;
+        padding:10px 16px;
+        font-size: 24px;
+        padding:18px 80px;
+        line-height: 4.2;
+        border-radius: 6px;
+        text-align: center;
+        cursor: pointer;
+        font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+      }
+      #questionMark {
+        position: absolute;
+        bottom:30px;
+        right:30px;
+        cursor: pointer;
+        color:rgb(66, 139, 202);
+      }
+      #questionMark i {
+        font-size: 40px;
+      }
+      #settings {
+        position: absolute;
+        bottom:30px;
+        left:30px;
+        cursor: pointer;
+        color:rgb(66, 139, 202);
+      }
+      #settings i {
+        font-size: 40px;
+      }
+    
+    
+    </style>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
     <script src="//google-maps-utility-library-v3.googlecode.com/svn/trunk/geolocationmarker/src/geolocationmarker-compiled.js"></script>
 
@@ -16,31 +131,126 @@
     <div id='map-logo-header'>
       <div id='logo'>Parkour</div>
     </div>
-    <div id='page1'>
-      <div id='map-info-header'>
-        <div id='targetedLocation'>TARGETED LOCATION</div>
-        <div id='myLocation'>No Location</div>
-      </div>
-      <div id='marker'> <img src='/images/flag_icon.svg'/></div>
-
-      <div id='map-notification'>
-        <div id='closeNotification'>
-          <i class="fa fa-times"></i>
-        </div>
-      </div>
-
-      <div id='map-footer'>
-        <a href="/screen2" id='goBtn' class="btn btn-warning btn-lg"><i class="fa fa-thumbs-up"></i> Go!</a>
-        <div id='questionMark'>
-          <i class="fa fa-question"></i>
-        </div>
-
-        <div id='settings'>
-          <i class="fa fa-cog"></i>
-        </div>
-      </div>
-      
+    <div id='map-info-header'>
+      <div id='targetedLocation'>TARGETED LOCATION</div>
+      <div id='myLocation'>No Location</div>
     </div>
+    <div id='map-footer'>
+      <a href="/screen2" id='goBtn' class="btn btn-warning btn-lg"><i class="fa fa-thumbs-up"></i> Go!</a>
+      <div id='questionMark'>
+        <i class="fa fa-question"></i>
+      </div>
+
+      <div id='settings'>
+        <i class="fa fa-cog"></i>
+      </div>
+    </div>
+    <div id='marker'> <img src='/images/flag_icon.svg'/></div>
   </body>
-  <script src="/js/mapscript.js"></script>
+
+  <script>
+
+    var map, GeoMarker;
+    var myLocation = document.getElementById('myLocation');
+    function initialize() {
+      
+      // var myLatlng = new google.maps.LatLng(37.790234970864, -122.39031314844);
+      var mapOptions = {
+          center: new google.maps.LatLng(37.790234970864, -122.39031314844),
+          zoom: 16,
+          mapTypeId: google.maps.MapTypeId.ROADMAP,
+          disableDefaultUI: true
+      };
+      map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+      var GeoMarker = new GeolocationMarker(map);
+
+       GeoMarker = new GeolocationMarker();
+        GeoMarker.setCircleOptions({visible: 'false', strokeOpacity : 0});
+
+        google.maps.event.addListenerOnce(GeoMarker, 'position_changed', function() {
+          map.setCenter(this.getPosition());
+          map.fitBounds(this.getBounds());
+          console.log('position changed.')
+        });
+
+        google.maps.event.addListener(GeoMarker, 'geolocation_error', function(e) {
+          alert('There was an error obtaining your position. Message: ' + e.message);
+        });
+
+        GeoMarker.setMap(map);
+
+        
+/*
+      var marker = new google.maps.Marker({
+          position: myLatlng,
+          map: map,
+          title: 'Hello World!'
+      });    
+        
+*/
+    }
+  function add_marker( event ) {
+    lat = event.latLng.lat;
+    lng = event.latLng.lng;
+    console.log(lat);
+    console.log(lng);
+    // ajax code here that posts the lat/lng to the server
+    // only call the remaining code to add the marker if it was successful
+    var marker = new google.maps.Marker({
+        position: event.latLng,
+        map: map // put the handle of your map here
+    });
+
+
+}
+
+
+
+google.maps.event.addDomListener(window, 'load', initialize);
+  if(!navigator.geolocation) {
+        alert('Your browser does not support geolocation');
+      }
+//google.maps.event.addListener(this.map, 'click', add_marker);
+
+
+    var timer1Available = true;
+    // var timer2Available = false;
+    var lastLatLng = "";
+    function reverse_geocode () {
+      var lat = map.getCenter().k;
+      var lng = map.getCenter().A;
+      var thisLatLng = lat + ", " + lng;
+      if(timer1Available && thisLatLng !== lastLatLng) {
+
+        var url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + ", " + lng;
+        console.log(url);
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4) {
+
+                var response = JSON.parse(xhr.responseText);
+                myLocation.innerHTML = response.results[0].formatted_address;
+            }
+        }
+        xhr.open("GET", url ,true);
+        xhr.send();
+        lastLatLng = thisLatLng;
+        timer1Available = false;
+        myLocation.innerHTML = "";
+        setTimeout(function() { timer1Available = true;}, 2000);
+      }
+    }
+    setInterval(
+      reverse_geocode, 2000);
+
+      
+     /*google.maps.event.addListener(map, "center_changed", function() {
+       console.log('center changed.');
+      var mapCenter = map.getCenter();
+      reverse_geocode(mapCenter.k, mapCenter.A);
+     
+    });
+     */
+
+  </script>
 </html>
