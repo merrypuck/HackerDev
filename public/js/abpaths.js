@@ -89,6 +89,22 @@ function getParkourDirections(fromCurrent, toParkingSpot) {
 	return getDrivingRequest(google.maps.TravelMode.DRIVING, fromCurrent, toParkingSpot);
 }
 
+// waypoints should not include from and to points
+// for cycle, make from == to
+function getDirectionsCycleRequest(from, to, waypoints) {
+	return {
+		  travelMode: google.maps.TravelMode.DRIVING,
+		  unitSystem: google.maps.UnitSystem.METRIC,
+		  origin: from,
+		  destination: to,
+		  waypoints: waypoints,
+		  optimizeWaypoints: false,
+		  provideRouteAlternatives: false,
+		  durationInTraffic: true,
+		  region: 'IL'
+		}
+}
+
 function getDrivingRequest(travelMode, from, to) {
 	return {
 		  origin: from,
