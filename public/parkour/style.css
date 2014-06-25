@@ -1,8 +1,36 @@
-.this-style-page-works{
-
-	background-color:red;
-}
-
-mybutton {
-	width=30px;
-}
+#questionMark {
+        position: absolute;
+        bottom:30px;
+        right:30px;
+        cursor: pointer;
+        color:rgb(66, 139, 202);
+      }
+	  
+	  #map-footer {
+        position: absolute;
+        bottom:0;
+        height:100px;
+        width:50%;
+        background-color: #fff;
+        text-align: center;
+      }
+	  
+      #questionMark i {
+        font-size: 40px;
+      }
+      #questionMark:hover {
+        color:#000;
+      }
+      #settings {
+        position: absolute;
+        bottom:30px;
+        left:30px;
+        cursor: pointer;
+        color:rgb(66, 139, 202);
+      }
+      #settings:hover {
+        color:#000;
+      }
+      #settings i {
+        font-size: 40px;
+      }
