@@ -59,6 +59,32 @@
       #findMyLocation i {
         font-size: 20px;
       }
+      #searchBtn{
+        position: absolute;
+        top:15px;
+        left:30px;
+        color:rgb(66, 139, 202);
+        cursor: pointer;
+        cursor: hand;
+      }
+      #searchBtn i {
+        font-size: 20px;
+      }
+      #searchBar {
+        position: absolute;
+        top:11px;
+        left: 57px;
+        z-index: 10000;
+        width: 76.5%;
+        display: none;
+      }
+      #searchBar input {
+        width:100%;
+        height:30px;
+        border-radius: 10px;
+        outline: none;
+        padding:5px;
+      }
       #map-footer {
         position: absolute;
         bottom:0;
@@ -67,6 +93,7 @@
         background-color: #fff;
         text-align: center;
       }
+
       #marker {
         position: absolute;
         top:35%;

@@ -18,7 +18,7 @@ function initialize() {
   
   // var myLatlng = new google.maps.LatLng(37.790234970864, -122.39031314844);
   var mapOptions = {
-      center: new google.maps.LatLng(34.793978899999956, 32.06997550635381),
+      center: new google.maps.LatLng(32.0820517821256, 34.78862497459524),
       zoom: 14,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       disableDefaultUI: true
@@ -31,8 +31,8 @@ function initialize() {
 //    GeoMarker.setCircleOptions(
 
     google.maps.event.addListenerOnce(GeoMarker, 'position_changed', function() {
-      map.setCenter(this.getPosition());
-      map.fitBounds(this.getBounds());
+      //map.setCenter(this.getPosition());
+      // map.fitBounds(this.getBounds());
       console.log('position changed.')
     });
 
@@ -112,6 +112,26 @@ google.maps.event.addDomListener(window, 'load', initialize);
     setInterval(
       reverse_geocode, 2000);
 
+    function geocode(address) {
+      var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address;
+      var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4) {
+              var response = JSON.parse(xhr.responseText);
+              var lat = response.results[0].geometry.location.lat;
+              var lng = response.results[0].geometry.location.lng;
+              console.log(lat);
+              console.log(lng);
+              var newLocation = new google.maps.LatLng(lat,lng);
+              map.setCenter(newLocation)
+
+
+            }
+        }
+        xhr.open("GET", url ,true);
+        xhr.send();
+    }
+
       
      /*google.maps.event.addListener(map, "center_changed", function() {
        console.log('center changed.');
@@ -120,7 +140,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
      
     });
      */
-
+/*
 var options = {
   enableHighAccuracy: true,
   timeout: 5000,
@@ -166,6 +186,7 @@ if(navigator.geolocation) {
     handleNoGeolocation(browserSupportFlag);
   }
 */
+/*
   function handleNoGeolocation(errorFlag) {
     if (errorFlag == true) {
       alert("Geolocation service failed.");
@@ -174,6 +195,7 @@ if(navigator.geolocation) {
     }
     map.setCenter(initialLocation);
   }
+  */
   function restart() {
     
     var goBtn = document.getElementById('goBtn');
@@ -184,6 +206,7 @@ if(navigator.geolocation) {
     goBtn.innerHTML = '<i class="fa fa-thumbs-up"></i>GO!';
     //targetedLocation.style.display = 'none';
     targetedLocation.innerHTML = 'TARGETED LOCATION';
+    markerLocation.innerHTML = '';
     markerLocation.style.display = 'block';
 
     //var foundBtn = document.getElementById('foundBtn');
@@ -200,4 +223,33 @@ if(navigator.geolocation) {
   goBack.addEventListener('click', function() {
     restart();
   });
+
+  var searchBtn = document.getElementById('searchBtn');
+  var searchBar = document.getElementById('searchBar');
+  var targetedLocation = document.getElementById('targetedLocation');
+  var markerLocation = document.getElementById('markerLocation');
+
+  searchBtn.addEventListener('click', function() { 
+    if(searchBar.style.display === 'none') {
+      searchBar.style.display = 'block';
+      searchBtn.style.color = '#000';
+      targetedLocation.style.display = 'none';
+      markerLocation.style.display = 'none';
+    }
+    else {
+      searchBar.style.display = 'none';
+      searchBtn.style.color = 'rgb(66, 139, 202)';
+      targetedLocation.style.display = 'block';
+      markerLocation.style.display = 'block';
+
+    }
+  });
+  searchBar.onkeydown = function(e){
+   if(e.keyCode == 13){
+     // submit
+     geocode(searchBar.children[0].value);
+
+
+   }
+  };
 

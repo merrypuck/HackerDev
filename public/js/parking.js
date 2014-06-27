@@ -58,6 +58,7 @@ goBtn.addEventListener('click', function() {
           var startPt = new google.maps.LatLng(32.070276,34.794166);
           var endPt = new google.maps.LatLng(32.077535,34.788547);
 
+
           var request = getDirectionsCycleRequest(startPt, endPt, response);
           console.log("request = " );
         	console.log(request);
