@@ -144,6 +144,10 @@ app.post('/direct', function(req, res) {
 	var radius = req.body.radius;
 });
 
+app.get('/mapdev', function(req, res) {
+	res.render('mapdev')
+});
+
 //////////////////////////////////
 // Web client sockets
 /////////////////////////////////

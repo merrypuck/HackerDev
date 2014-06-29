@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Parkour</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Sans|Droid+Sans:bold">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/mapstyle1.css">
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+    <script src="//google-maps-utility-library-v3.googlecode.com/svn/trunk/geolocationmarker/src/geolocationmarker-compiled.js"></script>
+    <script type="text/javascript" src="/js/markerWithLabel.js"></script>
+    <script type="text/javascript" src="/js/markers.js"></script>
+    <script type="text/javascript" src="/js/abpaths.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+  </head>
+  <body>
+    <div id="map-canvas"></div>
+    <div id='map-logo-header'>
+      <div id='logo'>Parkour</div>
+    </div>
+    <div id='page1'>
+      <div id='map-info-header'>
+        <div id='targetedLocation'>TARGETED LOCATION</div>
+        <div id='markerLocation'>No Location</div>
+        <div id='findMyLocation'>
+          <i class="fa fa-paper-plane-o"></i>
+        </div>
+        <div id='searchBtn'>
+          <i class="fa fa-search"></i>
+        </div>
+        <div id='searchBar'>
+          <input type='text' id='searchInput'/>
+          
+        </div>
+
+        <div id='goBack'>
+          <i class="fa fa-arrow-circle-left"></i>
+        </div>
+      </div>
+
+      <div id='marker'> <img src='/images/flag_icon.svg'/></div>
+
+
+      <!--<div id='map-notification'>
+        <div id='closeNotification'>
+          <i class="fa fa-times"></i>
+        </div>
+      </div>-->
+
+      <div id='map-footer'>
+        <a id='goBtn' class="btn btn-warning btn-lg"><i class="fa fa-thumbs-up"></i> Go!</a>
+        <div id='questionMark'>
+          <i class="fa fa-question"></i>
+        </div>
+
+        <div id='settings'>
+          <i class="fa fa-cog"></i>
+        </div>
+      </div>
+      
+    </div>
+  </body>
+  <script src="/js/mapdev.js"></script>
+  <script src="/js/parking.js"></script>
+</html>
