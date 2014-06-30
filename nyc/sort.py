@@ -1,4 +1,4 @@
-
+import os	
 import csv
 
 
@@ -11,17 +11,17 @@ import csv
 
 # locations count : 94102
 # locations duplicates : ['S-003375', 'S-005176', 'S-028053']
-locationsCSV = csv.reader(open("./locations.csv", "rU"))
+locationsCSV = csv.reader(open(os.path.expanduser("~/parkour/nyc/locations.CSV"), "rU"))
 # signs count : 750475
-signsCSV = csv.reader(open("./signs.csv", "rU"))
-wr = csv.writer(open("./locationsandsigns2.csv", "wb"))
+#signsCSV = csv.reader(open(os.path.expanduser("~/parkour/nyc/signs.CSV"), "rU"))
+wr = csv.writer(open(os.path.expanduser("~/parkour/nyc/locationsandsigns4.csv"), "wb"))
 
 
 found = False
 newRow = []
 rowsCounted = 0
 for l in locationsCSV:
-	signsCSV = csv.reader(open("./signs.csv", "rU"))
+	signsCSV = csv.reader(open(os.path.expanduser("~/parkour/nyc/signs.CSV"), "rU"))
 	for s in signsCSV:
 		if l[1] == s[1]:
 			if found == False:
