@@ -15,7 +15,8 @@
     "lodash":"",
     "socket.io": "0.9.x",
     "moment":"",
-    "geolib":""
+    "geolib":"",
+    "mongoose":""
   },
   "description": "parkour",
   "main": "index.js",
