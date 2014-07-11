@@ -6,8 +6,25 @@ var _ 				= require('lodash');
 var io 				= require('socket.io').listen(app);
 var fs				= require('fs');
 var geolib 			= require('geolib');
+var mongoose		= require('mongoose');
 var cycleCalculator	= require('./search_algorithm/calculate_cycles.js');
+var csv = require("fast-csv");
 
+/*
+csv.fromPath("navcodes.csv").on("record", function(data){ 
+	var navcodes = data[0].substring(1, data[0].length-1).split(',');
+	var id = data[1];
+	var color = data[2];
+	var s1 = data[3];
+	var s2 = data[4];
+	var s3 = data[5];
+	var side = data[6];
+	console.log(codes);
+})
+.on("end", function() { 
+		console.log("done");});
+
+*/
 
 //////////////////////////////////
 // Express app config
@@ -23,13 +40,28 @@ app.http().io();
 
 var parking_file = "./examples/get_parking_lots.txt";
 
+/********************* MONGOOSE INIT ****************************/
+
+// var mongoose = require('mongoose');
+
+// mongoose.connect('mongodb://abc:abc123@kahana.mongohq.com:10088/parkour');
+
+var db = mongoose.connection;
+
+// Error handling
+db.on('error', console.error.bind(console, 'connection error:'));
+
+db.once('open', function callback() {
+  console.log('Connected to DB');
+});
+
 
 //////////////////////////////////
 // Express handlers
 /////////////////////////////////
-
 app.get('/', function(req, res) {
-  res.render('home');
+	res.render('home')
+  	
 });
 
 app.get('/park_here', function(req, res) {
@@ -37,7 +69,29 @@ app.get('/park_here', function(req, res) {
 });
 
 app.get('/map', function(req, res) {
-	res.render('map1');
+	var allCodes = [];
+	csv.fromPath("navandcolors.csv").on("record", function(data){ 
+		try {
+
+			var navcodes = data[0].substring(1, data[0].length -1).split(',');
+			var id = data[1];
+			var color = data[2];
+			var obj = {'n' : navcodes, 'id' : id, 'c' : color}
+			allCodes.push(obj);
+			// console.log(obj);
+		}
+		catch(e) {
+			console.log(e);
+		}
+
+	})
+	.on("end", function() { 
+		var stringCodes = JSON.stringify(allCodes);
+		res.render('map1', {
+			allCodes : stringCodes
+		});
+	});
+	
 });
 
 app.get('/direct', function(req, res) {

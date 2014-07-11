@@ -1,4 +1,5 @@
 /***** GLOBALS *****/
+
 var previousPage = "";
 var map, GeoMarker;
 var markerLocation = document.getElementById('markerLocation');
@@ -14,11 +15,30 @@ var markerLocation = document.getElementById('markerLocation');
     previousPage = currentPage;
  }
 
+function populateCodes(map) {
+  for(var i = 0; i < allCodes.length; i++) {
+    var rawPolyline = [];
+    console.log(allCodes[i].color);
+    var p = new google.maps.LatLng(parseFloat(allCodes[i].n[0]), parseFloat(allCodes[i].n[1]));
+    var q = new google.maps.LatLng(parseFloat(allCodes[i].n[2]), parseFloat(allCodes[i].n[3]));
+    rawPolyline.push(p);
+    rawPolyline.push(q);
+    // console.log(rawPolyline);
+    var n = new google.maps.Polyline({
+          path: rawPolyline,
+          strokeColor: allCodes[i].c,
+          strokeOpacity: .5,
+          strokeWeight: 6
+      });
+    n.setMap(map);
+  }
+}
+
 function initialize() {
   
   // var myLatlng = new google.maps.LatLng(37.790234970864, -122.39031314844);
   var mapOptions = {
-      center: new google.maps.LatLng(32.0820517821256, 34.78862497459524),
+      center: new google.maps.LatLng(40.71121108253146, -74.00447633613476),
       zoom: 14,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       disableDefaultUI: true
@@ -41,7 +61,7 @@ function initialize() {
     });
 
     GeoMarker.setMap(map);
-
+    populateCodes(map);
         
 /*
       var marker = new google.maps.Marker({
@@ -82,7 +102,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
     function reverse_geocode () {
       var lat = map.getCenter().k;
-      var lng = map.getCenter().A;
+      var lng = map.getCenter().B;
       var thisLatLng = lat + ", " + lng;
       if(timer1Available && thisLatLng !== lastLatLng) {
 
