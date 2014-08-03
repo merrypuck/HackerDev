@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Parkour</title>
+    <title>1000Scientists</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Sans|Droid+Sans:bold">
@@ -10,21 +10,31 @@
     <script src="http://whispering-everglades-6142.herokuapp.com/socket.io/socket.io.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
+    <script type="text/javascript">
+      (function(d) {
+        var config = {
+          kitId: 'eid7xze',
+          scriptTimeout: 3000
+        },
+        h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+      })(document);
+    </script>
   </head>
   <body>
     <style>
       #question {
         font-size: 18px;
         position: absolute;
-        top:95px;
+        top:100px;
         width: 100%;
         height: 40px;
         font-size: 30px;
         text-align: center;
-        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        /*font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;*/
+        font-family: "soleil", 'Helvetica Neue', Helvetica, Arial, sans-serif;
       }
       .answerWrapper {
-        top:175px;
+        top:150px;
         width: 375px;
         height: 375px;
         margin: 0 auto;
@@ -37,7 +47,7 @@
         margin: 2px;
         cursor: pointer;
         cursor: hand;
-        border: 2px solid #000;
+        border: 3px solid #000;
       }
       #skipWrapper {
         width: 100%;
@@ -46,21 +56,30 @@
         top:160px;
       }
       #skipBtn {
-        width:150px;
-        height:45px;
+        /*width:150px;*/
+        /*height:45px;*/
         text-decoration: none;
         color:#fff;
-        background-color: #f0ad4e;
-        border-color:#eea236;
-        font-weight: 400;
-        padding:10px 16px;
+        /*background-color: #f0ad4e;*/
+        /*border-color:#eea236;*/
+        /*font-weight: 400;*/
+        /*padding:10px 16px;*/
         font-size: 24px;
-        padding:18px 100px;
-        line-height: 4.2;
-        border-radius: 6px;
+        /*padding:18px 100px;*/
+        /*line-height: 4.2;*/
+        /*border-radius: 6px;*/
         text-align: center;
         cursor: pointer;
-        font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+        font-family: "soleil", 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+        position: absolute !important;
+        bottom: 0px !important;
+        width: 100% !important;
+        background: #efefef;
+        border-top: 1px solid #ccc;
+        color: #333;
+        text-transform: uppercase;
+        padding: 20px;
       }
       #map-info-header {
         border-bottom: 1px solid #000;
@@ -77,42 +96,85 @@
         color:#fff;
         text-align: center;
         font-size: 20px;
-        font-family: 'Droid Sans';
+        font-family: "soleil", 'Helvetica Neue', Helvetica, Arial, sans-serif;
         letter-spacing: 3px;
         line-height: 45px;
+        text-transform: uppercase;
+        font-weight: 300;
       }
       #map-canvas {
         visibility:hidden;
       }
       
-      #map-info-header {
+      #map-info-header, #map-info-header2 {
         position: absolute;
         width: 100%;
         height:50px;
         top:45px;
         background-color: #fff;
       }
+      #map-info-header2
+      {
+        /*border-bottom: 1px solid rgba(59, 194, 94, 1.0);*/
+        border-bottom: 1px solid #ccc;
+      }
+      #map-info-progress
+      {
+        width: 0%;
+        height: 100%;
+        position: relative;
+        left: 0px;
+        background: rgba(59,194,94, 0.7);
+        border-bottom: 1px solid #268232;
+        border-right: 1px solid #268232;
+        /*border-radius-top-right: 2px;*/
+        /*border-radius-bottom-right: 2px;*/
+        /*border-radius: 5px;*/
+      }
+      #map-info-progress #money
+      {
+        color: #fff;
+        font-family: "soleil", 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-size: 16px;
+        /*background: #268232;*/
+        /*border-bottom: 2px solid #268232;*/
+        /*border-radius: 5px;*/
+        display: inline-block;
+        padding: 2px 4px;
+        margin: 10px;
+        width: auto;
+        /*opacity: 0.8;*/
+      }
+      #map-info-progress.empty #money
+      {
+        color: #268232;
+      }
     </style>
     <div id='map-logo-header'>
       <div id='logo'>1000Scientists</div>
     </div>
-    <div id='map-info-header'>
-        
-      </div>
+    <div id='map-info-header2'>
+      <div id="map-info-progress" class="empty">
+        <div id="money">
+          $0.00
+        </div>
+      </div>    
+    </div>
     <div id='allQuestions'>
 
     </div>
     
 
-    <div id='skipWrapper'>
-      <a onclick="skip()" id='skipBtn' class="btn btn-warning btn-lg">Skip</a>
-    </div>
+    <!-- <div id='skipWrapper'> -->
+      <a onclick="skip()" id='skipBtn' class="btn btn-warning btn-lg">skip this, next question</a>
+    <!-- </div> -->
   </body>
   <script>
   var uncompletedTasks = [];
   var completedTasks   = [];
   var currentTaskId    = "";
   var skipped          = [];
+
   // 'jobId'      : jobObj['_id'],
   // 'question'      : question,
   // 'label'       : labelsLength[i],
@@ -184,7 +246,7 @@
         document.getElementById("q" + currentTaskId).remove();
         document.getElementById("q" + uncompletedTasks[0]).style.display = 'block';
         currentTaskId = uncompletedTasks[0];
-        
+        updateProgressBar()
       }
       answerWrapper.appendChild(answerImg);
 
@@ -205,12 +267,29 @@
     else {
           location.reload();
         }
+    updateProgressBar()
   }
   function replaceTask(task) {
     question.innerHTML = task['question'];
     for(var i = 0; i < 4; i++) {
       
     }
+  }
+  function updateProgressBar()
+  {
+    var completed = completedTasks.length
+    var nocomplete = uncompletedTasks.length
+    var completed_fill = (completed) / (nocomplete + completed) * 100 
+    var payout = completed * 0.05
+    payout = payout.toFixed(2)
+    document.getElementById('money').innerHTML = "$" + payout
+    document.getElementById('map-info-progress').style.width = completed_fill + "%"
+
+    if(completed_fill < 7)
+      document.getElementById('map-info-progress').className = 'empty';
+    else 
+      document.getElementById('map-info-progress').className = undefined;
+
   }
 
 

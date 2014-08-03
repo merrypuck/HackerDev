@@ -29,9 +29,7 @@
         /* border: 1px solid #000; */
         font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
         border-radius:10px;
-        -webkit-box-shadow: rgb(230, 230, 230) 5px 5px 5px 5px;
         padding: 10px 20px;
-        border:1px solid #3276B1;
         cursor: pointer;
         cursor: hand;
       }
@@ -40,6 +38,7 @@
       }
       #driveAndPark {
         width: 90%;
+        height: 100px;
         color: #fff;
         position: relative;
         text-align: center;
@@ -57,6 +56,8 @@
         border:1px solid #EEA236;
         cursor: pointer;
         cursor: hand;
+        line-height: 34px;
+
 
       }
       #driveAndPark i {

@@ -94,7 +94,6 @@ var CompletedTask = mongoose.model('CompletedTask', {
 // Express handlers
 /////////////////////////////////
 app.get('/', function(req, res) {
-	var jobs = Job.find();
 	res.render('home')
   	
 });
