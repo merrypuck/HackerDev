@@ -158,6 +158,7 @@
       answerImg.className             = "answerImage";
       answerImg.onclick               = function() {
         var taskId = this.parentNode.id;
+        alert(taskId);
         console.log(taskId);
         var cTask = {
           'taskId' : taskId,
@@ -170,6 +171,11 @@
         formData.append("answer", this.src);
 
         var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+          if(xhr.readyState === 4) {
+            console.log('true');
+          }
+        }
         xhr.open("POST", "http://localhost:5000/completedtask",true);
         xhr.send(formData);
         completedTasks.push(cTask);

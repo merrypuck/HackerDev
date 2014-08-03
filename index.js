@@ -172,7 +172,10 @@ app.post('/completedtask', function(req, res) {
 		'taskId' : taskId,
 		'answer' : answer
 	});
-	return 'true'
+	task.save(function(err) {
+		return 'true'
+	});
+	
 
 });
 
