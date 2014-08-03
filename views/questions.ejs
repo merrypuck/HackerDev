@@ -149,6 +149,28 @@
       {
         color: #268232;
       }
+
+      #popup {
+        display: none;
+        position: absolute;
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
+        height:200px;
+        width:360px;
+        position: absolute;
+        top:200px;
+        margin: 0 auto;
+        font-family: "soleil", 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        background:rgba(59,194,94, 1);
+        text-align: center;
+        font-size: 30px;
+        color: #fff;
+        cursor: pointer;
+        cursor: hand;
+
+      }
     </style>
     <div id='map-logo-header'>
       <div id='logo'>1000Scientists</div>
@@ -163,17 +185,22 @@
     <div id='allQuestions'>
 
     </div>
-    
+    <div id='popup' onclick="location.reload();">
+      Great Job! You made $0.55.<br/> Answer more?
+    </div>
 
     <!-- <div id='skipWrapper'> -->
       <a onclick="skip()" id='skipBtn' class="btn btn-warning btn-lg">skip this, next question</a>
     <!-- </div> -->
+
   </body>
   <script>
   var uncompletedTasks = [];
   var completedTasks   = [];
   var currentTaskId    = "";
   var skipped          = [];
+  var count = 0;
+  var popup = document.getElementById('popup');
 
   // 'jobId'      : jobObj['_id'],
   // 'question'      : question,
@@ -247,6 +274,11 @@
         document.getElementById("q" + uncompletedTasks[0]).style.display = 'block';
         currentTaskId = uncompletedTasks[0];
         updateProgressBar()
+        count = count + 1;
+        if(count === 11) {
+          popup.style.display = 'block';
+          //location.reload();
+        }
       }
       answerWrapper.appendChild(answerImg);
 
@@ -255,6 +287,7 @@
     allQuestions.appendChild(questionWrapper)
 
   }
+  
   function skip() {
     skipped.push(currentTaskId);
     uncompletedTasks.splice(0, 1);
@@ -279,7 +312,7 @@
   {
     var completed = completedTasks.length
     var nocomplete = uncompletedTasks.length
-    var completed_fill = (completed) / (nocomplete + completed) * 100 
+    var completed_fill = (completed) / (10) * 100 
     var payout = completed * 0.05
     payout = payout.toFixed(2)
     document.getElementById('money').innerHTML = "$" + payout
