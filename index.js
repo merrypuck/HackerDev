@@ -3,11 +3,12 @@ var app 			= express();
 var request 		= require('request');
 var moment 			= require('moment');
 var _ 				= require('lodash');
-var io 				= require('socket.io').listen(app);
 var fs				= require('fs');
+var http			= require('http');
 var geolib 			= require('geolib');
 var mongoose		= require('mongoose');
-var cycleCalculator	= require('./search_algorithm/calculate_cycles.js');
+var connect 		= require('connect');
+var bodyParser = require('body-parser')
 var csv = require("fast-csv");
 
 /*
@@ -26,6 +27,21 @@ csv.fromPath("navcodes.csv").on("record", function(data){
 
 */
 
+
+/**
+ * Randomize array element order in-place.
+ * Using Fisher-Yates shuffle algorithm.
+ */
+function shuffleArray(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+    return array;
+}
+
 //////////////////////////////////
 // Express app config
 /////////////////////////////////
@@ -33,6 +49,7 @@ csv.fromPath("navcodes.csv").on("record", function(data){
 app.engine('ejs', require('ejs-locals'));//.renderFile);
 app.set('port', (process.env.PORT || 5000))
 app.use(express.static(__dirname + '/public'))
+app.use(express.bodyParser());
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.set('view options', {layout: "template.html"});
@@ -42,9 +59,7 @@ var parking_file = "./examples/get_parking_lots.txt";
 
 /********************* MONGOOSE INIT ****************************/
 
-// var mongoose = require('mongoose');
-
-// mongoose.connect('mongodb://abc:abc123@kahana.mongohq.com:10088/parkour');
+mongoose.connect('mongodb://abc:abc123@kahana.mongohq.com:10087/1000scientists');
 
 var db = mongoose.connection;
 
@@ -55,168 +70,110 @@ db.once('open', function callback() {
   console.log('Connected to DB');
 });
 
+var Job = mongoose.model('Job', { 
+  question 	: String,
+  labels	: [],
+  answers	: [],
+  max 		: Number
+});
 
+var Task = mongoose.model('Task', {
+	jobId 		: String,
+	completed   : String,                                                                    
+	answers 	: String,
+	question    : String,
+	label 		: String,
+	taskId 		: String
+});
+
+var CompletedTask = mongoose.model('CompletedTask', {
+	taskId 		: String,
+	answers     : String
+});
 //////////////////////////////////
 // Express handlers
 /////////////////////////////////
 app.get('/', function(req, res) {
+	var jobs = Job.find();
 	res.render('home')
   	
 });
 
-app.get('/park_here', function(req, res) {
-  res.render('park_here');
+app.get('/newjob', function(req, res) {
+	res.render('createjob');
+})
+app.post('newjob', function(req, res) {
+	var description = req.body.description;
+	var question 	= req.body.question;
+	var labels 	 	= req.body.labels;
+	var answers  	= req.body.answers;
+	var max 	 	= req.body.max;
+	var job = new Job({
+		'description' 	: description,
+		'question'		: question,
+		'labels'  		: labels,
+		'answers' 		: answers,
+		'max'	  		: max});
+	job.save(function(err) {
+		var labelsLength = labels.length;
+		var answersLength = answers.length;
+		for(var i = 0; i < labelsLength.length; i++) {
+			for(var m = 0; m < 5; m++) {
+				var potentialAnswers = [];
+				for(var n = 0; n < 4; n++) {
+					potentialAnswers.push(answers[Math.floor(Math.random() * answersLength)]);
+				}
+				var task = new Task({
+					'jobId' 			: jobObj['_id'],
+					'question'  		: question,
+					'label'				: labelsLength[i],
+					'answers'			: potentialAnswers,
+					'completed'			: 'false',
+					'answer'			: 'false'
+				});
+				task.save(function(err) {
+
+				});
+			}
+		};
+	});
+
 });
 
-app.get('/map', function(req, res) {
-	var allCodes = [];
-	csv.fromPath("navandcolors.csv").on("record", function(data){ 
-		try {
-
-			var navcodes = data[0].substring(1, data[0].length -1).split(',');
-			var id = data[1];
-			var color = data[2];
-			var obj = {'n' : navcodes, 'id' : id, 'c' : color}
-			allCodes.push(obj);
-			// console.log(obj);
+app.get('/job/:jobId', function(req, res) {
+	var jobId = req.param('jobId');
+	//var thisJob = Job.findOne({'_id': jobId});
+	Task.find({jobId : jobId}, function(err, tasks) {
+		var allTasks = [];
+		for(var i = 0; i < tasks.length; i++ ) {
+			console.log(tasks[i].answers)
+			var newObj = {};
+			newObj.completed = tasks[i]['completed'];
+			newObj.question = tasks[i]['question'];
+			newObj.answers  = tasks[i].answers;
+			newObj.label    = tasks[i].label;
+			newObj.jobId	= tasks[i].jobId;
+			newObj.taskId       = tasks[i].taskId;
+			allTasks.push(newObj);
 		}
-		catch(e) {
-			console.log(e);
-		}
-
-	})
-	.on("end", function() { 
-		var stringCodes = JSON.stringify(allCodes);
-		res.render('map1', {
-			allCodes : stringCodes
+		var theseTasks = shuffleArray(allTasks);
+		//console.log(allTasks);
+		res.render('questions', {
+			tasks : JSON.stringify(theseTasks)
 		});
 	});
-	
 });
 
-app.get('/direct', function(req, res) {
-	res.redirect("/");
-});
+app.post('/completedtask', function(req, res) {
+	console.log(req.body);
+	var taskId = req.body.taskId;
+	var answer = req.body.answer;
+	var task = new CompletedTask({
+		'taskId' : taskId,
+		'answer' : answer
+	});
+	return 'true'
 
-app.get('/api/do-parkour', function(req, res){
-	var loc = {
-		lat: Number(req.query.lat),
-		lon: Number(req.query.lon),
-	};
-
-	if(loc.lat && loc.lon)
-	{
-		var result = cycleCalculator.do_parkour(loc, 500);
-		res.send(result);
-	}
-	else
-	{
-		res.send([]);
-	}
-});
-
-app.get('/api/parking-nearby', function(req, res){
-
-	var loc = {
-		lat: req.query.lat,
-		lon: req.query.lon
-	};
-
-	if(loc.lat && loc.lon)
-	{
-
-		fs.readFile(parking_file, 'utf8', function (err, data) {
-			if (err) {
-				console.log('Error: ' + err);
-				return;
-			}
-
-			data = JSON.parse(data);
-
-			if(data.Results && data.Results.tblStations)
-			{
-				var sorted_array = _.sortBy(data.Results.tblStations, function(elem, index){
-					var dist = geolib.getDistance(
-					    {latitude: loc.lat, longitude: loc.lon}, 
-					    {latitude: elem.p_OutDecLotLatitude, longitude: elem.p_OutDecLotLongitude}
-					);
-					//console.log("Distance = " + dist);
-					return dist;
-				});
-
-				var result_array = _.filter(sorted_array, function(value, index, collection){
-					return index < 10;
-				});
-
-				var our_format = _.map(result_array, function(value, index){
-					return {
-						pangoId: value.p_OutIntLotID,
-						lat: value.p_OutDecLotLatitude,
-						lon: value.p_OutDecLotLongitude,
-						name: value.p_OutStrLotName,
-						phone: value.p_OutStrLotPhoneNumber,
-						address: value.p_OutStrLotAddress,
-						isLotFull: value.p_OutIsLotFull,
-						discountAmount: value.p_OutDecPercentDiscount,
-						discountText: value.p_OutStrShortName
-					};
-				});
-
-				console.log("Returning " + result_array.length + " results to my query for " + loc.lat + " / " + loc.lon);
-
-				res.send(our_format);
-			}
-			else
-			{
-				console.log("Reading the file returned an empty data set");
-				res.send({});
-			}
-		});
-	}
-	else
-	{
-		console.log("Asked to return nearby parking spots, but nothing found");
-		res.send({error: "Need to provide lat and lon"});
-	}
-});
-
-app.get('/screen1', function(req, res){
-	res.render('screen1');
-});
-
-app.get('/screen2', function(req, res){
-	res.render('screen2');
-});
-
-app.get('/screen3', function(req, res){
-	res.render('screen3');
-});
-
-app.post('/direct', function(req, res) {
-	var starting_location = req.body.starting_location;
-	var end_location = req.body.end_location;
-	var radius = req.body.radius;
-});
-
-app.get('/mapdev', function(req, res) {
-	res.render('mapdev')
-});
-
-//////////////////////////////////
-// Web client sockets
-/////////////////////////////////
-
-app.io.route('ready', function(req) {
-    req.io.emit('zazti_notices', {
-        message: 'io event from an io route on the server'
-    })
-
-    console.log("Got a ready message from client");
-});
-
-io.sockets.on('connection', function (socket) {
-	console.log("Server received socket io request");
-	socket.emit("hello", "Saying hello to the web client");
 });
 
 app.listen(app.get('port'), function() {

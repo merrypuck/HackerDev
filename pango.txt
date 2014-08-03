@@ -1,3 +1,0 @@
-https://www.mcpsmartphonews.4500.co.il/PangoSmartPhoneWs_prod/PangoServices.asmx/sp_smart_IPHONE_Get_Cars_XML_Node
-
-http://ipango.itip.co.il/iphonecar/add/
