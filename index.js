@@ -169,15 +169,29 @@ app.post('/completedtask', function(req, res) {
 	var taskId = req.body.taskId;
 	var answer = req.body.answer;
 	console.log(answer);
-	var task = new CompletedTask({
-		'taskId' : taskId,
-		'answer' : answer
-	});
-	task.save(function(err) {
+	Task.update({'id' : taskId}, {answer : answer, completed : true}, function() {
+		var task = new CompletedTask({
+			'taskId' : taskId,
+			'answer' : answer
+		});
+		task.save(function(err) {
 
+		});
 	});
 	
+	res.end()
+	
 
+});
+
+app.get('/dashboard/:jobId', function(req, res) {
+	var jobId = req.param('jobId');
+	CompletedTask.find({jobId : jobId}, function(err, cTasks) {
+
+	})
+	res.render('dashboard', {
+		tasks : tasks
+	});
 });
 
 app.listen(app.get('port'), function() {

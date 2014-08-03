@@ -171,17 +171,23 @@
         xhr.onreadystatechange = function() {
           if(xhr.readyState === 4) {
             console.log('true');
+            xhr.abort();
           }
         }
         xhr.open("POST", "http://localhost:5000/completedtask",true);
         xhr.send(formData);
         completedTasks.push(cTask);
         uncompletedTasks.splice(0, 1);
+        if(uncompletedTasks.length === 0) {
+          location.reload();
+        }
         document.getElementById("q" + currentTaskId).remove();
         document.getElementById("q" + uncompletedTasks[0]).style.display = 'block';
         currentTaskId = uncompletedTasks[0];
+        
       }
       answerWrapper.appendChild(answerImg);
+
 
     }
     allQuestions.appendChild(questionWrapper)
@@ -190,9 +196,15 @@
   function skip() {
     skipped.push(currentTaskId);
     uncompletedTasks.splice(0, 1);
+    if(uncompletedTasks.length > 0) {
+    
         document.getElementById("q" + currentTaskId).remove();
         document.getElementById("q" + uncompletedTasks[0]).style.display = 'block';
         currentTaskId = uncompletedTasks[0];
+    }
+    else {
+          location.reload();
+        }
   }
   function replaceTask(task) {
     question.innerHTML = task['question'];
