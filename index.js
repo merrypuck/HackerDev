@@ -88,7 +88,7 @@ var Task = mongoose.model('Task', {
 
 var CompletedTask = mongoose.model('CompletedTask', {
 	taskId 		: String,
-	answers     : String
+	answer     	: String
 });
 //////////////////////////////////
 // Express handlers
@@ -168,12 +168,13 @@ app.post('/completedtask', function(req, res) {
 	console.log(req.body);
 	var taskId = req.body.taskId;
 	var answer = req.body.answer;
+	console.log(answer);
 	var task = new CompletedTask({
 		'taskId' : taskId,
 		'answer' : answer
 	});
 	task.save(function(err) {
-		return 'true'
+
 	});
 	
 

@@ -158,13 +158,10 @@
       answerImg.className             = "answerImage";
       answerImg.onclick               = function() {
         var taskId = this.parentNode.id;
-        alert(taskId);
-        console.log(taskId);
         var cTask = {
           'taskId' : taskId,
           'answer' : this.src
         }
-
 
         var formData = new FormData();
         formData.append("taskId", taskId);
