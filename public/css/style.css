@@ -27,7 +27,7 @@
         font-size: 26px;
         background: #428BCA;
         /* border: 1px solid #000; */
-        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-family: "soleil", 'Helvetica Neue', Helvetica, Arial, sans-serif;
         border-radius:10px;
         padding: 10px 20px;
         cursor: pointer;
@@ -49,9 +49,8 @@
         font-size: 26px;
         background: #F0AD4E;
         /* border: 1px solid #000; */
-        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-family: "soleil", 'Helvetica Neue', Helvetica, Arial, sans-serif;
         border-radius:10px;
-        -webkit-box-shadow: rgb(230, 230, 230) 5px 5px 5px 5px;
         padding: 10px 20px;
         border:1px solid #EEA236;
         cursor: pointer;
@@ -75,7 +74,7 @@
         color:#fff;
         text-align: center;
         font-size: 20px;
-        font-family: 'Droid Sans';
+        font-family: "soleil", 'Helvetica Neue', Helvetica, Arial, sans-serif;
         letter-spacing: 3px;
         line-height: 45px;
       }
@@ -93,14 +92,14 @@
       #targetedLocation {
         text-align: center;
         font-size: 13px;
-        font-family: 'Droid Sans';
+        font-family: "soleil", 'Helvetica Neue', Helvetica, Arial, sans-serif;
         color:#27aa0b;
         line-height: 30px;
       }
       #markerLocation {
          text-align: center;
         font-size: 16px;
-        font-family: 'Droid Sans';
+        font-family: "soleil", 'Helvetica Neue', Helvetica, Arial, sans-serif;
         color:#000;
         line-height: 9px;
       }
@@ -156,7 +155,7 @@
         border-radius: 6px;
         text-align: center;
         cursor: pointer;
-        font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+        font-family: "soleil", 'Helvetica Neue', Helvetica, Arial, sans-serif;
       }
       .questionMark {
         position: absolute;
