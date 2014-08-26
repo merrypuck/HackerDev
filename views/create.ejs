@@ -1,0 +1,331 @@
+<html>
+	<head>
+
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+		<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+	    <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+		<script type="text/javascript">
+      (function(d) {
+        var config = {
+          kitId: 'eid7xze',
+          scriptTimeout: 3000
+        },
+        h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+      })(document);
+    </script>
+		<style>
+			* {
+				box-sizing: border-box;
+				margin: 0;
+				padding: 0;
+				font-family: "soleil", 'Helvetica Neue', Helvetica, Arial, sans-serif;
+			}
+			input {
+
+			}
+			#header {
+				width: 100%;
+				height:80px;
+				border-bottom: 2px solid #000;
+			}
+			#listWrapper {
+				overflow: auto;
+				width:100%;
+				height: 90px;
+			}
+			#listWrapper ul {
+				width:800px;
+				height:80px;
+			}
+			#listWrapper ul li {
+				display: inline-block;
+				float: left;
+				height:60px;
+				width:120px;
+				margin:10px 0 0 10px;
+				border:2px solid #000;
+				border-radius: 5px;
+				text-align: center;
+				cursor: hand;
+				cursor:pointer;
+			}
+			#liInput input {
+				width: 85px;
+				margin-top: 8px;
+				cursor: hand;
+				cursor: pointer;
+			}
+			#liTextarea textarea {
+				width: 85px;
+				margin-top: 8px;
+				cursor: hand;
+				cursor: pointer;
+			}
+			#liHeader1 {
+				font-size: 26px;
+				padding-top: 10px;
+				font-weight: 600;
+				height: 50px;
+			}
+			#liHeader2 {
+				font-size: 20px;
+				padding-top: 14px;
+				font-weight: 600;
+			}
+			#liHeader3 {
+				font-size: 16px;
+				padding-top: 18px;
+				font-weight: 600;
+			}
+			#liText {
+				font-size: 18px;
+				padding-top: 20px;
+			}
+			.header1Element {
+				font-size: 26px;
+				font-weight: 600;
+				width: 100px;
+			}
+			.header2Element {
+				font-size: 20px;
+				font-weight: 600;
+				width: 100px;
+			}
+			.header3Element {
+				font-size: 16px;
+				font-weight: 600;
+				width: 100px;
+			}
+			.textElement {
+				font-size: 18px;
+				width: 100px;
+			}
+			.inputElement {
+				height: 25px;
+				width: 200px;
+			}
+			.textareaElement {
+				height: 60px;
+				width: 225px;
+			}
+			#dialog-form {
+				display: none;
+			}
+
+			#container {
+				width: 100%;
+				height: 600px;
+				position: relative;
+			}
+
+			 body { font-size: 62.5%; }
+    label, input { display:block; }
+    input.text { margin-bottom:12px; width:95%; padding: .4em; }
+    fieldset { padding:0; border:0; margin-top:25px; }
+    h1 { font-size: 1.2em; margin: .6em 0; }
+    div#users-contain { width: 350px; margin: 20px 0; }
+    div#users-contain table { margin: 1em 0; border-collapse: collapse; width: 100%; }
+    div#users-contain table td, div#users-contain table th { border: 1px solid #eee; padding: .6em 10px; text-align: left; }
+    .ui-dialog .ui-state-error { padding: .3em; }
+    .validateTips { border: 1px solid transparent; padding: 0.3em; }
+		</style>
+
+	</head>
+
+	<body>
+		<div id='header'>
+			<div id='listWrapper'>
+				<ul>
+					<li onclick="newItem('input');" id='liInput'>Input<br/><input disabled/></li>
+					<li onclick="newItem('textarea');" id='liTextarea'>Textarea<br/><textarea disabled></textarea></li>
+					<li onclick="newItem('header1');" id='liHeader1'>Header1</li>
+					<li onclick="newItem('header2');" id='liHeader2'>Header2</li>
+					<li onclick="newItem('header3');" id='liHeader3'>Header3</li>
+					<li onclick="newItem('text');" id='liText'>Text</li>
+				</ul>
+			</div>
+		</div>
+		<div id='container'>
+
+			<div id="dialog-form" title="Edit Attributes">
+				<form>
+				<fieldset>
+				  <label for="name">Name</label>
+				  <input type="text" name="name" id="name" value="Jane Smith" class="text ui-widget-content ui-corner-all">
+				  <label for="email">Email</label>
+				  <input type="text" name="email" id="email" value="jane@smith.com" class="text ui-widget-content ui-corner-all">
+				  <label for="password">Password</label>
+				  <input type="password" name="password" id="password" value="xxxxxxx" class="text ui-widget-content ui-corner-all">
+
+				  <!-- Allow form submission with keyboard without duplicating the dialog button -->
+				  <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+				</fieldset>
+				</form>
+				</div>
+		</div>
+	</body>
+	<script>
+		var container = document.getElementById('container');
+		var modalWrapper = document.getElementById('modalWrapper');
+		var modalVisible = false;
+		function isInt(n) {
+		   return n % 1 === 0;
+		}
+		function makeid()
+		{
+		    var text = "";
+		    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+		    for( var i=0; i < 5; i++ )
+		        text += possible.charAt(Math.floor(Math.random() * possible.length));
+		    if(!isInt(text[0])) {
+		    	text[0] = 'a';
+		    }
+
+		    return text;
+		}
+		function saveAttributes(element, attributes) {
+			for(var i in attributes) {
+				element.setAttribute(i, attributes[i]);
+			}
+		}
+		function createAttrModal(element) {
+			// Important Attributes
+			// Height
+			// Width
+			// Type - input/textarea *date/text/Numbers
+			// placeholder
+			// required
+			// validation
+			/*
+			if(modalVisible === false) {
+				var modalWrapper = document.createElement('div');
+				modalWrapper.className = 'modalWrapper';
+				container.appendChild(modalWrapper);
+				modalExists = true;
+			}
+			*/
+			
+			
+			var attributes = {};
+			var height = element.getAttribute("height");
+			attributes['height'] = height;
+			var width = element.getAttribute("width");
+			attributes['width'] = width;
+			var type = element.getAttribute("type");
+			attributes['type'] = type;
+			var placeholder = element.getAttribute("placeholder");
+			attributes['placeholder'] = placeholder;
+			var required = element.getAttribute("required");
+			attributes['required'] = required;
+			var validation = element.getAttribute("validation");
+			attributes['validation'] = validation;
+
+			var wrapperDiv = document.createElement('div');
+			var form  = document.createElement('div');
+			wrapperDiv.appendChild(form);
+
+			for(var i in attributes) {
+				var label = document.createElement('label');
+				label.textContent = i;
+				label.style.width = '100px';
+				label.style.float = 'left';
+				var input = document.createElement('input');
+				input.value = attributes[i];
+				input.className = i;
+				input.style.float = 'left';
+				form.appendChild(label);
+				form.appendChild(input);
+				var br = document.createElement('br');
+				form.appendChild(br);
+			}
+			var button = document.createElement('button');
+			button.textContent = "Save";
+			button.onclick = function() {
+				alert('asd');
+				var formChildren = this.parentNode.children;
+				var newAttributes = {};
+				for(var c = 0; c < formChildren.length; formChildren++) {
+					if(formChildren[c].tagName === "INPUT") {
+						newAttributes[formChildren[c].className] = formChildren[c].value;
+					}
+				}
+				console.log(newAttributes);
+				saveAttributes(element, newAttributes);
+			}
+			form.appendChild(button);
+
+			$("#dialog-form").appendTo("body").dialog({
+			     modal: true,
+			     title: "Edit Attributes"
+			});
+	
+		}
+
+		function newItem(elementType) {
+
+			// Setting className for styling purposes
+			
+			if(elementType === "header1") {
+				var element = document.createElement('div');
+				element.textContent = 'Header1';
+				element.className = 'header1Element';
+			}
+			else if(elementType === "header2") {
+				var element = document.createElement('div');
+				element.textContent = 'Header2';
+				element.className = 'header2Element';
+			}
+			else if(elementType === "header3") {
+				var element = document.createElement('div');
+				element.textContent = 'Header3';
+				element.className = 'header3Element';
+			}
+			else if(elementType === "text") {
+				var element = document.createElement('div');
+				element.textContent = 'Text';
+				element.className = "textElement"
+			}
+			else if(elementType === "input") {
+				var element = document.createElement('input');
+				element.className = 'inputElement';
+			}
+			else if(elementType === "textarea") {
+				var element = document.createElement('textarea');
+				element.className = 'textareaElement';
+			}
+
+			element.ondblclick=function(){
+				createAttrModal(element);
+			};
+			if(elementType === "input" || "textarea") {
+				$(element).disableSelection().css('webkit-user-select','none').draggable({cancel: null,
+					cursor: "move"});
+			}
+			else {
+				$(element).draggable({ 
+					cursor: "move", 
+				})
+			}
+			
+			element.style.position = 'absolute';
+
+			//element.style.marginLeft = 'auto';
+			//element.style.marginRight = 'auto';
+			//element.style.left = '0';
+			//element.style.right = '0';
+
+			while(true) {
+				var thisId = makeid();
+				var find = document.getElementById(thisId);
+				if(!find) {
+					element.id = thisId;
+					break;
+				}
+			}
+			container.appendChild(element);
+		}
+
+	</script>
+</html>

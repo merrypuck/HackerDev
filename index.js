@@ -5,9 +5,9 @@ var moment 			= require('moment');
 var _ 				= require('lodash');
 var fs				= require('fs');
 var http			= require('http');
-var geolib 			= require('geolib');
 var mongoose		= require('mongoose');
 var connect 		= require('connect');
+var json 			= require('json');
 var bodyParser = require('body-parser')
 var csv = require("fast-csv");
 
@@ -49,17 +49,15 @@ function shuffleArray(array) {
 app.engine('ejs', require('ejs-locals'));//.renderFile);
 app.set('port', (process.env.PORT || 5000))
 app.use(express.static(__dirname + '/public'))
-app.use(express.bodyParser());
+// app.use(express.bodyParser());
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.set('view options', {layout: "template.html"});
 app.http().io();
 
-var parking_file = "./examples/get_parking_lots.txt";
-
 /********************* MONGOOSE INIT ****************************/
 
-mongoose.connect('mongodb://abc:abc123@kahana.mongohq.com:10087/1000scientists');
+mongoose.connect('mongodb://nexus:5@kahana.mongohq.com:10084/greet');
 
 var db = mongoose.connection;
 
@@ -70,32 +68,38 @@ db.once('open', function callback() {
   console.log('Connected to DB');
 });
 
-var Job = mongoose.model('Job', { 
-  question 	: String,
-  labels	: [],
-  answers	: [],
-  max 		: Number
+var User = mongoose.model('User', {
+	name 				: String,
+	number 			: Number,
 });
 
-var Task = mongoose.model('Task', {
-	jobId 		: String,
-	completed   : String,                                                                    
-	answers 	: String,
-	question    : String,
-	label 		: String,
-	taskId 		: String
+var Event = mongoose.model('Event', {
+	from 				: String,
+	to 					: String,
+	type 				: String,
+	date				: String,
+	memo 				: String
 });
 
-var CompletedTask = mongoose.model('CompletedTask', {
-	taskId 		: String,
-	answer     	: String
-});
 //////////////////////////////////
 // Express handlers
 /////////////////////////////////
 app.get('/', function(req, res) {
-	res.render('home')
-  	
+	res.render('who')
+});
+
+app.post('/start', function(req, res){
+	var contacts = req.body.contacts;
+	console.log(contacts);
+	return "true"
+});
+app.post('/contact', function(req, res){
+	//var contacts = req.body.contacts;
+	console.log(req.body);
+	return "true"
+});
+app.get('/create', function(req, res) {
+	res.render('create')
 });
 
 app.get('/newjob', function(req, res) {
