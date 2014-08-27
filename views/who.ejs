@@ -47,10 +47,30 @@
     		#subHeader {
     			width: 100%;
     			height:50px;
-    			background: rgba(250,105,0,1);
+    			background: #F5861E;
     			float: left;
     			position: relative;
     		}
+            #choices {
+                width:340px;
+                margin: 0 auto;
+                line-height: 
+            }
+            .choice {
+                float: left;    
+                color:#EDEDED;
+                font-size: 27px;
+                line-height: 47px;
+            }
+            #who {
+                margin: 0 0 0 15%;
+            }
+            #how {
+                margin: 0 0 0 15%;
+            }
+            #when {
+                margin: 0 0 0 15%;
+            }
     		#container {
                 float: left;
                 width: 100%;
@@ -62,8 +82,7 @@
             #contacts ul {
                 overflow: auto;
                 width:100%;
-                height: 100%;
-
+                height:200px;
             }
             #contacts ul li {
                 width: 100%;
@@ -95,6 +114,41 @@
             .select span {
                 color: rgba(213, 213, 213, 1);
             }
+
+            #bottomBar {
+                width:100%;
+                height:80px;
+                background: rgba(224,228,204,1);
+                position:absolute; 
+                bottom:0;
+            }
+            #barWrapper {
+                position: relative;
+            }
+            #sendButton {
+                width:160px;
+                height:50px;
+                background: rgba(105,210,231,1);
+                margin: 15px auto 0 auto;
+                border-radius: 5px;
+                text-align: center;
+                color:#fff;
+                font-size: 38px;
+                line-height: 50px;
+                cursor: pointer;
+                cursor: hand;
+            }
+            #addButton {
+                position: absolute;
+                top:0;
+                right:15px;
+                float: right;
+            }
+            #addButton span {
+                cursor: hand;
+                cursor: pointer;
+                color: rgba(250,105,0, 1);
+            }
     	</style>
 	</head>
 	<body>
@@ -104,12 +158,49 @@
             </div>
 		</div>
 		<div id='subHeader'>
-
+            <div id='choices'>
+                <div class='choice' id='Who'>
+                    Who
+                </div>
+                <div class='choice' id='How'>
+                    How
+                </div>
+                <div class='choice' id='When'>
+                    When
+                </div>
+            </div>
 		</div>
 
 		<div id='container'>
             <div id='contacts'>
                 <ul id='contactsList'>
+                    <li>
+                        <div class='pic'>
+                            <img src='/images/henryprofile.jpg'/>
+                        </div>
+                        <div class='name'>Dave Fontenot</div>
+                        <div class='select'>
+                            <span class="pe-7s-check pe-4x pe-va"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class='pic'>
+                            <img src='/images/henryprofile.jpg'/>
+                        </div>
+                        <div class='name'>Taylor Blau</div>
+                        <div class='select'>
+                            <span class="pe-7s-check pe-4x pe-va"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class='pic'>
+                            <img src='/images/henryprofile.jpg'/>
+                        </div>
+                        <div class='name'>Jason Marman</div>
+                        <div class='select'>
+                            <span class="pe-7s-check pe-4x pe-va"></span>
+                        </div>
+                    </li>
                     <li>
                         <div class='pic'>
                             <img src='/images/henryprofile.jpg'/>
@@ -123,73 +214,42 @@
                         <div class='pic'>
                             <img src='/images/henryprofile.jpg'/>
                         </div>
-                        <div class='name'>Henry Boldizsar</div>
-                        <div class='select'></div>
-                    </li>
-                    <li>
-                        <div class='pic'>
-                            <img src='/images/henryprofile.jpg'/>
-                        </div>
-                        <div class='name'>Henry Boldizsar</div>
-                        <div class='select'></div>
-                    </li>
-                    <li>
-                        <div class='pic'>
-                            <img src='/images/henryprofile.jpg'/>
-                        </div>
-                        <div class='name'>Henry Boldizsar</div>
-                        <div class='select'></div>
-                    </li>
-                    <li>
-                        <div class='pic'>
-                            <img src='/images/henryprofile.jpg'/>
-                        </div>
-                        <div class='name'>Henry Boldizsar</div>
-                        <div class='select'></div>
-                    </li>
-                    <li>
-                        <div class='pic'>
-                            <img src='/images/henryprofile.jpg'/>
-                        </div>
-                        <div class='name'>Henry Boldizsar</div>
-                        <div class='select'></div>
-                    </li>
-                    <li>
-                        <div class='pic'>
-                            <img src='/images/henryprofile.jpg'/>
-                        </div>
-                        <div class='name'>Henry Boldizsar</div>
-                        <div class='select'></div>
-                    </li>
-
-                    <li>
-                        <div class='pic'>
-                            <img src='/images/henryprofile.jpg'/>
-                        </div>
-                        <div class='name'>Henry Boldizsar</div>
-                        <div class='select'></div>
-                    </li>
-                    <li>
-                        <div class='pic'>
-                            <img src='/images/henryprofile.jpg'/>
-                        </div>
-                        <div class='name'>Henry Boldizsar</div>
-                        <div class='select'></div>
-                    </li><li>
-                        <div class='pic'>
-                            <img src='/images/henryprofile.jpg'/>
-                        </div>
-                        <div class='name'>Henry Boldizsar</div>
+                        <div class='name'>Aaron Landy</div>
                         <div class='select'>
-
+                            <span class="pe-7s-check pe-4x pe-va"></span>
                         </div>
                     </li>
-
+                    <li>
+                        <div class='pic'>
+                            <img src='/images/henryprofile.jpg'/>
+                        </div>
+                        <div class='name'>Jordan Leigh</div>
+                        <div class='select'>
+                            <span class="pe-7s-check pe-4x pe-va"></span>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>
 
+        <div id='bottomBar'>
+            <div id='barWrapper'>
+                <div id='sendButton'>
+                    SKED
+                </div>
+                <div id='addButton'>
+                    <span class="pe-7s-plus pe-4x pe-va"></span>
+
+                </div>
+            </div>
+
+        </div>
+
 	</body>
+    <script>
+        var contactsList = document.getElementById('contactsList');
+        contactsList.style.height = (document.documentElement.clientHeight - 200) + "px";
+    </script>
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -197,7 +257,7 @@
 
     <script>
         document.body.style.overflow = 'hidden';
-        var contactsList = document.getElementById('contactsList');
+        
         var contacts = contactsList.children;
         for(var i = 0; i < contacts.length; i++) {
             contacts[i].onclick = function() {
@@ -220,6 +280,12 @@
             console.log(this);
             //this.children[2].style.color = 'color:rgba(250,105,0, 1);'
         }
+
+
+        window.onresize = function(event) {
+            contactsList.style.height = (document.documentElement.clientHeight - 200) + "px";
+        };
+
 
         setTimeout(function() {
           //location.reload()

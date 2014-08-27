@@ -81,11 +81,19 @@ var Event = mongoose.model('Event', {
 	memo 				: String
 });
 
+
+// Facebook INIT
+//appId = 1457379081194444;
+//appSecret = "9838903221f77bc33f9f8dfe1f286089";
+
 //////////////////////////////////
 // Express handlers
 /////////////////////////////////
+
+
 app.get('/', function(req, res) {
-	res.render('who')
+	
+	res.render('who');
 });
 
 app.post('/start', function(req, res){
@@ -93,6 +101,38 @@ app.post('/start', function(req, res){
 	console.log(contacts);
 	return "true"
 });
+
+
+
+/*
+app.get('/facebook/login/callback', function(req, res){
+	var code = req.query.code;
+    var url1 = "https://graph.facebook.com/oauth/access_token?client_id=" + appId + "&redirect_uri=http://localhost:5000/facebook/login/callback&client_secret=" + appSecret + "&code=" + code;   
+    request(url1, function (error, response, body) {
+    if(error) {
+      console.log(error);
+      return null;
+    }
+    else {
+      var body1 = querystring.parse(body);
+      var url2 = "https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id=" + appId + "&client_secret=" + appSecret + "&fb_exchange_token=" + body1.access_token;
+      request(url2, function (error, response, body) {
+        if(error) {
+          console.log(error);
+          callback(null);
+        }
+        else {
+
+          
+          var body2 = querystring.parse(body);
+          console.log(body2);
+          //callback(body);
+      	}
+      });
+  	}
+  });
+})
+*/
 app.post('/contact', function(req, res){
 	//var contacts = req.body.contacts;
 	console.log(req.body);
