@@ -33,8 +33,7 @@
     			height:70px;
     			background: rgba(105,210,231,1);
     			float: left;
-    			position: relative;
-                
+    			position: relative;   
     		}
             #logo {
                 width: 200px;
@@ -51,6 +50,30 @@
     			float: left;
     			position: relative;
     		}
+            #loginPage {
+                display: none;
+            }
+            #page1 {
+                display: none;
+            }
+            #requestWhoPage {
+                display: block;
+            }
+            #stateHeader {
+                float: left;
+                position: relative;
+                height:50px;
+                width: 100%;
+                background:rgba(224,228,204,1);
+            }
+            #people {
+                margin: 0 0 0 21%;
+                float: left;    
+            }
+            #video {
+                margin: 5px 0 0 18%;
+                float: left;    
+            }
             #choices {
                 width:340px;
                 margin: 0 auto;
@@ -60,10 +83,12 @@
                 float: left;    
                 color:#EDEDED;
                 font-size: 27px;
-                line-height: 47px;
+                line-height: 53px;
+                font-weight:200;
             }
             #who {
                 margin: 0 0 0 15%;
+                font-weight: 600;
             }
             #how {
                 margin: 0 0 0 15%;
@@ -149,6 +174,8 @@
                 cursor: pointer;
                 color: rgba(250,105,0, 1);
             }
+
+
     	</style>
 	</head>
 	<body>
@@ -157,98 +184,121 @@
                 SKED
             </div>
 		</div>
-		<div id='subHeader'>
-            <div id='choices'>
-                <div class='choice' id='Who'>
-                    Who
-                </div>
-                <div class='choice' id='How'>
-                    How
-                </div>
-                <div class='choice' id='When'>
-                    When
-                </div>
+        <!--
+        <div id='stateHeader'>
+            <div id='people'>
+                <span class="pe-7s-users pe-3x pe-va"></span>
             </div>
-		</div>
-
-		<div id='container'>
-            <div id='contacts'>
-                <ul id='contactsList'>
-                    <li>
-                        <div class='pic'>
-                            <img src='/images/henryprofile.jpg'/>
-                        </div>
-                        <div class='name'>Dave Fontenot</div>
-                        <div class='select'>
-                            <span class="pe-7s-check pe-4x pe-va"></span>
-                        </div>
-                    </li>
-                    <li>
-                        <div class='pic'>
-                            <img src='/images/henryprofile.jpg'/>
-                        </div>
-                        <div class='name'>Taylor Blau</div>
-                        <div class='select'>
-                            <span class="pe-7s-check pe-4x pe-va"></span>
-                        </div>
-                    </li>
-                    <li>
-                        <div class='pic'>
-                            <img src='/images/henryprofile.jpg'/>
-                        </div>
-                        <div class='name'>Jason Marman</div>
-                        <div class='select'>
-                            <span class="pe-7s-check pe-4x pe-va"></span>
-                        </div>
-                    </li>
-                    <li>
-                        <div class='pic'>
-                            <img src='/images/henryprofile.jpg'/>
-                        </div>
-                        <div class='name'>Henry Boldizsar</div>
-                        <div class='select'>
-                            <span class="pe-7s-check pe-4x pe-va"></span>
-                        </div>
-                    </li>
-                    <li>
-                        <div class='pic'>
-                            <img src='/images/henryprofile.jpg'/>
-                        </div>
-                        <div class='name'>Aaron Landy</div>
-                        <div class='select'>
-                            <span class="pe-7s-check pe-4x pe-va"></span>
-                        </div>
-                    </li>
-                    <li>
-                        <div class='pic'>
-                            <img src='/images/henryprofile.jpg'/>
-                        </div>
-                        <div class='name'>Jordan Leigh</div>
-                        <div class='select'>
-                            <span class="pe-7s-check pe-4x pe-va"></span>
-                        </div>
-                    </li>
-                </ul>
+            <div id='video'>
+                <img src='http://www.droid-life.com/wp-content/uploads/2013/05/Hangouts-Logo.png' height='35px' width='35px'/>
             </div>
+            
         </div>
-
-        <div id='bottomBar'>
-            <div id='barWrapper'>
-                <div id='sendButton'>
-                    SKED
+        -->
+		<div id='container'>
+            <div id='loginPage'>
+                <!-- Single button -->
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle btn-info" data-toggle="dropdown">
+                    Action <span class="caret"></span>
+                    </button>
                 </div>
-                <div id='addButton'>
-                    <span class="pe-7s-plus pe-4x pe-va"></span>
 
+                <a href="https://www.facebook.com/dialog/oauth?client_id=1457379081194444&redirect_uri=http://localhost:5000/facebook/login/callback&scope=email%2C%20user_about_me%2C%20user_birthday%2C%20user_website%2C%20friends_about_me%2C%20friends_activities%2C%20friends_education_history%2C%20friends_hometown%2C%20friends_interests%2C%20friends_likes%2C%20friends_location%2C%20friends_photos%2C%20friends_website%2C%20friends_work_history%2C%20read_friendlists">Facebook Login</a>
+            </div>
+            <div id='page1'>
+
+            </div>
+            <div id='requestWhoPage'>
+                <div id='subHeader'>
+                    <div id='choices'>
+                        <div class='choice' id='who'>
+                            Who
+                        </div>
+                        <div class='choice' id='when'>
+                            When
+                        </div>
+                        <div class='choice' id='how'>
+                            How
+                        </div>
+                    </div>
+                </div>
+                <div id='contacts'>
+                    <ul id='contactsList'>
+                        <li>
+                            <div class='pic'>
+                                <img src='/images/henryprofile.jpg'/>
+                            </div>
+                            <div class='name'>Dave Fontenot</div>
+                            <div class='select'>
+                                <span class="pe-7s-check pe-4x pe-va"></span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class='pic'>
+                                <img src='/images/henryprofile.jpg'/>
+                            </div>
+                            <div class='name'>Taylor Blau</div>
+                            <div class='select'>
+                                <span class="pe-7s-check pe-4x pe-va"></span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class='pic'>
+                                <img src='/images/henryprofile.jpg'/>
+                            </div>
+                            <div class='name'>Jason Marman</div>
+                            <div class='select'>
+                                <span class="pe-7s-check pe-4x pe-va"></span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class='pic'>
+                                <img src='/images/henryprofile.jpg'/>
+                            </div>
+                            <div class='name'>Henry Boldizsar</div>
+                            <div class='select'>
+                                <span class="pe-7s-check pe-4x pe-va"></span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class='pic'>
+                                <img src='/images/henryprofile.jpg'/>
+                            </div>
+                            <div class='name'>Aaron Landy</div>
+                            <div class='select'>
+                                <span class="pe-7s-check pe-4x pe-va"></span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class='pic'>
+                                <img src='/images/henryprofile.jpg'/>
+                            </div>
+                            <div class='name'>Jordan Leigh</div>
+                            <div class='select'>
+                                <span class="pe-7s-check pe-4x pe-va"></span>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
-
         </div>
 
 	</body>
-    <script>
+    <script type='text/javascript'>
+        var loggedIn = <%= loggedIn %>;
+        if(!loggedIn) {
+
+        }
+        console.log(loggedIn);
+
+
+    </script>
+
+
+    <script> 
         var contactsList = document.getElementById('contactsList');
-        contactsList.style.height = (document.documentElement.clientHeight - 200) + "px";
+        contactsList.style.height = (document.documentElement.clientHeight - 120) + "px";
     </script>
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -256,6 +306,13 @@
     <script src="/js/bootstrap.min.js"></script>
 
     <script>
+        var globalState = {};
+        globalState['who'] = {};
+        globalState['when'] = {};
+        globalState['how'] = {};
+
+        globalState['who']['users'] = [];
+        globalState['who']['selected'] = [];
         document.body.style.overflow = 'hidden';
         
         var contacts = contactsList.children;
@@ -272,6 +329,7 @@
                     spanElement.style.color = 'rgba(250,105,0, 1)';
                     this.className = 'selected';
                 }
+
                 
             };
         }
@@ -283,12 +341,13 @@
 
 
         window.onresize = function(event) {
-            contactsList.style.height = (document.documentElement.clientHeight - 200) + "px";
+            contactsList.style.height = (document.documentElement.clientHeight - 120) + "px";
         };
 
 
         setTimeout(function() {
           //location.reload()
-        }, 1500)
+        }, 1500);
+
     </script>
 </html>
