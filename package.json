@@ -17,7 +17,9 @@
     "moment":"",
     "geolib":"",
     "mongoose":"",
-    "fast-csv": ""
+    "fast-csv": "",
+    "passwordHash" : "",
+    "querystring " : ""
   },
   "description": "parkour",
   "main": "index.js",
