@@ -122,12 +122,21 @@ var User = mongoose.model('User', {
 	name 			: String,
 	email 			: String,
 	phone		 	: String,
-	number 			: Number,
-	profilePic 		: String,
-	access_token 	: String,
 	password 		: String,
-	createdAt		: String
+	hasProfile		: String,
+	friends 		: []
 
+});
+
+var Conversation = mongoose.model('Conversation', {
+	title 			: String,
+	people 			: [],
+	creator 		: String,
+	messages		: []
+});
+var Request = mongoose.model('Request', {
+	requester 		: String,
+	reqestees 		: String
 });
 
 var Session = mongoose.model('Session', {
@@ -137,7 +146,15 @@ var Session = mongoose.model('Session', {
 });
 
 var Contact = mongoose.model('Contact', {
-	'data' : String
+	
+});
+
+var Message = mongoose.model('Message', {
+	data 			: String,
+	conversation 	: String,
+	sender			: String,
+	timestamp 		: String,
+
 });
 
 // calls back sessionObj
@@ -197,7 +214,7 @@ app.get('/', function(req, res) {
 				delete userObj['_id'];
 				delete userObj['password'];
 				res.render('login', {
-					userObj : String(userObj)
+					userObj : userObj
 				});
 			}
 		});
@@ -209,14 +226,44 @@ app.get('/', function(req, res) {
 	}
 	
 });
-/*
-app.get('/', function(req, res) {
-	var sessionId = req.session.sid;
+
+app.get('/conversation', function(req, res) {
+	User.findOne({'_id' : req.session.sid}, function(err, userObj) {
+		if(err) {
+			console.log(err);
+		}
+		else {
+			if(userObj) {
+				var allFriends = [];
+				for(var i = 0; i < userObj.friends.length; i++) {
+					User.findOne({'_id': userObj.friends[i]}, function(err, friendObj) {
+						if(friendObj) {
+							allFriends.push(allFriends);
+						}
+					});
+				}
+				res.render('conversation', {
+					userObj : userObj,
+					allFriends : allFriends
+				});
+			}
+			
+		}
+	});
+
+	
+});
+
+app.get('/convo/:convoId', function(req, res) {
+	var convoId = req.params.convoId;
+
+});	
+
+app.get('/who', function(req, res) {
 	res.render('who', {
 		loggedIn : "false"
 	});
 });
-*/
 
 
 app.post('/signup', function(req, res) {
@@ -258,16 +305,6 @@ app.post('/signup', function(req, res) {
 
 });
 
-app.post('/pullcontacts', function(req, res) {
-	var contacts = req.body.contacts;
-	console.log(contacts);
-	var contact = new Contact({
-		'data' : contacts
-	});
-	contact.save(function(err) {
-		console.log(err);
-	});
-});
 app.post('/login', function(req, res) {
 	var email = req.body.email;
 	var password = req.body.password;
