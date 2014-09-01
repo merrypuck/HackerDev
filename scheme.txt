@@ -1,0 +1,21 @@
+User
+	- name
+	- email
+	- phone
+	- password
+	- hasProfile
+	- friends
+
+Conversation
+	- title
+	- creator
+	- when
+	- how
+	- where
+	- memo
+
+Request 
+	- requestor
+	- requestees
+	- 
+
