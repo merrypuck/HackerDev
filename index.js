@@ -207,11 +207,12 @@ app.get('/github/callback', function(req, res) {
 		        }
 		      };
           request(options, function(error, response, body1) {
-            var body1 = querystring(body1);
+            var body1 = querystring.parse(body1);
           	if(error) {
           		console.log(error);
           	}
           	else {
+              res.send(body1);
               /*
           		var user = new User({
                 name : body1.name,
