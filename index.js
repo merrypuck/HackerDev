@@ -131,44 +131,15 @@ db.once('open', function callback() {
 });
 
 var User = mongoose.model('User', {
-	name 			: String,
-	email 			: String,
-	phone		 	: String,
-	password 		: String,
-	hasProfile		: String,
-	friends 		: []
-
+	name 			      : String,
+	email 			    : String,
+	phone		 	      : String,
+	password 		    : String,
+	hasProfile	    : String,
+	friends 		    : [],
+  github_data     : {},
+  github_token    : String
 });
-
-var Conversation = mongoose.model('Conversation', {
-	title 			: String,
-	people 			: [],
-	creator 		: String,
-	messages		: []
-});
-var Request = mongoose.model('Request', {
-	requester 		: String,
-	reqestees 		: String
-});
-
-var Session = mongoose.model('Session', {
-	userId 			: String,
-	valid 			: String,
-	createdAt 		: String
-});
-
-var Contact = mongoose.model('Contact', {
-	
-});
-
-var Message = mongoose.model('Message', {
-	data 			: String,
-	conversation 	: String,
-	sender			: String,
-	timestamp 		: String,
-
-});
-
 // calls back sessionObj
 var newSession = function(userId, callback) {
 	var session = new Session({
@@ -235,13 +206,19 @@ app.get('/github/callback', function(req, res) {
               'Authorization' : 'token ' + body.access_token
 		        }
 		      };
-          request(options, function(error, response, body) {
+          request(options, function(error, response, body1) {
+            var body1 = querystring(body1);
           	if(error) {
           		console.log(error);
           	}
           	else {
-          		res.send(body);
-;          	}
+              /*
+          		var user = new User({
+                name : body1.name,
+                email : 
+              });
+*/
+          	}
           });
       }
     });
