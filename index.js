@@ -226,13 +226,12 @@ app.get('/github/callback', function(req, res) {
         console.log(error);
       }
       else {
-          console.log("body " + body);
-          console.log('token : ' + body.access_token);
+          var body = querystring.parse(body);
           var github_userdata_url = "https://api.github.com/user";
           var options = {
 		        url: github_userdata_url,
 		        headers: {
-		          'User-Agent': 'hack',
+		          'User-Agent': 'hack'
               'Authorization' : 'token ' + body.access_token
 		        }
 		      };
