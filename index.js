@@ -231,7 +231,7 @@ app.get('/github/callback', function(req, res) {
           var options = {
 		        url: github_userdata_url,
 		        headers: {
-		          'User-Agent': 'hack'
+		          'User-Agent': 'hack',
               'Authorization' : 'token ' + body.access_token
 		        }
 		      };
@@ -240,7 +240,7 @@ app.get('/github/callback', function(req, res) {
           		console.log(error);
           	}
           	else {
-          		res.send(body);
+          		
 ;          	}
           });
       }
