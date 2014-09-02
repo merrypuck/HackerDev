@@ -215,8 +215,8 @@ app.get('/github/callback', function(req, res) {
           		var user = new User({
                 name : github_user.name,
                 email : github_user.email,
-                github_token : String(body.access_token),
-                github_data : github_user
+                github_token : body.access_token,
+                github_data : String(github_user)
               });
               user.save(function(err) {
                 if(err) {
