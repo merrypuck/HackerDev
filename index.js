@@ -227,13 +227,15 @@ app.get('/github/callback', function(req, res) {
       }
       else {
           console.log("body " + body);
-          var github_userdata_url = "https://api.github.com/user/repos?access_token=" + body.access_token;
+          console.log('token : ' + body.access_token);
+          var github_userdata_url = "https://api.github.com/user";
           var options = {
-		    url: github_userdata_url,
-		    headers: {
-		        'User-Agent': 'hack'
-		    }
-		  };
+		        url: github_userdata_url,
+		        headers: {
+		          'User-Agent': 'hack'
+              'Authorization': 'token ' + body.access_token
+		        }
+		      };
           request(options, function(error, response, body) {
           	if(error) {
           		console.log(error);
