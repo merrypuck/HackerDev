@@ -240,7 +240,7 @@ app.get('/github/callback', function(req, res) {
           		console.log(error);
           	}
           	else {
-          		
+          		res.send(body);
 ;          	}
           });
       }
