@@ -239,7 +239,7 @@ app.get('/github/callback', function(req, res) {
           		console.log(error);
           	}
           	else {
-          		console.log(body)
+          		res.send(body);
 ;          	}
           });
       }
