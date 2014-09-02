@@ -7,7 +7,8 @@ from bs4 import BeautifulSoup
 
 client = MongoClient('mongodb://dave:aaron@kahana.mongohq.com:10046/hack')
 
-emailAvail = client.hack.emailAvail
+comEmailAvail = client.hack.comEmailAvail
+ioEmailAvail = client.hack.ioEmailAvail
 
 #driver = webdriver.PhantomJS('./phantomjs')
 
@@ -20,19 +21,25 @@ def domainAvailVerisign(query):
 	r = json.loads(raw[42:len(raw)-2])
 	return r
 	
-def domainAvailDomainr(query):
-	webQuery = query + ".com"
-	domain = emailAvail.find_one({"site" : webQuery})
+def domainAvailDomainr(query, extension):
+	webQuery = query + extension
+	domain = ioEmailAvail.find_one({"site" : webQuery})
 	if not domain:
-		url = "https://domai.nr/api/site/availability?d=" + webQuery
+		url = "https://domai.nr/api/site/availability?d=" + webQuery 
 		raw = urlopen(url).read()
 		r = json.loads(raw)
 		print r
 		availability = r['availability'][webQuery]
-		emailAvail.insert({
+		ioEmailAvail.insert({
 			'site' : webQuery,
 			'availability' : availability
 		})
+		"""
+		comEmailAvail.insert({
+			'site' : webQuery,
+			'availability' : availability
+		})
+		"""
 		return availability
 	else: 
 		return "did"
@@ -42,9 +49,9 @@ count = 0
 with open("./english_words.txt") as inputFileHandle:
 	for i in inputFileHandle:
 		count = count + 1
-		if count > 2631:
+		if count < 1829:
 			print i
-			print domainAvailDomainr(i.strip())
+			print domainAvailDomainr(i.strip(), ".io")
 
 
 

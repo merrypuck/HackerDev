@@ -212,31 +212,42 @@ app.get('/github/callback', function(req, res) {
           		console.log(error);
           	}
           	else {
-              User.findOne({'email' : github_user.email}, function(err, userObj) {
-                if(!userObj) {
-                  var user = new User({
-                    name : github_user.name,
-                    email : github_user.email,
-                    github_token : body.access_token,
-                    github_data : String(github_user)
-                  });
-                  user.save(function(err) {
-                    if(err) {
-                      console.log(err);
-                    }
-                    else {
-                      res.render('score', {
-                        userObj : userObj,
-                        profileUrl : github_user.avatar_url
-                      });
-                    }
-                   
-                  });
+              var github_userdata_url = "https://api.github.com/user/emails";
+              var options = {
+                url: github_userdata_url,
+                headers: {
+                  'User-Agent': 'hack',
+                  'Authorization' : 'token ' + body.access_token
                 }
-                res.render('score', {
-                  userObj : userObj
+              };
+              request(options, function(error, response, body2) {
+                console.log(body2);
+                User.findOne({'email' : github_user.email}, function(err, userObj) {
+                  if(!userObj) {
+                    var user = new User({
+                      name : github_user.name,
+                      email : github_user.email,
+                      github_token : body.access_token,
+                      github_data : String(github_user)
+                    });
+                    user.save(function(err) {
+                      if(err) {
+                        console.log(err);
+                      }
+                      else {
+                        res.render('score', {
+                          userObj : userObj,
+                          profileUrl : github_user.avatar_url
+                        });
+                      }
+                     
+                    });
+                  }
+                  res.render('score', {
+                    userObj : userObj
+                  });
                 });
-              });
+              })
           		
           	}
           });
