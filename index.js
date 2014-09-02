@@ -207,20 +207,25 @@ app.get('/github/callback', function(req, res) {
 		        }
 		      };
           request(options, function(error, response, body1) {
-            var body1 = querystring.parse(body1);
+            var github_user = querystring.parse(body1);
           	if(error) {
           		console.log(error);
           	}
           	else {
           		var user = new User({
-                name : body1.name,
-                email : body1.email,
+                name : github_user.name,
+                email : github_user.email,
                 github_token : body.access_token,
-                github_data : body1
+                github_data : github_user
               });
               user.save(function(err) {
-                console.log(err);
-                res.send(querystring.stringify(body1));
+                if(err) {
+                  console.log(err);
+                }
+                else {
+                  res.send(body1);
+                }
+               
               });
           	}
           });
