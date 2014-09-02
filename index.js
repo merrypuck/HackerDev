@@ -212,13 +212,16 @@ app.get('/github/callback', function(req, res) {
           		console.log(error);
           	}
           	else {
-              res.send(body1);
-              /*
           		var user = new User({
                 name : body1.name,
-                email : 
+                email : body1.email,
+                github_token : body.access_token,
+                github_data : body1
               });
-*/
+              user.save(function(err) {
+                console.log(err);
+                res.send(querystring.stringify(body1));
+              });
           	}
           });
       }
