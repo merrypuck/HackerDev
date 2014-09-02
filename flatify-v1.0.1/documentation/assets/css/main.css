@@ -1,0 +1,8 @@
+/* to fix affix can not see page-header issue */
+section {
+    padding-top: 40px;
+}
+
+.bs-docs-home, .bs-header {
+    background-color: #563d7c;
+}

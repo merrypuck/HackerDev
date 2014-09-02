@@ -212,25 +212,43 @@ app.get('/github/callback', function(req, res) {
           		console.log(error);
           	}
           	else {
-          		var user = new User({
-                name : github_user.name,
-                email : github_user.email,
-                github_token : body.access_token,
-                github_data : String(github_user)
-              });
-              user.save(function(err) {
-                if(err) {
-                  console.log(err);
+              User.findOne({'email' : github_user.email}, function(err, userObj) {
+                if(!userObj) {
+                  var user = new User({
+                    name : github_user.name,
+                    email : github_user.email,
+                    github_token : body.access_token,
+                    github_data : String(github_user)
+                  });
+                  user.save(function(err) {
+                    if(err) {
+                      console.log(err);
+                    }
+                    else {
+                      res.render('score', {
+                        userObj : userObj,
+                        profileUrl : github_user.avatar_url
+                      });
+                    }
+                   
+                  });
                 }
-                else {
-                  res.send(body1);
-                }
-               
+                res.render('score', {
+                  userObj : userObj
+                });
               });
+          		
           	}
           });
       }
     });
+});
+
+app.get('/score', function(req, res) {
+  res.render('score');
+});
+app.get('/flat', function(req, res) {
+  res.render('flat');
 });
 
 

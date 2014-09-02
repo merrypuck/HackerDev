@@ -1,0 +1,124 @@
+<html>
+	<head>
+		<title>Hack</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"> 
+		<link href="/css/bootstrap.min.css" rel="stylesheet">
+		<link href="/css/bootstrap-social.css" rel="stylesheet">
+		<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" href="/css/pe-icon-7-stroke/css/pe-icon-7-stroke.css">
+
+		<!-- Optional - Adds useful class to manipulate icon font display -->
+		<link rel="stylesheet" href="/css/pe-icon-7-stroke/css/helper.css">
+
+		<style>
+
+			body{font-weight:300;-webkit-font-smoothing:antialiased}
+			h2{text-align:center;font-weight:300}
+			.btn-social-icon{margin-bottom:4px}
+			.jumbotron{position:relative;background:#6CC478;font-size:16px;color:#fff;color:rgba(255,255,255,0.75);text-align:center;border-radius:0}.jumbotron h1{margin-bottom:15px;font-weight:300;letter-spacing:-1px;color:#fff}
+			.jumbotron iframe{width:90px !important;height:20px !important;border:none;overflow:hidden;margin:2px}
+			.btn-outline{margin-top:15px;margin-bottom:15px;padding:18px 24px;font-size:inherit;font-weight:500;color:#fff;background-color:transparent;border-color:#fff;border-color:rgba(255,255,255,0.5);transition:all .1s ease-in-out}.btn-outline:hover,.btn-outline:active{color:#6c71c4;background-color:#fff;border-color:#fff}
+			.jumbotron p a,.jumbotron-links a{font-weight:500;color:#fff;transition:all .1s ease-in-out}
+			.jumbotron p a:hover,.jumbotron-links a:hover{text-shadow:0 0 10px rgba(255,255,255,0.55)}
+			.jumbotron-links{margin-top:15px;margin-bottom:0;padding-left:0;list-style:none;font-size:14px}.jumbotron-links li{display:inline}
+			.jumbotron-links li+li{margin-left:20px}
+			.how-to{padding:20px}.how-to h2{text-align:center}
+			.how-to li{font-size:21px;line-height:1.7;margin-top:20px}.how-to li p{font-size:16px;color:#555}
+			.how-to code{font-size:85%;word-wrap:break-word;white-space:normal}
+			footer{text-align:center;opacity:.8;padding:20px 0 40px}
+			.links{margin:0;list-style:none;padding-left:0}.links li{display:inline;padding:0 10px}
+			.social-class .social-hex{font-family:Monaco,Menlo,Consolas,"Courier New",monospace;font-size:10px;opacity:.3;float:right}
+			.social-class li{margin-bottom:4px}.social-class li:hover .social-hex{opacity:1}
+			.social-class li:hover code{background-color:#e8e8ee}
+			.social-class code{cursor:default}
+
+
+			.page-header {
+				height:80px;
+				margin: 0;
+				padding:0;
+			}
+			#logo {
+				font-size: 30px;
+				position: relative;
+				float: left;
+				padding:18px 0 0 24px;
+			}
+			#profileName {
+				font-size: 20px;
+				float: right;
+			}
+			#profileImageWrapper {
+				position: relative;
+				float: right;
+				border-left: 1px solid #000;
+				height:80px;
+				padding:12px;
+				box-sizing: border-box;
+
+
+			}
+			#profileImageWrapper img {
+				height: 55px;
+				width: 55px;
+				float: left;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="page-header">
+			<div id='logo'>HackerScore</div>
+			<div id='profileImageWrapper'>
+				
+				<img src='<%= profileUrl %>' />
+			</div>
+		</div>
+		<div class="jumbotron">
+	      <div class="container">
+	        <h1>What's your Hacker score?</h1>
+	        <p>
+	          Let's look at your <a href='#'>github</a> and find how badass of a
+	          <a href='#'>hacker</a> you are.
+	          
+	        </p>
+
+	        <a href='https://github.com/login/oauth/authorize?client_id=a1a676b0be2c4f013563&scope=user,email,public_repo,repo,notifications' class="btn btn-large btn-social btn-github" onclick="_gaq.push(['_trackEvent', 'btn-social', 'click', 'btn-github']);">
+	            <i class="fa fa-github"></i> Sign in with GitHub
+	          </a>
+
+	        
+	      </div>
+    	</div>
+    	<div id="features">
+			<div>
+				<img src="/img/multiple.png">
+				<h2>Multiple</h2>
+				<p>You can select a lot of layers and rename it in 1 click</p>
+			</div>
+
+			<div>
+				<img src="/img/filter.png">
+				<h2>Find and Replace</h2>
+				<p>Use simple text find and replace for layer names</p>
+			</div>
+			
+			<div>
+				<img src="/img/autocomplete.png">
+				<h2>Regex</h2>
+				<p>Powerful advanced mechanism of matching substrings</p>
+			</div>
+			
+		</div>
+    	<!--
+		<div class='container'>
+			<div class="row">
+			  <div class="col-xs-6 col-sm-4">.col-md-4</div>
+			  <div class="col-xs-6 col-sm-4">.col-md-4</div>
+			  <div class="col-xs-6 col-sm-4">.col-md-4</div>
+			</div>
+		</div>
+	-->
+	</body>
+	<script src='/js/jquery.min.js'></script>
+</html>
