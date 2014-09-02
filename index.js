@@ -30,6 +30,18 @@ csv.fromPath("navcodes.csv").on("record", function(data){
 */
 
 
+var siteURL = "http://localhost:5000";
+
+/**** GITHUB INIT *****/
+var github_app_name = "hack";
+var github_client_id = "a1a676b0be2c4f013563";
+var github_client_secret = "60cb4d2630131522b3ce39f7a3a30f234522444a";
+var github_redirect_uri = "http://localhost:5000/github/callback";
+var github_scope = [];
+var github_state = "";
+
+var github_base_url = "https://github.com/login/oauth/authorize";
+
 /**
  * Randomize array element order in-place.
  * Using Fisher-Yates shuffle algorithm.
@@ -107,7 +119,7 @@ app.configure(function(){
 });
 /********************* MONGOOSE INIT ****************************/
 
-mongoose.connect('mongodb://nexus:5@kahana.mongohq.com:10084/greet');
+mongoose.connect('mongodb://dave:aaron@kahana.mongohq.com:10046/hack');
 
 var db = mongoose.connection;
 
@@ -202,309 +214,41 @@ appSecret = "9838903221f77bc33f9f8dfe1f286089";
 
 
 app.get('/', function(req, res) {
-	console.log(req.session.sid);
-	if(req.session.sid) {
-		checkSession(req.session.sid, function(userObj) {
-			if(!userObj) {
-				res.render('login', {
-					userObj : false
-				});
-			}
-			else {
-				delete userObj['_id'];
-				delete userObj['password'];
-				res.render('login', {
-					userObj : userObj
-				});
-			}
-		});
-	}
-	else {
-		res.render('login', {
-			userObj : false
-		});
-	}
+	res.render('home');
 	
 });
-
-app.get('/conversation', function(req, res) {
-	User.findOne({'_id' : req.session.sid}, function(err, userObj) {
-		if(err) {
-			console.log(err);
-		}
-		else {
-			if(userObj) {
-				var allFriends = [];
-				for(var i = 0; i < userObj.friends.length; i++) {
-					User.findOne({'_id': userObj.friends[i]}, function(err, friendObj) {
-						if(friendObj) {
-							allFriends.push(allFriends);
-						}
-					});
-				}
-				res.render('conversation', {
-					userObj : userObj,
-					allFriends : allFriends
-				});
-			}
-			
-		}
-	});
-
-	
-});
-
-app.get('/convo/:convoId', function(req, res) {
-	var convoId = req.params.convoId;
-
-});	
-
-app.get('/who', function(req, res) {
-	res.render('who', {
-		loggedIn : "false"
-	});
-});
-
-
-app.post('/signup', function(req, res) {
-	console.log('signup req recieved.');
-
-	var name = req.body.name;
-	var email = req.body.email;
-	var password = req.body.password;
-	console.log(name);
-	console.log(email);
-	console.log(password);
-
-
-	var user = new User({
-		'name' : name,
-		'email' : email,
-		'password' : passwordHash.generate(password),
-		'createdAt' : new Date().toString()
-	});
-	user.save(function(err, userObj) {
-		if(err) {
-			console.log(err);
-		}
-		else {
-			newSession(userObj._id, function(sessionObj) {
-				req.session.sid = sessionObj._id;
-				delete userObj['_id'];
-				delete userObj['password'];
-				res.send({
-						action : 'signup',
-						status :'success',
-						userObj : userObj,
-						session : sessionObj._id
-				})
-			});
-		}
-
-	});
-
-});
-
-app.post('/login', function(req, res) {
-	var email = req.body.email;
-	var password = req.body.password;
-	User.findOne({'email' : email}, function(err, userObj) {
-		if(!userObj) {
-			res.send({ 
-				action 	: 'login',
-				status 	: 'failed',
-				error 	: 'user does not exist.'
-			});
-		}
-		else {
-			checkPassword(password, userObj.password, function(isMatching) {
-				if(!isMatching) {
-					res.send({
-						action 	: 'login',
-						status 	: 'failed',
-						error 	: 'invalid password'
-					});
-				}
-				else {
-					newSession(userObj._id, function(sessionObj) {
-						req.session.sid = sessionObj._id;
-						delete userObj['_id'];
-						delete userObj['password'];
-						res.send({
-							action : 'login',
-							status :'success',
-							userObj : userObj,
-							session : sessionObj._id
-						});
-					});
-				}
-			});
-		}
-	});
-});
-
-
-app.get('/min', function(req, res) {
-	res.render('minimal/index');
-});
-
-
-app.post('/start', function(req, res){
-	var contacts = req.body.contacts;
-	console.log(contacts);
-	return "true"
-});
-
-app.get('/facebook/login/callback', function(req, res){
+app.get('/github/callback', function(req, res) {
 	var code = req.query.code;
-    var url1 = "https://graph.facebook.com/oauth/access_token?client_id=" + appId + "&redirect_uri=http://localhost:5000/facebook/login/callback&client_secret=" + appSecret + "&code=" + code;   
-    request(url1, function (error, response, body) {
-    if(error) {
-      console.log(error);
-      return null;
-    }
-    else {
-      var body1 = querystring.parse(body);
-      var url2 = "https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id=" + appId + "&client_secret=" + appSecret + "&fb_exchange_token=" + body1.access_token;
-      request(url2, function (error, response, body) {
-        if(error) {
-          console.log(error);
-          callback(null);
-        }
-        else {
-
-          
-          var body2 = querystring.parse(body);
-          console.log(body2);
-          var accessToken = body2.access_token;
-          var user = {
-
-      		};
-	      getFacebookData(req, '', accessToken, function(userData) {
-	      	console.log(userData);
-	        var userData = JSON.parse(userData);
-	        user.profileData = userData;
-	        console.log(userData);
-	        console.log('name : ' + userData.name);
-	        getFacebookData(req, 'friends', accessToken, function(userFriends) {
-	          var userFriends = JSON.parse(userFriends);
-	          user.friends = userFriends
-	          // user.amtOfFriends = userFriends.data.length;
-            	getFacebookData(req, 'picture', accessToken, function(userProfilePicture) {
-              		user.picture = userProfilePicture;
-              		console.log(user);
-              	});
-             });
+	console.log(code);
+	var github_access_url = "https://github.com/login/oauth/access_token?client_id=" + github_client_id + "&client_secret=" + github_client_secret + "&code=" + code;
+	request(github_access_url, function (error, response, body) {
+      if(error) {
+        console.log(error);
+      }
+      else {
+          console.log("body " + body);
+          var github_userdata_url = "https://api.github.com/user/repos?access_token=" + body.access_token;
+          var options = {
+		    url: github_userdata_url,
+		    headers: {
+		        'User-Agent': 'hack'
+		    }
+		  };
+          request(options, function(error, response, body) {
+          	if(error) {
+          		console.log(error);
+          	}
+          	else {
+          		console.log(body)
+;          	}
           });
-      	}
-      });
-  	}
-  });
-})
-
-app.post('/contact', function(req, res){
-	//var contacts = req.body.contacts;
-	console.log(req.body);
-	return "true"
-});
-app.get('/create', function(req, res) {
-	res.render('create')
+      }
+    });
 });
 
-app.get('/newjob', function(req, res) {
-	res.render('createjob');
-})
-app.post('newjob', function(req, res) {
-	var description = req.body.description;
-	var question 	= req.body.question;
-	var labels 	 	= req.body.labels;
-	var answers  	= req.body.answers;
-	var max 	 	= req.body.max;
-	var job = new Job({
-		'description' 	: description,
-		'question'		: question,
-		'labels'  		: labels,
-		'answers' 		: answers,
-		'max'	  		: max});
-	job.save(function(err) {
-		var labelsLength = labels.length;
-		var answersLength = answers.length;
-		for(var i = 0; i < labelsLength.length; i++) {
-			for(var m = 0; m < 5; m++) {
-				var potentialAnswers = [];
-				for(var n = 0; n < 4; n++) {
-					potentialAnswers.push(answers[Math.floor(Math.random() * answersLength)]);
-				}
-				var task = new Task({
-					'jobId' 			: jobObj['_id'],
-					'question'  		: question,
-					'label'				: labelsLength[i],
-					'answers'			: potentialAnswers,
-					'completed'			: 'false',
-					'answer'			: 'false'
-				});
-				task.save(function(err) {
 
-				});
-			}
-		};
-	});
 
-});
 
-app.get('/job/:jobId', function(req, res) {
-	var jobId = req.param('jobId');
-	//var thisJob = Job.findOne({'_id': jobId});
-	Task.find({jobId : jobId}, function(err, tasks) {
-		var allTasks = [];
-		for(var i = 0; i < tasks.length; i++ ) {
-			console.log(tasks[i].answers)
-			var newObj = {};
-			newObj.completed = tasks[i]['completed'];
-			newObj.question = tasks[i]['question'];
-			newObj.answers  = tasks[i].answers;
-			newObj.label    = tasks[i].label;
-			newObj.jobId	= tasks[i].jobId;
-			newObj.taskId       = tasks[i].taskId;
-			allTasks.push(newObj);
-		}
-		var theseTasks = shuffleArray(allTasks);
-		//console.log(allTasks);
-		res.render('questions', {
-			tasks : JSON.stringify(theseTasks)
-		});
-	});
-});
-
-app.post('/completedtask', function(req, res) {
-	console.log(req.body);
-	var taskId = req.body.taskId;
-	var answer = req.body.answer;
-	console.log(answer);
-	Task.update({'id' : taskId}, {answer : answer, completed : true}, function() {
-		var task = new CompletedTask({
-			'taskId' : taskId,
-			'answer' : answer
-		});
-		task.save(function(err) {
-
-		});
-	});
-	
-	res.end()
-	
-
-});
-
-app.get('/dashboard/:jobId', function(req, res) {
-	var jobId = req.param('jobId');
-	CompletedTask.find({jobId : jobId}, function(err, cTasks) {
-
-	})
-	res.render('dashboard', {
-		tasks : tasks
-	});
-});
 
 app.listen(app.get('port'), function() {
   console.log("Node app is running at localhost:" + app.get('port'))
