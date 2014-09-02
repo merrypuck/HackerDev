@@ -51,10 +51,13 @@ def getUserBatch(since):
 		except:
 			email = ""
 		if not email:
-			if name:
-				gravatar_email = getEmailFromGravatar(username, firstName, lastName, blog, gravatar_id)
-			else:
-				gravatar_email = getEmailFromGravatar(username, "", "", blog, gravatar_id)
+			try:
+				if name:
+					gravatar_email = getEmailFromGravatar(username, firstName, lastName, blog, gravatar_id)
+				else:
+					gravatar_email = getEmailFromGravatar(username, "", "", blog, gravatar_id)
+			except:
+				gravatar_email = ""
 			
 			if len(gravatar_email) > 0:
 				print "found " + gravatar_email
