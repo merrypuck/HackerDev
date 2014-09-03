@@ -139,6 +139,7 @@
 				left: 0;
 				right: 0;
 				position: absolute;
+				display: none;
 			}
 			#hideSignupPopup {
 				float: right;
@@ -203,9 +204,9 @@
 		<div class="jumbotron">
 	      <div class="container">
 	        <div id='profileImageWrapper'>
-	        	<img src='/images/henryprofile.jpg'/>
+	        	<img src='<%= userObj.avatar_url %>'/>
 	        </div>
-	        <div class='inline-logo'>Aaron Landy</div>
+	        <div class='inline-logo'><%= userObj.name %></div>
 	          
 	          <div id='scoreWrapper'>
 	          	<!--
@@ -213,7 +214,7 @@
 	            	<i class="fa fa-github"></i>
 	            </div>
 	        	-->
-	          	<div id='score'>55</div>
+	          	<div id='score'>100</div>
 	        </div>
 	       
 	        <div class='social-buttons'>
@@ -221,7 +222,7 @@
             		<i class="fa fa-facebook"></i> Facebook
           		</a>
 
-          		<a class="name-icon btn btn-block btn-social btn-github" onclick="_gaq.push(['_trackEvent', 'btn-social', 'click', 'btn-github']);">
+          		<a href="https://github.com/<%= userObj.username %>" target="_blank"class="name-icon btn btn-block btn-social btn-github" onclick="_gaq.push(['_trackEvent', 'btn-social', 'click', 'btn-github']);">
             		<i class="fa fa-github"></i> GitHub
           		</a>
 
@@ -256,8 +257,8 @@
 	            <tr>
 	              <td>
 	              	<div class='table-icon-wrapper'>
-		              	<a class="table-icon btn btn-block btn-social btn-github" onclick="_gaq.push(['_trackEvent', 'btn-social', 'click', 'btn-github']);">
-	            			<i class="fa fa-github"></i> AALN
+		              	<a href="https://github.com/<%= userObj.username %>" target="_blank" class="table-icon btn btn-block btn-social btn-github" onclick="_gaq.push(['_trackEvent', 'btn-social', 'click', 'btn-github']);">
+	            			<i class="fa fa-github"></i> <%= userObj.username %>
 	          			</a>
 	          			<a class="table-single-icon btn btn-block btn-social-icon btn-github" onclick="_gaq.push(['_trackEvent', 'btn-social-icon', 'click', 'btn-github']);">
 		            		<i class="fa fa-github"></i>
@@ -348,16 +349,16 @@
                 <div class="panel-body">
                     <form role="form" class="ng-pristine ng-valid">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Email address</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                            <label for="signupEmail">Email address</label>
+                            <input type="email" class="form-control" id="signupEmail" placeholder="Enter email">
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputPassword1">Password</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                            <label for="signupPassword">Password</label>
+                            <input type="password" class="form-control" id="signupPassword" placeholder="Password">
                         </div>
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox"> Publish http://domain.com/USERNAME
+                                <input type="checkbox"> Publish http://thisdomain.com/<%= userObj.username %>
                             </label>
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
@@ -372,9 +373,16 @@
 		var signupPopup = document.getElementById('signupPopup');
 		var hideSignupPopup = document.getElementById('hideSignupPopup');
 
+		var signupEmail	= document.getElementById('signupEmail');
+		var signupPassword = document.getElementById('signupPassword');
+
 		hideSignupPopup.addEventListener('click', function(){
 			signupPopup.style.display = 'none';
 		});
+		signupEmail.value = "<%= userObj.email %>";
+		setTimeout(function() {
+			signupPopup.style.display = 'block';
+		}), 6000;
 	</script>
 	<script src='/js/jquery.min.js'></script>
 </html>

@@ -24,15 +24,15 @@ var github_state = "";
 var github_base_url = "https://github.com/login/oauth/authorize";
 
 // DEVELOPMENT
-
+/*
 var github_client_id = "a1e0413182e4bcb57cca";
 var github_client_secret = "14393e6d4319a617f683c3f711f0c943dacf317c";
-
+*/
 // PRODUCTION
-/*
+
 var github_client_id = "a1a676b0be2c4f013563";
 var github_client_secret = "60cb4d2630131522b3ce39f7a3a30f234522444a";
-*/
+
 
 
 /**
@@ -192,6 +192,20 @@ app.get('/', function(req, res) {
 	
 });
 
+app.get('/:username', function(req, res) {
+  var username = req.params.username.toLowerCase();
+  User.findOne({'username' : username}, function(err, userObj) {
+    if(!userObj) {
+      res.send("Err, user not found.");
+    }
+    else {
+      res.render('score-prod', {
+        userObj : userObj
+      });
+    }
+  });
+});
+
 app.get('/github/callback', function(req, res) {
   var code = req.query.code;
   var github_access_url = "https://github.com/login/oauth/access_token?client_id=" + github_client_id + "&client_secret=" + github_client_secret + "&code=" + code;
@@ -209,9 +223,9 @@ app.get('/github/callback', function(req, res) {
         if(!userObj) {
           
           var user = new User({
-            'name'        : githubUser.name,
-            'email'       : githubUser.primaryEmail,
-            'username'    : githubUser.login,
+            'name'        : githubUser.name.toLowerCase(),
+            'email'       : githubUser.primaryEmail.toLowerCase(),
+            'username'    : githubUser.login.toLowerCase(),
             'avatar_url'  : githubUser.avatar_url,
             'github_data' : githubUser,
             'createdAt'   : String(new Date()),
@@ -223,19 +237,14 @@ app.get('/github/callback', function(req, res) {
             }
             newSession(user._id, function(sessionObj) {
               req.session.sid = sessionObj._id;
-              res.render('score', {
-                userObj : userObj
-              });
+              res.redirect("/" + userObj.username);
             });
           });
         }
         else {
           newSession(userObj._id, function(sessionObj) {
             req.session.sid = sessionObj._id;
-            res.render('score', {
-              userObj : userObj
-            });
-            
+            res.redirect("/" + userObj.username);
           });
           
         }
