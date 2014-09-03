@@ -38,11 +38,16 @@
 				margin: 0;
 				padding:0;
 			}
-			#logo {
+			.logo {
 				font-size: 30px;
 				position: relative;
 				float: left;
 				padding:18px 0 0 24px;
+			}
+			.inline-logo {
+
+				font-size: 60px;
+				color:#000;
 			}
 			#profileName {
 				font-size: 20px;
@@ -63,33 +68,48 @@
 				width: 55px;
 				float: left;
 			}
+			#score {
+				font-size: 80px;
+				padding:10px;
+				border:1px solid #000;
+			}
 		</style>
 	</head>
 
 	<body>
+		<!--
 		<div class="page-header">
-			<div id='logo'>HackerScore</div>
+			<div class='logo'>HackerScore</div>
 			<div id='profileImageWrapper'>
 				
-				<img src='<%= userObj.github_data.profileUrl %>' />
+				<img src='<%= userObj.profileUrl %>' />
 			</div>
 		</div>
+		-->
 		<div class="jumbotron">
 	      <div class="container">
-	        <h1>What's your Hacker score?</h1>
-	        <p>
-	          Let's look at your <a href='#'>github</a> and find how badass of a
-	          <a href='#'>hacker</a> you are.
-	          
-	        </p>
-
-	        <a href='https://github.com/login/oauth/authorize?client_id=a1a676b0be2c4f013563&scope=user,email,public_repo,repo,notifications' class="btn btn-large btn-social btn-github" onclick="_gaq.push(['_trackEvent', 'btn-social', 'click', 'btn-github']);">
-	            <i class="fa fa-github"></i> Sign in with GitHub
-	          </a>
+	        <div class='inline-logo'>HackerScore</div>
+	        <div id='score'>89</div>
+	         
 
 	        
 	      </div>
     	</div>
+    	<h2 class='title'>Raise my Score</h2>
+	    	<table class="table table-striped table-hover">
+		        <tr>
+		          <td><b>Name<b></td>
+		          <td><b>Link</b></td>
+		          <td><b>Pages</b></td>
+		          <td><b>Transcribe</b></td>
+		        </tr>
+	           <tr>
+	              <td></td>
+	              <td></td>
+	              <td></td>
+	              <td></td>
+	            </tr>
+	      </table>
     	<!--
 		<div class='container'>
 			<div class="row">

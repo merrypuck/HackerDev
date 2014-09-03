@@ -65,46 +65,6 @@ function shuffleArray(array) {
     return array;
 }
 
-//https://graph.facebook.com/me/?access_token=CAAUteoJwC8wBALtHxqKNLOzG80u3PGRCDG2GIFUGlvcWOIfoxPu6f5IgQ8O5pNtuloVZBsW9Ed5zgkJAsYnxZAbTQdvOgGUuZAF9RJbn3n3L7m3ivVZCoEzJEA8w7ZBrJYwBhBky1oGTI8mniWHx64KBArVZCZB4sTZAE2zX9CupeGmfcJz11myS&fields=name,picture
-
-var getFacebookData = function(req, type, access_token, callback) {
-  var url = 'https://graph.facebook.com/me/' + type + '?access_token=' + access_token + "&height=200&type=normal&width=200";
-  if(type === 'picture') {
-    request(url, function (error, response, body) {
-      if(error) {
-        console.log(error);
-      }
-      else {
-          var destUrl = this.redirects[this.redirects.length-1].redirectUri;
-          callback(destUrl);
-      }
-    });
-  }
-  else if(type==='friends') {
-    var url = 'https://graph.facebook.com/me/' + type + '?access_token=' + access_token + "&fields=name,picture";
-    request(url, function (error, response, body) {
-      if(error) {
-        console.log(error);
-      }
-      else {
-
-        callback(body);
-      }
-    });
-  }
-  else {
-    request(url, function (error, response, body) {
-      if(error) {
-        console.log(error);
-      }
-      else {
-
-        callback(body);
-      }
-    });
-  }
-}
-
 
 //////////////////////////////////
 // Express app config
@@ -141,14 +101,24 @@ db.once('open', function callback() {
 
 var User = mongoose.model('User', {
 	name 			      : String,
+  username        : String,
 	email 			    : String,
 	phone		 	      : String,
 	password 		    : String,
 	hasProfile	    : String,
+  avatar_url      : String,
 	friends 		    : [],
   github_data     : {},
-  github_token    : String
+  github_token    : String,
+  createdAt       : String
 });
+
+var Session = mongoose.model('Session', {
+  userId      : String,
+  valid       : String,
+  createdAt     : String
+});
+
 // calls back sessionObj
 var newSession = function(userId, callback) {
 	var session = new Session({
@@ -181,6 +151,10 @@ var checkSession = function(sessionId, callback) {
 	});
 }
 
+var setSession = function(req, newSession, callback) {
+  req.session.sid = newSession;
+  callback();
+};
 var checkPassword = function(password, hashedPassword, callback) {
 	callback(passwordHash.verify(password, hashedPassword));
 }
@@ -193,6 +167,31 @@ var getPrimaryGithubEmail = function(emailList, callback) {
   }
   callback(false);
 }
+
+var getGithubData = function(access_token, callback) {
+  sendGithubRequest("https://api.github.com/user", access_token, function(rawGithubUser) {
+    sendGithubRequest("https://api.github.com/user/emails", access_token, function(email) {
+      getPrimaryGithubEmail(JSON.parse(email), function(primaryEmail) {
+          rawGithubUser['primaryEmail'] = primaryEmail;
+          callback(rawGithubUser);
+      });
+    });
+  });
+}
+
+var sendGithubRequest = function(url, access_token, callback) {
+  var reqObj = {
+    url: url,
+    headers: {
+      'User-Agent': 'hack',
+      'Authorization' : 'token ' + access_token
+    }
+  };
+  request(reqObj, function(error, response, body) {
+    callback(body);
+  });
+};
+
 // Facebook INIT
 appId = 1457379081194444;
 appSecret = "9838903221f77bc33f9f8dfe1f286089";
@@ -208,86 +207,72 @@ app.get('/', function(req, res) {
   });
 	
 });
+
 app.get('/github/callback', function(req, res) {
-	var code = req.query.code;
-	console.log(code);
-	var github_access_url = "https://github.com/login/oauth/access_token?client_id=" + github_client_id + "&client_secret=" + github_client_secret + "&code=" + code;
-	request(github_access_url, function (error, response, body) {
-      if(error) {
-        console.log(error);
-      }
-      else {
-          var body = querystring.parse(body);
-          var github_userdata_url = "https://api.github.com/user";
-          var options1 = {
-		        url: github_userdata_url,
-		        headers: {
-		          'User-Agent': 'hack',
-              'Authorization' : 'token ' + body.access_token
-		        }
-		      };
-          request(options1, function(error, response, body1) {
-            var github_user = JSON.parse(body1);
-            this.github_user = github_user;
-            var github_orig = this;
-
-          	if(error) {
-          		console.log(error);
-          	}
-          	else {
-              var github_useremail_url = "https://api.github.com/user/emails";
-              var options2 = {
-                url: github_useremail_url,
-                headers: {
-                  'User-Agent': 'hack',
-                  'Authorization' : 'token ' + body.access_token
-                }
-              };
-              request(options2, function(error, response, body2) {
-                var githubEmailList = JSON.parse(body2);
-                getPrimaryGithubEmail(githubEmailList, function(primaryEmail) {
-                  User.findOne({'email' : primaryEmail}, function(err, userObj) {
-                    console.log(github_orig.github_user);
-                    if(!userObj) {
-                      var user = new User({
-                        name : github_orig.github_user.name,
-                        email : primaryEmail,
-                        github_token : body.access_token,
-                        github_data : github_orig.github_user
-                      });
-                      user.save(function(err) {
-                        if(err) {
-                          console.log(err);
-                        }
-                        else {
-                          res.render('score', {
-                            userObj : userObj,
-                            githubObj : github_orig.github_user
-                          });
-                        }
-                       
-                      });
-                    }
-                    else {
-                      res.render('score', {
-                          userObj : userObj,
-                          githubObj : github_orig.github_user
-                        });
-                    }
-
-                });
+  var code = req.query.code;
+  var github_access_url = "https://github.com/login/oauth/access_token?client_id=" + github_client_id + "&client_secret=" + github_client_secret + "&code=" + code;
+  request(github_access_url, function (error, response, body) {
+    var body = querystring.parse(body);
+    var access_token = body.access_token;
+    getGithubData(access_token, function(rawGithubUser) {
+      var githubUser = JSON.parse(rawGithubUser);
+      User.findOne({'email': githubUser.primaryEmail}, function(err, userObj) {
+        if(err) {
+          console.log(err);
+        }
+        console.log(userObj);
+        if(!userObj) {
+          
+          var user = new User({
+            'name'        : githubUser.name,
+            'email'       : githubUser.primaryEmail,
+            'username'    : githubUser.login,
+            'avatar_url'  : githubUser.avatar_url,
+            'github_data' : githubUser,
+            'createdAt'   : String(new Date())
+          });
+          user.save(function(err) {
+            if(err) {
+              console.log(err);
+            }
+            newSession(user._id, function(sessionObj) {
+              req.session.sid = sessionObj._id;
+              res.render('score', {
+                userObj : userObj
               });
             });
-          		
-          	}
           });
-      }
+        }
+        else {
+          newSession(userObj._id, function(sessionObj) {
+            req.session.sid = sessionObj._id;
+            res.render('score', {
+              userObj : userObj
+            });
+            
+          });
+          
+        }
+        
+      });
     });
+  });
 });
 
 app.get('/score', function(req, res) {
-  res.render('score');
+  var session = req.session.sid;
+  checkSession(session, function(userObj) {
+    if(!userObj) {
+      res.render('score', {
+        userObj : userObj
+      });
+    }
+    else {
+      res.redirect('/');
+    }
+  });
 });
+
 app.get('/flat', function(req, res) {
   res.render('flat');
 });
