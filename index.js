@@ -40,15 +40,15 @@ var github_state = "";
 var github_base_url = "https://github.com/login/oauth/authorize";
 
 // DEVELOPMENT
-/*
+
 var github_client_id = "a1e0413182e4bcb57cca";
 var github_client_secret = "14393e6d4319a617f683c3f711f0c943dacf317c";
-*/
-// PRODUCTION
 
+// PRODUCTION
+/*
 var github_client_id = "a1a676b0be2c4f013563";
 var github_client_secret = "60cb4d2630131522b3ce39f7a3a30f234522444a";
-
+*/
 
 
 /**
@@ -253,7 +253,7 @@ app.get('/github/callback', function(req, res) {
                         name : github_orig.github_user.name,
                         email : primaryEmail,
                         github_token : body.access_token,
-                        github_data : String(github_orig.github_user)
+                        github_data : github_orig.github_user
                       });
                       user.save(function(err) {
                         if(err) {
@@ -262,7 +262,7 @@ app.get('/github/callback', function(req, res) {
                         else {
                           res.render('score', {
                             userObj : userObj,
-                            profileUrl : github_orig.github_user.avatar_url
+                            githubObj : github_orig.github_user
                           });
                         }
                        
@@ -271,7 +271,7 @@ app.get('/github/callback', function(req, res) {
                     else {
                       res.render('score', {
                           userObj : userObj,
-                          profileUrl : github_orig.github_user.avatar_url
+                          githubObj : github_orig.github_user
                         });
                     }
 
