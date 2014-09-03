@@ -15,7 +15,7 @@
 			body{font-weight:300;-webkit-font-smoothing:antialiased}
 			h2{text-align:center;font-weight:300}
 			.btn-social-icon{margin-bottom:4px}
-			.jumbotron{position:relative;background:#6CC478;font-size:16px;color:#fff;color:rgba(255,255,255,0.75);text-align:center;border-radius:0}.jumbotron h1{margin-bottom:15px;font-weight:300;letter-spacing:-1px;color:#fff}
+			.jumbotron{position:relative;background:#6CC478;font-size:16px;color:#fff;color:rgba(255,255,255,0.75);text-align:center;border-radius:0;margin-bottom: 0;padding-top:10px;padding-bottom: 100px;}.jumbotron h1{margin-bottom:15px;font-weight:300;letter-spacing:-1px;color:#fff}
 			.jumbotron iframe{width:90px !important;height:20px !important;border:none;overflow:hidden;margin:2px}
 			.btn-outline{margin-top:15px;margin-bottom:15px;padding:18px 24px;font-size:inherit;font-weight:500;color:#fff;background-color:transparent;border-color:#fff;border-color:rgba(255,255,255,0.5);transition:all .1s ease-in-out}.btn-outline:hover,.btn-outline:active{color:#6c71c4;background-color:#fff;border-color:#fff}
 			.jumbotron p a,.jumbotron-links a{font-weight:500;color:#fff;transition:all .1s ease-in-out}
@@ -32,6 +32,9 @@
 			.social-class li:hover code{background-color:#e8e8ee}
 			.social-class code{cursor:default}
 
+			table tr td {
+				width:100px;
+			}
 
 			.page-header {
 				height:80px;
@@ -46,33 +49,113 @@
 			}
 			.inline-logo {
 
-				font-size: 60px;
-				color:#000;
-			}
-			#profileName {
-				font-size: 20px;
-				float: right;
+				font-size: 40px;
+				color:#444;
+				font-weight: 300;
+				letter-spacing: -1px;
 			}
 			#profileImageWrapper {
-				position: relative;
-				float: right;
-				border-left: 1px solid #000;
-				height:80px;
-				padding:12px;
-				box-sizing: border-box;
-
+				padding-top: 18px;
 
 			}
 			#profileImageWrapper img {
-				height: 55px;
-				width: 55px;
-				float: left;
+				height: 150px;
+				width: 150px;
+				border-radius: 75px;
+			}
+			#scoreWrapper {
+
 			}
 			#score {
-				font-size: 80px;
-				padding:10px;
-				border:1px solid #000;
+				height: 100px;
+				width: 100px;
+				
+				font-size: 60px;
+				position: absolute;
+				top:220px;
+				margin-left: auto;
+				margin-right: auto;
+				left: 0;
+				right: 0;
 			}
+			#octocat {
+				border-color: rgba(0,0,0,0.2);
+				position: absolute;
+				top:0px;
+				margin-left: auto;
+				margin-right: auto;
+				left: 0;
+				right: 0;
+				width:150px;
+				height:150px;
+				z-index: 10;
+
+			}
+			#octocat i {
+				font-size: 180px;
+				z-index: 1000;
+				color:#444;
+			}
+			.container p i {
+				font-size: 50px;
+			}
+			.social-buttons {
+				position: absolute;
+				top:50px;
+				left:20px;
+				width: 90%;
+				
+			}
+			.name-icon {
+				width:200px;
+			}
+			
+			.single-icon {
+				display: none;
+			}
+			.table-icon-wrapper {
+				width:150px;
+			}
+			.table-icon {
+				width: 100%;
+			}
+			.table-single-icon {
+				display: none;
+			}
+			.content-title {
+				font-size: 50px;
+				color:#444;
+				font-weight: 400;
+				letter-spacing: -1px;
+				padding:5px 0 ;
+				text-align: center;
+			}
+			@media screen and (max-width: 700px) {
+				.social-buttons .name-icon {
+					width: 25%;
+				}
+			}
+			@media screen and (max-width: 510px) {
+				.social-buttons .name-icon {
+					display: none;
+				}
+				.social-buttons .single-icon {
+					display: block;
+				}
+				.table-icon {
+					display: none;
+				}
+				.table-single-icon {
+					display: block;
+					
+				}
+			}
+			
+
+        #marker {
+          left:50%;
+        }
+      }
 		</style>
 	</head>
 
@@ -82,34 +165,156 @@
 			<div class='logo'>HackerScore</div>
 			<div id='profileImageWrapper'>
 				
-				<img src='<%= userObj.profileUrl %>' />
+				<img src='%= userObj.profileUrl %' />
 			</div>
 		</div>
 		-->
 		<div class="jumbotron">
 	      <div class="container">
-	        <div class='inline-logo'>HackerScore</div>
-	        <div id='score'>89</div>
-	         
+	        <div id='profileImageWrapper'>
+	        	<img src='/images/henryprofile.jpg'/>
+	        </div>
+	        <div class='inline-logo'>Aaron Landy</div>
+	          
+	          <div id='scoreWrapper'>
+	          	<!--
+	          	<div id='octocat'>
+	            	<i class="fa fa-github"></i>
+	            </div>
+	        	-->
+	          	<div id='score'>85</div>
+	        </div>
+	       
+	        <div class='social-buttons'>
+	        	<a class="name-icon btn btn-block btn-social btn-facebook" onclick="_gaq.push(['_trackEvent', 'btn-social', 'click', 'btn-facebook']);">
+            		<i class="fa fa-facebook"></i> Facebook
+          		</a>
+
+          		<a class="name-icon btn btn-block btn-social btn-github" onclick="_gaq.push(['_trackEvent', 'btn-social', 'click', 'btn-github']);">
+            		<i class="fa fa-github"></i> GitHub
+          		</a>
+
+          		<a class="name-icon btn btn-block btn-social btn-linkedin" onclick="_gaq.push(['_trackEvent', 'btn-social', 'click', 'btn-linkedin']);">
+		            <i class="fa fa-linkedin"></i> LinkedIn
+		        </a>
+
+		        <a class="single-icon btn btn-social-icon btn-facebook" onclick="_gaq.push(['_trackEvent', 'btn-social-icon', 'click', 'btn-facebook']);">
+          			<i class="fa fa-facebook"></i>
+          		</a>
+
+          		<a class="single-icon btn btn-block btn-social-icon btn-github" onclick="_gaq.push(['_trackEvent', 'btn-social-icon', 'click', 'btn-github']);">
+            		<i class="fa fa-github"></i>
+          		</a>
+
+          		<a class="single-icon btn btn-block btn-social-icon btn-linkedin" onclick="_gaq.push(['_trackEvent', 'btn-social', 'click', 'btn-linkedin']);">
+		            <i class="fa fa-linkedin"></i>
+		        </a>
+	        </div>
 
 	        
 	      </div>
-    	</div>
-    	<h2 class='title'>Raise my Score</h2>
+   		</div>
+   			<div class='content-title'>Stats</div>
 	    	<table class="table table-striped table-hover">
 		        <tr>
-		          <td><b>Name<b></td>
-		          <td><b>Link</b></td>
-		          <td><b>Pages</b></td>
-		          <td><b>Transcribe</b></td>
+		          <td><b><i class="fa fa-github"></i> Github<b></td>
+		          <td><b>Commits</b></td>
+		          <td><b>Repos</b></td>
+		          <td><b>Stars</b></td>
 		        </tr>
-	           <tr>
-	              <td></td>
-	              <td></td>
-	              <td></td>
-	              <td></td>
+	            <tr>
+	              <td>
+	              	<div class='table-icon-wrapper'>
+		              	<a class="table-icon btn btn-block btn-social btn-github" onclick="_gaq.push(['_trackEvent', 'btn-social', 'click', 'btn-github']);">
+	            			<i class="fa fa-github"></i> AALN
+	          			</a>
+	          			<a class="table-single-icon btn btn-block btn-social-icon btn-github" onclick="_gaq.push(['_trackEvent', 'btn-social-icon', 'click', 'btn-github']);">
+		            		<i class="fa fa-github"></i>
+		          		</a>
+	          		</div>
+	              </td>
+	              <td>102</td>
+	              <td>26</td>
+	              <td>1027</td>
 	            </tr>
-	      </table>
+
+	            
+	        </table>
+	        <div class='content-title'>Social</div>
+	        <!--
+	        <table class="table table-striped table-hover">
+		        <tr>
+		          <td><b><i class="fa fa-facebook"></i> Facebook<b></td>
+		          <td><b>Friends</b></td>
+		          <td><b>Groups</b></td>
+		          <td><b>Posts</b></td>
+		        </tr>
+	            <tr>
+	              <td>
+	              	<div class='table-icon-wrapper'>
+		              	<a class="table-icon btn btn-block btn-social btn-facebook" onclick="_gaq.push(['_trackEvent', 'btn-social', 'click', 'btn-facebook']);">
+	            			<i class="fa fa-facebook"></i> AALN.PY
+	          			</a>
+	          		</div>
+	              </td>
+	              <td>a</td>
+	              <td>a</td>
+	              <td>a</td>
+	            </tr>
+	            
+	        </table>
+			-->
+	        <table class="table table-striped table-hover">
+		        <tr>
+		          <td><b><i class="fa fa-linkedin"></i> Linkedin<b></td>
+		          <td><b>Title</b></td>
+		          <td><b>Connections</b></td>
+		          <td><b>Job Seeking</b></td>
+		        </tr>
+	            <tr>
+	              <td>
+	              	<div class='table-icon-wrapper'>
+		              	<a class="table-icon btn btn-block btn-social btn-linkedin" onclick="_gaq.push(['_trackEvent', 'btn-social', 'click', 'btn-linkedin']);">
+	            			<i class="fa fa-linkedin"></i> AARONLAN95
+	          			</a>
+	          			<a class="table-single-icon btn btn-block btn-social-icon btn-linkedin" onclick="_gaq.push(['_trackEvent', 'btn-social-icon', 'click', 'btn-github']);">
+		            		<i class="fa fa-linkedin"></i>
+		          		</a>
+	          		</div>
+
+	              </td>
+	              <td>Software engineer</td>
+	              <td>500+</td>
+	              <td>true/false</td>
+	            </tr>
+	            
+	        </table>
+	        <div class='content-title'>Projects</div>
+	        <table class="table table-striped table-hover">
+		        <tr>
+		          <td><b><i class="fa fa-linkedin"></i> Linkedin<b></td>
+		          <td><b>Title</b></td>
+		          <td><b>Connections</b></td>
+		          <td><b>Job Seeking</b></td>
+		        </tr>
+	            <tr>
+	              <td>
+	              	<div class='table-icon-wrapper'>
+		              	<a class="table-icon btn btn-block btn-social btn-linkedin" onclick="_gaq.push(['_trackEvent', 'btn-social', 'click', 'btn-linkedin']);">
+	            			<i class="fa fa-linkedin"></i> AARONLAN95
+	          			</a>
+	          			<a class="table-single-icon btn btn-block btn-social-icon btn-linkedin" onclick="_gaq.push(['_trackEvent', 'btn-social-icon', 'click', 'btn-github']);">
+		            		<i class="fa fa-linkedin"></i>
+		          		</a>
+	          		</div>
+
+	              </td>
+	              <td>Software engineer</td>
+	              <td>500+</td>
+	              <td>true/false</td>
+	            </tr>
+	            
+	        </table>
     	<!--
 		<div class='container'>
 			<div class="row">
@@ -118,7 +323,7 @@
 			  <div class="col-xs-6 col-sm-4">.col-md-4</div>
 			</div>
 		</div>
-	-->
+	--> 
 	</body>
 	<script src='/js/jquery.min.js'></script>
 </html>

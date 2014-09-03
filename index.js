@@ -13,22 +13,6 @@ var csv 			= require("fast-csv");
 var querystring 	= require('querystring');
 //var uuid 			= require('node-uuid');
 var passwordHash 	= require('password-hash');
-/*
-csv.fromPath("navcodes.csv").on("record", function(data){ 
-	var navcodes = data[0].substring(1, data[0].length-1).split(',');
-	var id = data[1];
-	var color = data[2];
-	var s1 = data[3];
-	var s2 = data[4];
-	var s3 = data[5];
-	var side = data[6];
-	console.log(codes);
-})
-.on("end", function() { 
-		console.log("done");});
-
-*/
-
 
 var siteURL = "http://localhost:5000";
 
@@ -40,15 +24,15 @@ var github_state = "";
 var github_base_url = "https://github.com/login/oauth/authorize";
 
 // DEVELOPMENT
-/*
+
 var github_client_id = "a1e0413182e4bcb57cca";
 var github_client_secret = "14393e6d4319a617f683c3f711f0c943dacf317c";
-*/
-// PRODUCTION
 
+// PRODUCTION
+/*
 var github_client_id = "a1a676b0be2c4f013563";
 var github_client_secret = "60cb4d2630131522b3ce39f7a3a30f234522444a";
-
+*/
 
 
 /**
@@ -214,6 +198,7 @@ app.get('/github/callback', function(req, res) {
   request(github_access_url, function (error, response, body) {
     var body = querystring.parse(body);
     var access_token = body.access_token;
+    console.log(access_token);
     getGithubData(access_token, function(rawGithubUser) {
       var githubUser = JSON.parse(rawGithubUser);
       User.findOne({'email': githubUser.primaryEmail}, function(err, userObj) {
@@ -229,7 +214,8 @@ app.get('/github/callback', function(req, res) {
             'username'    : githubUser.login,
             'avatar_url'  : githubUser.avatar_url,
             'github_data' : githubUser,
-            'createdAt'   : String(new Date())
+            'createdAt'   : String(new Date()),
+            'access_token': access_token
           });
           user.save(function(err) {
             if(err) {
@@ -259,6 +245,9 @@ app.get('/github/callback', function(req, res) {
   });
 });
 
+app.get('/score1', function(req, res) {
+  res.render('score');
+});
 app.get('/score', function(req, res) {
   var session = req.session.sid;
   checkSession(session, function(userObj) {
@@ -272,6 +261,7 @@ app.get('/score', function(req, res) {
     }
   });
 });
+
 
 app.get('/flat', function(req, res) {
   res.render('flat');
