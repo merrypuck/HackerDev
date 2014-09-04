@@ -30,6 +30,7 @@ var github_base_url = "https://github.com/login/oauth/authorize";
 
 // PRODUCTION
 var github_client_id = "a1a676b0be2c4f013563";
+
 var github_client_secret = "60cb4d2630131522b3ce39f7a3a30f234522444a";
 
 
