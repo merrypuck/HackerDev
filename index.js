@@ -25,17 +25,15 @@ var github_base_url = "https://github.com/login/oauth/authorize";
 
 // DEVELOPMENT
 
-//var github_client_id = "a1e0413182e4bcb57cca";
-//var github_client_secret = "14393e6d4319a617f683c3f711f0c943dacf317c";
+var github_client_id = "a1e0413182e4bcb57cca";
+var github_client_secret = "14393e6d4319a617f683c3f711f0c943dacf317c";
 
 // PRODUCTION
+/*
 var github_client_id = "a1a676b0be2c4f013563";
-var a ="";
-
-
 
 var github_client_secret = "60cb4d2630131522b3ce39f7a3a30f234522444a";
-
+*/
 
 /**
  * Randomize array element order in-place.
@@ -156,19 +154,19 @@ var getPrimaryGithubEmail = function(emailList, callback) {
       callback(emailList[e].email);
     }
   }
-  callback(emailList[0].email);
+  //scallback(emailList[0].email);
 }
 
 var getGithubData = function(access_token, callback) {
-  sendGithubRequest("https://api.github.com/user", access_token, function(rawGithubUser) {
-    sendGithubRequest("https://api.github.com/user/emails", access_token, function(email) {
-      getPrimaryGithubEmail(JSON.parse(email), function(primaryEmail) {
-          var githubUser = JSON.parse(rawGithubUser);
-          githubUser['primaryEmail'] = primaryEmail;
-          callback(githubUser);
+    sendGithubRequest("https://api.github.com/user", access_token, function(rawGithubUser) {
+      sendGithubRequest("https://api.github.com/user/emails", access_token, function(email) {
+        getPrimaryGithubEmail(JSON.parse(email), function(primaryEmail) {
+            var githubUser = JSON.parse(rawGithubUser);
+            githubUser['primaryEmail'] = primaryEmail;
+            callback(JSON.stringify((githubUser)));
+        });
       });
     });
-  });
 }
 
 var sendGithubRequest = function(url, access_token, callback) {
@@ -200,10 +198,14 @@ app.get('/', function(req, res) {
 	
 });
 
+
+app.get('/score1', function(req, res) {
+  res.render('score1');
+});
 app.get('/scoredemo', function(req, res) {
   res.render('scoredemo');
 });
-/*
+
 app.get('/:username', function(req, res) {
   var username = req.params.username.toLowerCase();
   User.findOne({'username' : username}, function(err, userObj) {
@@ -217,25 +219,28 @@ app.get('/:username', function(req, res) {
     }
   });
 });
-*/
+
 
 app.get('/github/callback', function(req, res) {
   var code = req.query.code;
   var github_access_url = "https://github.com/login/oauth/access_token?client_id=" + github_client_id + "&client_secret=" + github_client_secret + "&code=" + code;
-  
-  initialGithubRequest(github_access_url, function (body) {
+  console.log('callback called');
+  initialGithubRequest(github_access_url, function(body) {
+    console.log('github request');
     var body = querystring.parse(body);
     var access_token = body.access_token;
     console.log(access_token);
     getGithubData(access_token, function(githubUser) {
+      console.log(githubUser);
+      var githubUser = JSON.parse(githubUser);
       User.findOne({'email': githubUser.primaryEmail}, function(err, userObj) {
         if(err) {
           console.log(err);
         }
-        console.log(userObj);
+        console.log('found user');
         if(!userObj) {
           var user = new User({
-            'name'        : githubUser.name.toLowerCase(),
+            'name'        : githubUser.name,
             'email'       : githubUser.primaryEmail.toLowerCase(),
             'username'    : githubUser.login.toLowerCase(),
             'avatar_url'  : githubUser.avatar_url,
@@ -243,30 +248,28 @@ app.get('/github/callback', function(req, res) {
             'createdAt'   : String(new Date()),
             'access_token': access_token
           });
-          user.save(function(err) {
+          user.save(function(err, userObj) {
+
             if(err) {
               console.log(err);
             }
-            //newSession(userObj._id, function(sessionObj) {
-              //req.session.sid = sessionObj._id;
-              //res.redirect("/" + userObj.username);
-            //});
+            newSession(userObj._id, function(sessionObj) {
+              req.session.sid = "sessionObj._id";
+              res.redirect("/" + userObj.username);
+            });
           });
-        }
-        else {
-          //newSession(userObj._id, function(sessionObj) {
-            //req.session.sid = sessionObj._id;
-            //res.redirect("/" + userObj.username);
-          //});
-            
-          
-        }
-        res.redirect("/" + userObj.username);
-      });
+       }
+       else {
+          newSession(userObj._id, function(sessionObj) {
+            req.session.sid = "sessionObj._id";
+            res.redirect("/" + userObj.username);
+          });
+      }
+        
     });
   
   });
-
+  })
 });
 
 app.get('/dev/score1', function(req, res) {

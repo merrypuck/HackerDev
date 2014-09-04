@@ -46,6 +46,11 @@ def domainAvailDomainr(query, extension):
 
 count = 0
 
+allLowercase = "abcdefghijklmnopqrstuvwxyz"
+everyPal = []
+def palindromes():
+	
+
 with open("./english_words.txt") as inputFileHandle:
 	for i in inputFileHandle:
 		count = count + 1
