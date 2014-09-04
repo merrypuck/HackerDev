@@ -144,7 +144,7 @@ var checkPassword = function(password, hashedPassword, callback) {
 }
 
 var initialGithubRequest = function(github_access_url, callback) {
-  request(github_access_url, function (body) {
+  request(github_access_url, function (error, response, body) {
     callback(body);
   });
 }
@@ -154,15 +154,16 @@ var getPrimaryGithubEmail = function(emailList, callback) {
       callback(emailList[e].email);
     }
   }
-  callback(false);
+  callback(emailList[0].email);
 }
 
 var getGithubData = function(access_token, callback) {
   sendGithubRequest("https://api.github.com/user", access_token, function(rawGithubUser) {
     sendGithubRequest("https://api.github.com/user/emails", access_token, function(email) {
       getPrimaryGithubEmail(JSON.parse(email), function(primaryEmail) {
-          rawGithubUser['primaryEmail'] = primaryEmail;
-          callback(rawGithubUser);
+          var githubUser = JSON.parse(rawGithubUser);
+          githubUser['primaryEmail'] = primaryEmail;
+          callback(githubUser);
       });
     });
   });
@@ -216,12 +217,11 @@ app.get('/github/callback', function(req, res) {
   var github_access_url = "https://github.com/login/oauth/access_token?client_id=" + github_client_id + "&client_secret=" + github_client_secret + "&code=" + code;
   
   initialGithubRequest(github_access_url, function (body) {
-    res.redirect("/aaln");
     var body = querystring.parse(body);
     var access_token = body.access_token;
     console.log(access_token);
-    getGithubData(access_token, function(rawGithubUser) {
-      var githubUser = JSON.parse(rawGithubUser);
+    getGithubData(access_token, function(githubUser) {
+      console.log(githubUser);
       User.findOne({'email': githubUser.primaryEmail}, function(err, userObj) {
         if(err) {
           console.log(err);
@@ -241,14 +241,18 @@ app.get('/github/callback', function(req, res) {
             if(err) {
               console.log(err);
             }
+            newSession(userObj._id, function(sessionObj) {
               req.session.sid = sessionObj._id;
               return res.redirect("/" + userObj.username);
-
+            });
           });
         }
         else {
+          newSession(userObj._id, function(sessionObj) {
             req.session.sid = sessionObj._id;
             return res.redirect("/" + userObj.username);
+          });
+            
           
         }
         
@@ -257,7 +261,7 @@ app.get('/github/callback', function(req, res) {
   });
 });
 
-app.get('/score1', function(req, res) {
+app.get('/dev/score1', function(req, res) {
   res.render('score');
 });
 app.get('/score', function(req, res) {
