@@ -25,13 +25,13 @@ var github_base_url = "https://github.com/login/oauth/authorize";
 
 // DEVELOPMENT
 
-//var github_client_id = "a1e0413182e4bcb57cca";
-//var github_client_secret = "14393e6d4319a617f683c3f711f0c943dacf317c";
+var github_client_id = "a1e0413182e4bcb57cca";
+var github_client_secret = "14393e6d4319a617f683c3f711f0c943dacf317c";
 
 // PRODUCTION
-var github_client_id = "a1a676b0be2c4f013563";
+//var github_client_id = "a1a676b0be2c4f013563";
 
-var github_client_secret = "60cb4d2630131522b3ce39f7a3a30f234522444a";
+//var github_client_secret = "60cb4d2630131522b3ce39f7a3a30f234522444a";
 
 
 /**
@@ -197,6 +197,10 @@ app.get('/', function(req, res) {
 	
 });
 
+app.get('/scoredemo', function(req, res) {
+  res.render('scoredemo');
+});
+/*
 app.get('/:username', function(req, res) {
   var username = req.params.username.toLowerCase();
   User.findOne({'username' : username}, function(err, userObj) {
@@ -210,6 +214,7 @@ app.get('/:username', function(req, res) {
     }
   });
 });
+*/
 
 app.get('/github/callback', function(req, res) {
   var code = req.query.code;
@@ -220,7 +225,6 @@ app.get('/github/callback', function(req, res) {
     var access_token = body.access_token;
     console.log(access_token);
     getGithubData(access_token, function(githubUser) {
-      console.log(githubUser);
       User.findOne({'email': githubUser.primaryEmail}, function(err, userObj) {
         if(err) {
           console.log(err);
@@ -240,24 +244,26 @@ app.get('/github/callback', function(req, res) {
             if(err) {
               console.log(err);
             }
-            newSession(userObj._id, function(sessionObj) {
-              req.session.sid = sessionObj._id;
-              return res.redirect("/" + userObj.username);
-            });
+            //newSession(userObj._id, function(sessionObj) {
+              //req.session.sid = sessionObj._id;
+              //res.redirect("/" + userObj.username);
+            //});
           });
         }
         else {
-          newSession(userObj._id, function(sessionObj) {
-            req.session.sid = sessionObj._id;
-            return res.redirect("/" + userObj.username);
-          });
+          //newSession(userObj._id, function(sessionObj) {
+            //req.session.sid = sessionObj._id;
+            //res.redirect("/" + userObj.username);
+          //});
             
           
         }
-        
+        res.redirect("/" + userObj.username);
       });
     });
+  
   });
+
 });
 
 app.get('/dev/score1', function(req, res) {
