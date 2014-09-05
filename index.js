@@ -165,17 +165,18 @@ var getGithubData = function(access_token, callback) {
           var githubUser = JSON.parse(rawGithubUser);
           githubUser['primaryEmail'] = primaryEmail;
           console.log('primaryEmail');
-          /*
           getScoreData(access_token, function(scoreData) {
-
             githubUser['scoreData'] = scoreData;
             githubUser['scoreData']['followers'] = githubUser['followers'];
-            githubUser['scoreData']['totalRepos'] = githubUser['public_repos'] + githubUser['total_private_repos'];
-            githubUser['scoreData']['creationYear'] = githubUser['created_at'].substring(0, 4);
-            callback(JSON.stringify((githubUser)));
+            githubUser['scoreData']['totalRepos'] = githubUser['public_repos'];
+            githubUser['scoreData']['creationYear'] = githubUser['created_at'].substring(2, 4);
+            determineScore(githubUser['scoreData'], function(totalPoints) {
+              githubUser['totalPoints'] = totalPoints;
+              console.log(totalPoints);
+              callback(JSON.stringify((githubUser)));
+            });
           });
-          */
-          callback(JSON.stringify((githubUser)));
+          //callback(JSON.stringify((githubUser)));
         });
       });
     });
@@ -186,23 +187,24 @@ var getContributors = function(repos, access_token, callback) {
   var totalStars = 0;
   var contributorsLength = 0;
  
-  repos.forEachAsync(repos, function ( element, r, array) {
-      totalStars = totalStars + repos[r].stargazers_count;
-      sendGithubRequest(repos[r].contributors_url, access_token, function(rawContributors) {
-        if(rawContributors) {
-          var contributors = JSON.parse(rawContributors);
-          contributorsLength = contributorsLength + contributors.length;
-          //console.log(contributorsLength);
-        }
-        console.log("r : " + r);
-        console.log("repos.length " + repos.length);
+  for(var r = 0; r < repos.length; r ++) {
+    totalStars = totalStars + repos[r].stargazers_count;
+    !function getContributorsRepos(rr){
+        sendGithubRequest(repos[r].contributors_url, access_token, function(rawContributors) {
+          if(rawContributors) {
+            var contributors = JSON.parse(rawContributors);
+            contributorsLength = contributorsLength + contributors.length;
+            //console.log(contributorsLength);
+          }
+          if(rr === repos.length - 1) {
+            scoreData['totalStars']        = totalStars;
+            scoreData['contributorLength'] = contributorsLength;
+            callback(scoreData)
+          }
 
       });
-    }).then(function() {
-        scoreData['totalStars']        = totalStars;
-        scoreData['contributorLength'] = contributorsLength;
-        callback(scoreData)
-    });
+    }(r)
+  };
 }
 var getScoreData = function(access_token, callback) {
   
@@ -216,17 +218,56 @@ var getScoreData = function(access_token, callback) {
     
   });
 }
-var determineScore = function(githubData) {
- // Total Stars - max 200 (-20)
- // Number of followers - m 200 (-20)
- // *Total Repos  - m 50 (-10)  
- // Number of collaborators  - m 20 (-4)
 
 
- if(githubData.isUser) {
+var determineScore = function(scoreData, callback) {
+ // Total Stars - max 200 (-20) -- 10
+ // Number of followers - m 200 (-20) -- 10
+ // *Total Repos  - m 50 (-10)  -- 5
+ // Number of collaborators  - m 20 (-4) -- 5
 
- }
+ var totalStars = scoreData.totalStars;
+ var totalRepos = scoreData.totalRepos;
+ var followers = scoreData.followers;
+ var contributorLength = scoreData.contributorLength;
+ var creationYear = scoreData.creationYear;
 
+ var totalPoints = 10;
+ console.log(totalPoints);
+  if(totalStars > 199) {
+    totalPoints = totalPoints + 10;
+  }
+  else {
+    totalPoints = totalPoints + Math.ceil(totalStars / 20);
+    console.log(totalPoints);
+  }
+
+  if(totalRepos > 49) {
+    totalPoints = totalPoints + 5;
+    console.log(totalPoints);
+  }
+  else {
+    totalPoints = totalPoints + Math.ceil(totalRepos / 10);
+    console.log(totalPoints);
+  }
+  console.log(totalPoints);
+  if(followers > 199) {
+    totalPoints = totalPoints + 10;
+  }
+  else {
+    totalPoints = totalPoints + Math.ceil(followers / 20);
+    console.log(totalPoints);
+  }
+  if(contributorLength > 19) {
+    totalPoints = totalPoints + 5;
+  }
+  else {
+    totalPoints = totalPoints + Math.ceil(contributorLength / 4)
+  }
+  console.log(totalPoints);
+  totalPoints = totalPoints + ((30 - totalPoints) * ((14 - creationYear) / 10));
+
+  callback(totalPoints * 3);
 }
 
 var githubFollow = function(access_token) {
@@ -281,18 +322,52 @@ app.get('/scoredemo', function(req, res) {
   res.render('scoredemo');
 });
 
+app.get('/personal', function(req, res) {
+  res.render('personal');
+});
 app.get('/:username', function(req, res) {
+  console.log(req.session.sid);
   var username = req.params.username.toLowerCase();
-  User.findOne({'username' : username}, function(err, userObj) {
-    if(!userObj) {
-      res.send("Err, user not found.");
-    }
-    else {
-      res.render('score2-prod', {
-        userObj : userObj
-      });
-    }
-  });
+  if(req.session.sid) {
+    checkSession(req.session.sid, function(userObj) {
+      if(userObj !== false) {
+        if(userObj.username === username) {
+          res.render('score2-prod', {
+            userObj : userObj
+          });
+        }
+        else {
+          User.findOne({'username' : username}, function(err, userObj) {
+            if(!userObj) {
+              res.send("Err, user not found.");
+            }
+            else {
+              res.render('score2-prod', {
+                userObj : userObj
+              });
+            }
+          });
+        }
+      }
+      else {
+        res.redirect('/');
+      }
+    });
+    
+    
+  }
+  else {
+    User.findOne({'username' : username}, function(err, userObj) {
+      if(!userObj) {
+        res.send("Err, user not found.");
+      }
+      else {
+        res.render('score2-prod', {
+          userObj : userObj
+        });
+      }
+    });
+  }
 });
 
 
@@ -309,6 +384,7 @@ app.get('/github/callback', function(req, res) {
       console.log(githubUser);
       var githubUser = JSON.parse(githubUser);
       User.findOne({'email': githubUser.primaryEmail}, function(err, userObj) {
+        githubUser['isUser'] = true;
         if(err) {
           console.log(err);
         }
@@ -329,14 +405,14 @@ app.get('/github/callback', function(req, res) {
               console.log(err);
             }
             newSession(userObj._id, function(sessionObj) {
-              req.session.sid = "sessionObj._id";
+              req.session.sid = sessionObj._id;
               res.redirect("/" + userObj.username);
             });
           });
        }
        else {
           newSession(userObj._id, function(sessionObj) {
-            req.session.sid = "sessionObj._id";
+            req.session.sid = sessionObj._id;
             res.redirect("/" + userObj.username);
           });
       }

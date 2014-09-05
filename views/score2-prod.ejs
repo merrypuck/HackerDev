@@ -175,6 +175,27 @@
 			  background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
 			}
 			
+			#facebookLikeWrapper {
+				position: absolute;
+				margin-left: auto;
+				margin-right: auto;
+				left: 0;
+				right: 0;
+				width: 100px;
+				height: 200px;
+				overflow: visible;
+			}
+			.fb-like span{
+				overflow:visible !important; 
+				width:450px !important; 
+				margin-right:-375px;
+			}
+
+			@media screen and (max-width: 406px) {
+				.score {
+					top:175px;
+				}
+			}
 			@media screen and (max-width: 655px) {
 				#hireMe {
 					bottom:210px;
@@ -184,17 +205,26 @@
 			</style>
 
 	<body>
+		<div id="fb-root"></div>
+		<script>(function(d, s, id) {
+		  var js, fjs = d.getElementsByTagName(s)[0];
+		  if (d.getElementById(id)) return;
+		  js = d.createElement(s); js.id = id;
+		  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=333223006848871&version=v2.0";
+		  fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));</script>
 
 		<div class="jumbotron">
 	      	<div class="container">
 		        <div class='inline-logo'><%= userObj.name %></div>
 		        <div class='score'>
-		        	30
+		        	<%= Math.round(userObj.github_data.totalPoints) %>
 		        </div>
 	          
 	    	</div>
+	    	
 	       
-	        
+
 	      </div>
    		</div>
    		<div id='bottomBar'>
@@ -269,9 +299,11 @@
 		});
 		var userObj = <%- JSON.stringify(userObj) %>;
 		var userWebsite = "<%= userObj['github_data'].blog %>";
-		if(userWebsite) {
+		console.log(userWebsite);
+		if(userWebsite.length > 0 && userWebsite !== "null") {
 			personalWebsite.textContent = userWebsite;
 			personalBox.addEventListener("mouseover", function() {
+				console.log('mouseover');
 				personalBox.style.background = 'rgb(167,219,216)';
 				personalImage.style.display = 'none';
 				personalWebsite.style.display = 'block';
