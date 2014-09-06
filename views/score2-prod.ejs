@@ -6,7 +6,7 @@
 		<link href="/css/bootstrap-social.css" rel="stylesheet">
 		<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
 		<link rel="stylesheet" href="/css/pe-icon-7-stroke/css/pe-icon-7-stroke.css">
-
+		<meta property="og:image" content="<%= userObj.avatar_url %>" />
 		<!-- Optional - Adds useful class to manipulate icon font display -->
 		<link rel="stylesheet" href="/css/pe-icon-7-stroke/css/helper.css">
 
@@ -52,6 +52,9 @@
 				letter-spacing: -1px;
 				padding-top: 10px;
 			}
+			.topGithubUsers {
+				font-size: 20px;
+			}
 			.score {
 				height:150px;
 				width: 150px;
@@ -64,7 +67,7 @@
 				margin-right: auto;
 				left: 0;
 				right: 0;
-				top:100px;
+				top:145px;
 			}
 			#bottomBar {
 				width:100%;
@@ -119,9 +122,13 @@
 				position: absolute;
 				top:90px;
 				left:20px;
+				width:190px;
 				font-size: 1.2em;
 				display: none;
 
+			}
+			#personalWebsiteLink {
+				text-decoration: none;
 			}
 			#hireMe {
 				width: 250px;
@@ -137,6 +144,21 @@
 				color: #fff;
 				font-size: 40px;
 				line-height: 10px;
+			}
+			#improveScoreSignIn {
+				position: absolute;
+				margin-left: auto;
+				margin-right: auto;
+				top:350px;
+				left: 0;
+				right:0;
+				width: 200px;
+				display: none;
+
+			}
+			#improveScoreSignIn a{
+				float: left;
+				width: 200px;
 			}
 			#popupForm {
 				display: none;
@@ -185,15 +207,15 @@
 				height: 200px;
 				overflow: visible;
 			}
-			.fb-like span{
-				overflow:visible !important; 
-				width:450px !important; 
-				margin-right:-375px;
+			.fb-like {
+				position: absolute;
+				top:0;
+				
 			}
 
 			@media screen and (max-width: 406px) {
 				.score {
-					top:175px;
+					/*top:190px; */
 				}
 			}
 			@media screen and (max-width: 655px) {
@@ -205,27 +227,27 @@
 			</style>
 
 	<body>
-		<div id="fb-root"></div>
-		<script>(function(d, s, id) {
-		  var js, fjs = d.getElementsByTagName(s)[0];
-		  if (d.getElementById(id)) return;
-		  js = d.createElement(s); js.id = id;
-		  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=333223006848871&version=v2.0";
-		  fjs.parentNode.insertBefore(js, fjs);
-		}(document, 'script', 'facebook-jssdk'));</script>
-
+			
 		<div class="jumbotron">
 	      	<div class="container">
 		        <div class='inline-logo'><%= userObj.name %></div>
+		        <div class='topGithubUsers'>
+		        	Top <%= userObj.github_data.top %>% of all github users
+		        </div>
 		        <div class='score'>
 		        	<%= Math.round(userObj.github_data.totalPoints) %>
 		        </div>
 	          
 	    	</div>
 	    	
-	       
 
 	      </div>
+   		</div>
+   		<div id='improveScoreSignIn'>
+   		
+   			<a href="https://github.com/login/oauth/authorize?client_id=a1e0413182e4bcb57cca&scope=user,email,public_repo,notifications" class="btn btn-block btn-social btn-github">
+            	<i class="fa fa-github"></i> Improve Your Score
+          	</a>
    		</div>
    		<div id='bottomBar'>
    			<div id='githubBox'>
@@ -234,10 +256,12 @@
    				<div id='githubUsername'><%= userObj.username %></div>
    			</a>
    			</div>
-   			<div id='personalBox'>
-   				<img id='personalImage' src='<%= userObj.avatar_url %>'/>
-   				<div id='personalWebsite'>aaronlandy.com</div>
-   			</div>
+   			<a id='personalWebsiteLink'>
+	   			<div id='personalBox'>
+	   				<img id='personalImage' src='<%= userObj.avatar_url %>'/>
+	   				<div id='personalWebsite'></div>
+	   			</div>
+   			</a>
    		</div>
 
    		
@@ -279,29 +303,64 @@
 		</div>
 	</body>
 	<script>
+
+		var userObj = <%- JSON.stringify(userObj) %>;
+		var userId = "<%= userObj['_id'] %>";
+		var users_name = "<%= userObj['name'] %>";
+		var userWebsite = "<%= userObj['github_data'].blog %>";
+		var isUser = <%= userObj['github_data'].isUser %>;
 		var personalBox = document.getElementById('personalBox');
 		var personalImage = document.getElementById('personalImage');
 		var personalWebsite = document.getElementById('personalWebsite');
+		var personalWebsiteLink = document.getElementById('personalWebsiteLink');
 		var popupForm = document.getElementById('popupForm');
 		var hireMe = document.getElementById('hireMe');
 		var popupFormSubmit = document.getElementById('popupFormSubmit');
 		var hidePopup = document.getElementById('hidePopup');
+		var improveScoreSignIn = document.getElementById('improveScoreSignIn');
+
+		var first_name = document.getElementById('first_name');
+		var last_name = document.getElementById('last_name');
+		var email = document.getElementById('email');
+		var company = document.getElementById('company');
+
 		hireMe.addEventListener('click', function(){
 			popupForm.style.display = 'block';
 		});
 		popupFormSubmit.addEventListener('click', function() {
+			var xhr = new XMLHttpRequest();
+			var data = new FormData();
+	        data.append('first_name', first_name.value);
+	        data.append('last_name', last_name.value);
+	        data.append('email', email.value);
+	        data.append('user_id', userId);
+	        data.append('users_name', users_name);
+	        data.append('company', company.value);
+	        xhr.onreadystatechange = function() {
+	            if (xhr.readyState == 4) {
+	              var response = xhr.responseText;
+	              if(response === "true") {
+	                hireMe.textContent = 'Thanks!';
+					hireMe.style.background = "rgb(53, 243, 48)";
+	              }
+	              
+	            }
+	        }
+	        xhr.open('POST', 'http://letshack.herokuapp.com/savecompany', true);
+	        xhr.send(data);
+
 			popupForm.style.display = 'none';
-			hireMe.textContent = 'Thanks!';
-			hireMe.style.background = "rgb(53, 243, 48)";
+			
 		});
 		hidePopup.addEventListener('click', function() {
 			popupForm.style.display = 'none';
 		});
-		var userObj = <%- JSON.stringify(userObj) %>;
-		var userWebsite = "<%= userObj['github_data'].blog %>";
+		
 		console.log(userWebsite);
 		if(userWebsite.length > 0 && userWebsite !== "null") {
 			personalWebsite.textContent = userWebsite;
+			personalWebsiteLink.href = userWebsite;
+			personalWebsiteLink.target = "_blank";
 			personalBox.addEventListener("mouseover", function() {
 				console.log('mouseover');
 				personalBox.style.background = 'rgb(167,219,216)';
@@ -316,6 +375,8 @@
 				personalImage.style.display = 'block';
 			});
 		}
+		if(!isUser) {
+			improveScoreSignIn.style.display = 'block';
+		}
 	</script>
-	<script src='/js/jquery.min.js'></script>
 </html>

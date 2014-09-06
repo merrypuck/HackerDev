@@ -1,0 +1,141 @@
+<html>
+	<head>
+		<title>Hack</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"> 
+		<link href="/css/bootstrap.min.css" rel="stylesheet">
+		<link href="/css/bootstrap-social.css" rel="stylesheet">
+		<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" href="/css/pe-icon-7-stroke/css/pe-icon-7-stroke.css">
+
+		<!-- Optional - Adds useful class to manipulate icon font display -->
+		<link rel="stylesheet" href="/css/pe-icon-7-stroke/css/helper.css">
+
+		<style>
+
+			body{font-weight:300;-webkit-font-smoothing:antialiased}
+			h2{text-align:center;font-weight:300}
+			.btn-social-icon{margin-bottom:4px}
+			.jumbotron{height:100%;position:relative;background:rgb(105,210,231);font-size:16px;color:#fff;color:rgba(255,255,255,0.75);text-align:center;border-radius:0;margin-bottom: 0;padding-top:10px;padding-bottom: 100px;}.jumbotron h1{margin-bottom:15px;font-weight:300;letter-spacing:-1px;color:#fff;}
+			.jumbotron iframe{width:90px !important;height:20px !important;border:none;overflow:hidden;margin:2px}
+			.btn-outline{margin-top:15px;margin-bottom:15px;padding:18px 24px;font-size:inherit;font-weight:500;color:#fff;background-color:transparent;border-color:#fff;border-color:rgba(255,255,255,0.5);transition:all .1s ease-in-out}.btn-outline:hover,.btn-outline:active{color:#6c71c4;background-color:#fff;border-color:#fff}
+			.jumbotron p a,.jumbotron-links a{font-weight:500;color:#fff;transition:all .1s ease-in-out}
+			.jumbotron p a:hover,.jumbotron-links a:hover{text-shadow:0 0 10px rgba(255,255,255,0.55)}
+			.jumbotron-links{margin-top:15px;margin-bottom:0;padding-left:0;list-style:none;font-size:14px}.jumbotron-links li{display:inline}
+			.jumbotron-links li+li{margin-left:20px}
+			.how-to{padding:20px}.how-to h2{text-align:center}
+			.how-to li{font-size:21px;line-height:1.7;margin-top:20px}.how-to li p{font-size:16px;color:#555}
+			.how-to code{font-size:85%;word-wrap:break-word;white-space:normal}
+			footer{text-align:center;opacity:.8;padding:20px 0 40px}
+			.links{margin:0;list-style:none;padding-left:0}.links li{display:inline;padding:0 10px}
+			.social-class .social-hex{font-family:Monaco,Menlo,Consolas,"Courier New",monospace;font-size:10px;opacity:.3;float:right}
+			.social-class li{margin-bottom:4px}.social-class li:hover .social-hex{opacity:1}
+			.social-class li:hover code{background-color:#e8e8ee}
+			.social-class code{cursor:default}
+
+
+			.page-header {
+				height:80px;
+				margin: 0;
+				padding:0;
+			}
+			.logo {
+				font-size: 30px;
+				position: relative;
+				float: left;
+				padding:18px 0 0 24px;
+			}
+			.inline-logo {
+
+				font-size: 50px;
+				color:#444;
+				font-weight: 300;
+				letter-spacing: -1px;
+				padding-top: 10px;
+			}
+			.score {
+				height:150px;
+				width: 150px;
+				border-radius: 75px;
+				background:rgb(250,105,0);
+				font-size: 60px;
+				padding-top: 30px;
+				position: absolute;
+				margin-left: auto;
+				margin-right: auto;
+				left: 0;
+				right: 0;
+				top:100px;
+			}
+			.compareTitle {
+				position: absolute;
+				margin-left: auto;
+				margin-right: auto;
+				left: 0;
+				right: 0;
+				top:300px;
+				font-size: 36px;
+			}
+			#facebookOauth {
+				position: absolute;
+				margin-left: auto;
+				margin-right: auto;
+				left: 0;
+				right: 0;
+				top:375px;
+				width:375px;
+			}
+			#facebookOauth a {
+
+			}
+			#improveScore {
+				background:rgb(250,105,0);
+				height: 45px;
+				width: 375px;
+				position: absolute;
+				margin-left: auto;
+				margin-right: auto;
+				left: 0;
+				right: 0;
+				top:450px;
+				text-align: center;
+				border-radius: 10px;
+				font-size: 30px;
+				cursor: hand;
+				cursor: pointer;
+			}
+			#improveScore {
+				text-decoration: none;
+				color:#fff;
+			}
+			</style>
+
+	<body>
+
+		<div class="jumbotron">
+	      	<div class="container">
+		        <div class='inline-logo'>Aaron Landy</div>
+		        <div class='score'>
+		        	30
+		        </div>
+	          <div class='compareTitle'>Compare with Friends.</div>
+	          <div id='facebookOauth'>
+	          	<a class="btn btn-block btn-social btn-lg btn-facebook" onclick="_gaq.push(['_trackEvent', 'btn-social', 'click', 'btn-facebook']);">
+            	<i class="fa fa-facebook"></i> Sign in with Facebook
+          	  	</a>
+          	  </div>
+          	  <a id='improveScore' href='/aaln/improve'>
+          	  	<div >Improve your score</div>
+          	  </a>
+	    	</div>
+	       
+	        
+	      </div>
+   		</div>
+
+   		
+
+	</body>
+	<script>
+		</script>
+	<script src='/js/jquery.min.js'></script>
+</html>

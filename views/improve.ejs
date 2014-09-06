@@ -11,10 +11,11 @@
 		<link rel="stylesheet" href="/css/pe-icon-7-stroke/css/helper.css">
 
 		<style>
-			body{font-weight:300;-webkit-font-smoothing:antialiased;background-color:#6c71c4;}
+
+			body{font-weight:300;-webkit-font-smoothing:antialiased}
 			h2{text-align:center;font-weight:300}
 			.btn-social-icon{margin-bottom:4px}
-			.jumbotron{position:relative;font-size:16px;color:#fff;color:rgba(255,255,255,0.75);text-align:center;background-color:#6c71c4;border-radius:0}.jumbotron h1{margin-bottom:15px;font-weight:300;letter-spacing:-1px;color:#fff}
+			.jumbotron{height:100%;position:relative;background:rgb(105,210,231);font-size:16px;color:#fff;color:rgba(255,255,255,0.75);text-align:center;border-radius:0;margin-bottom: 0;padding-top:10px;padding-bottom: 100px;}.jumbotron h1{margin-bottom:15px;font-weight:300;letter-spacing:-1px;color:#fff;}
 			.jumbotron iframe{width:90px !important;height:20px !important;border:none;overflow:hidden;margin:2px}
 			.btn-outline{margin-top:15px;margin-bottom:15px;padding:18px 24px;font-size:inherit;font-weight:500;color:#fff;background-color:transparent;border-color:#fff;border-color:rgba(255,255,255,0.5);transition:all .1s ease-in-out}.btn-outline:hover,.btn-outline:active{color:#6c71c4;background-color:#fff;border-color:#fff}
 			.jumbotron p a,.jumbotron-links a{font-weight:500;color:#fff;transition:all .1s ease-in-out}
@@ -31,36 +32,107 @@
 			.social-class li:hover code{background-color:#e8e8ee}
 			.social-class code{cursor:default}
 
-		</style>
-	</head>
+
+			.page-header {
+				height:80px;
+				margin: 0;
+				padding:0;
+			}
+			.logo {
+				font-size: 30px;
+				position: relative;
+				float: left;
+				padding:18px 0 0 24px;
+			}
+			.inline-logo {
+
+				font-size: 50px;
+				color:#444;
+				font-weight: 300;
+				letter-spacing: -1px;
+				padding-top: 10px;
+			}
+			.score {
+				height:150px;
+				width: 150px;
+				border-radius: 75px;
+				background:rgb(250,105,0);
+				font-size: 60px;
+				padding-top: 30px;
+				position: absolute;
+				margin-left: auto;
+				margin-right: auto;
+				left: 0;
+				right: 0;
+				top:100px;
+				
+			}
+			.compareTitle {
+				position: absolute;
+				margin-left: auto;
+				margin-right: auto;
+				left: 0;
+				right: 0;
+				top:300px;
+				font-size: 36px;
+			}
+			#facebookOauth {
+				position: absolute;
+				margin-left: auto;
+				margin-right: auto;
+				left: 0;
+				right: 0;
+				top:375px;
+				width:375px;
+			}
+			#facebookOauth a {
+
+			}
+			#improveScore {
+				background:rgb(250,105,0);
+				height: 45px;
+				width: 375px;
+				position: absolute;
+				margin-left: auto;
+				margin-right: auto;
+				left: 0;
+				right: 0;
+				top:450px;
+				text-align: center;
+				border-radius: 10px;
+				font-size: 24px;
+				cursor: hand;
+				cursor: pointer;
+				line-height: 40px;
+				border: 1px solid rgb(220, 111, 32);
+			}
+			#improveScore {
+				text-decoration: none;
+				color:#fff;
+			}
+			</style>
 
 	<body>
+
 		<div class="jumbotron">
-	      <div class="container">
-	        <h1>What's your Hacker score?</h1>
-	        <p>
-	          Let's look at your <a href='#'>github</a> and find how badass of a
-	          <a href='#'>hacker</a> you are.
-	          
-	        </p>
-
-	        <a href='https://github.com/login/oauth/authorize?client_id=<%= client_id %>&scope=user,email,public_repo,notifications' class="btn btn-large btn-social btn-github" onclick="_gaq.push(['_trackEvent', 'btn-social', 'click', 'btn-github']);">
-	            <i class="fa fa-github"></i> Sign in with GitHub
-	          </a>
-
-
-
+	      	<div class="container">
+		        <div class='inline-logo'><%= userObj.name %></div>
+		        <div class='score'>
+		        	30
+		        </div>
+          	  <a id='improveScore' href='https://github.com/settings/profile'>
+          	  	<div >Add website to github.</div>
+          	  </a>
+	    	</div>
+	       
 	        
 	      </div>
    		</div>
-    	<!--
-		<div class='container'>
-			<div class="row">
-			  <div class="col-xs-6 col-sm-4">.col-md-4</div>
-			  <div class="col-xs-6 col-sm-4">.col-md-4</div>
-			  <div class="col-xs-6 col-sm-4">.col-md-4</div>
-			</div>
-		</div>
-	-->
+
+   		
+
 	</body>
+	<script>
+		</script>
+	<script src='/js/jquery.min.js'></script>
 </html>

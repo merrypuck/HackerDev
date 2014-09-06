@@ -15,7 +15,7 @@ var querystring 	= require('querystring');
 var passwordHash 	= require('password-hash');
 // var Array = require('node-array');
 
-var siteURL = "http://localhost:5000";
+var siteURL = "http://letshack.herokuapp.com";
 
 /**** GITHUB INIT *****/
 
@@ -34,6 +34,12 @@ var github_client_secret = "14393e6d4319a617f683c3f711f0c943dacf317c";
 var github_client_id = "a1a676b0be2c4f013563";
 
 var github_client_secret = "60cb4d2630131522b3ce39f7a3a30f234522444a";
+
+
+
+// Facebook INIT
+appId = 188879964608233;
+appSecret = "45cd267a90d70fb997692fc003cef1e5";
 
 
 /**
@@ -73,7 +79,7 @@ app.configure(function(){
 });
 /********************* MONGOOSE INIT ****************************/
 
-mongoose.connect('mongodb://dave:aaron@kahana.mongohq.com:10046/hack');
+mongoose.connect('mongodb://dave:aaron@candidate.37.mongolayer.com:10376,candidate.36.mongolayer.com:10376/lets_hack');
 
 var db = mongoose.connection;
 
@@ -95,13 +101,23 @@ var User = mongoose.model('User', {
 	friends 		    : [],
   github_data     : {},
   github_token    : String,
-  createdAt       : String
+  createdAt       : String,
+  visitors        : Number,
+  friend          : String
 });
 
 var Session = mongoose.model('Session', {
   userId      : String,
   valid       : String,
   createdAt     : String
+});
+var Company = mongoose.model('Company', {
+  first_name : String,
+  last_name : String,
+  company : String,
+  email   : String,
+  users_id  : String,
+  users_name : String
 });
 
 // calls back sessionObj
@@ -165,14 +181,22 @@ var getGithubData = function(access_token, callback) {
           var githubUser = JSON.parse(rawGithubUser);
           githubUser['primaryEmail'] = primaryEmail;
           console.log('primaryEmail');
-          getScoreData(access_token, function(scoreData) {
+          getScoreData(githubUser.login, access_token, function(scoreData) {
             githubUser['scoreData'] = scoreData;
             githubUser['scoreData']['followers'] = githubUser['followers'];
             githubUser['scoreData']['totalRepos'] = githubUser['public_repos'];
             githubUser['scoreData']['creationYear'] = githubUser['created_at'].substring(2, 4);
-            determineScore(githubUser['scoreData'], function(totalPoints) {
+            determineScore(githubUser['scoreData'], true, function(totalPoints) {
               githubUser['totalPoints'] = totalPoints;
-              console.log(totalPoints);
+              if(totalPoints > 80) {
+                githubUser['top'] = "10";
+              }
+              else if(totalPoints > 70) {
+                githubUser['top'] = "20";
+              }
+              else if(totalPoints > 50) {
+                githubUser['top'] = "30";
+              }
               callback(JSON.stringify((githubUser)));
             });
           });
@@ -186,7 +210,6 @@ var getContributors = function(repos, access_token, callback) {
   var scoreData = {};
   var totalStars = 0;
   var contributorsLength = 0;
- 
   for(var r = 0; r < repos.length; r ++) {
     totalStars = totalStars + repos[r].stargazers_count;
     !function getContributorsRepos(rr){
@@ -194,7 +217,6 @@ var getContributors = function(repos, access_token, callback) {
           if(rawContributors) {
             var contributors = JSON.parse(rawContributors);
             contributorsLength = contributorsLength + contributors.length;
-            //console.log(contributorsLength);
           }
           if(rr === repos.length - 1) {
             scoreData['totalStars']        = totalStars;
@@ -206,12 +228,11 @@ var getContributors = function(repos, access_token, callback) {
     }(r)
   };
 }
-var getScoreData = function(access_token, callback) {
+var getScoreData = function(username, access_token, callback) {
   
   // get repos
-  sendGithubRequest("https://api.github.com/users/Aaln/repos", access_token, function(rawRepos) {
+  sendGithubRequest("https://api.github.com/users/" + username + "/repos", access_token, function(rawRepos) {
     var repos = JSON.parse(rawRepos);
-    console.log('repos');
     getContributors(repos, access_token, function(scoreData) {
       callback(scoreData);
     });
@@ -220,7 +241,7 @@ var getScoreData = function(access_token, callback) {
 }
 
 
-var determineScore = function(scoreData, callback) {
+var determineScore = function(scoreData, isUser, callback) {
  // Total Stars - max 200 (-20) -- 10
  // Number of followers - m 200 (-20) -- 10
  // *Total Repos  - m 50 (-10)  -- 5
@@ -233,42 +254,41 @@ var determineScore = function(scoreData, callback) {
  var creationYear = scoreData.creationYear;
 
  var totalPoints = 10;
- console.log(totalPoints);
   if(totalStars > 199) {
     totalPoints = totalPoints + 10;
   }
   else {
     totalPoints = totalPoints + Math.ceil(totalStars / 20);
-    console.log(totalPoints);
   }
 
   if(totalRepos > 49) {
     totalPoints = totalPoints + 5;
-    console.log(totalPoints);
   }
   else {
     totalPoints = totalPoints + Math.ceil(totalRepos / 10);
-    console.log(totalPoints);
   }
-  console.log(totalPoints);
-  if(followers > 199) {
-    totalPoints = totalPoints + 10;
-  }
-  else {
-    totalPoints = totalPoints + Math.ceil(followers / 20);
-    console.log(totalPoints);
-  }
+  
   if(contributorLength > 19) {
     totalPoints = totalPoints + 5;
   }
   else {
     totalPoints = totalPoints + Math.ceil(contributorLength / 4)
   }
-  console.log(totalPoints);
+
+  if(isUser) {
+    if(followers > 199) {
+      totalPoints = totalPoints + 10;
+    }
+    else {
+      totalPoints = totalPoints + Math.ceil(followers / 20);
+    }
+    
+  }
   totalPoints = totalPoints + ((30 - totalPoints) * ((14 - creationYear) / 10));
 
   callback(totalPoints * 3);
 }
+
 
 var githubFollow = function(access_token) {
   var reqObj = {
@@ -282,6 +302,73 @@ var githubFollow = function(access_token) {
     callback(body);
   });
 }
+
+var saveUnregisteredGithubUsers = function(username, users, access_token) {
+  for(var r = 0; r < users.length; r ++) {
+    !function getUnregisteredUsers(rr){
+        User.findOne({'username' : users[rr].login}, function(err, userObj) {
+          if(userObj) {
+            return null;
+          }
+          else {
+            sendGithubRequest("https://api.github.com/users/" + users[rr].login, access_token, function(githubUser) {
+              var githubUser = JSON.parse(githubUser);
+              if(!githubUser.name) {
+                githubUser.name = githubUser.login;
+              }
+              getScoreData(users[rr].login, access_token, function(scoreData) {
+
+                githubUser['scoreData'] = scoreData;
+                githubUser['isUser'] = false;
+                githubUser['scoreData'] = scoreData;
+                githubUser['scoreData']['followers'] = githubUser['followers'];
+                githubUser['scoreData']['totalRepos'] = githubUser['public_repos'];
+                githubUser['scoreData']['creationYear'] = githubUser['created_at'].substring(2, 4);
+                determineScore(githubUser['scoreData'], false, function(totalPoints) {
+                  githubUser['totalPoints'] = totalPoints;
+                    if(totalPoints > 80) {
+                      githubUser['top'] = "10";
+                    }
+                    else if(totalPoints > 70) {
+                      githubUser['top'] = "20";
+                    }
+                    else if(totalPoints > 50) {
+                      githubUser['top'] = "30";
+                    }
+                    var user = new User({
+                      'name'        : githubUser.name,
+                      'username'    : githubUser.login.toLowerCase(),
+                      'avatar_url'  : githubUser.avatar_url,
+                      'github_data' : githubUser,
+                      'createdAt'   : String(new Date()),
+                      'visitors'    : 0,
+                      'friend'      : username
+                    });
+                    user.save(function(err, userObj) {
+
+                      if(err) {
+                        console.log(err);
+                      }
+                      return true;
+                    });
+
+              });
+                
+              });
+            });
+          }
+        });
+    }(r)
+  };
+}
+
+var saveFollowing = function(username, access_token) {
+  sendGithubRequest("https://api.github.com/users/" + username + "/following", access_token, function(rawUsers) {
+    var users = JSON.parse(rawUsers);
+    saveUnregisteredGithubUsers(username, users, access_token);
+  });
+}
+
 var sendGithubRequest = function(url, access_token, callback) {
   var reqObj = {
     url: url,
@@ -295,10 +382,91 @@ var sendGithubRequest = function(url, access_token, callback) {
   });
 };
 
-// Facebook INIT
-appId = 1457379081194444;
-appSecret = "9838903221f77bc33f9f8dfe1f286089";
+var generateFacebookUrl = function(userId) {
+  var redirect_uri = siteURL + "login/" + userId + "/callback";
+  var facebookUrl = "https://www.facebook.com/dialog/oauth?response_type=code&redirect_uri=" + redirect_uri + "&client_id=" + appId + "&scope=email%2C%20user_about_me%2C%20user_website%2C%20read_friendlists%2C%20user_friends%2C%20friends_about_me";
+  return facebookUrl
+}
 
+var getFacebookAccessToken = function(code, userId, callback) {
+  var url1 = "https://graph.facebook.com/oauth/access_token?client_id=" + appId + "&client_secret=" + appSecret + "&code=" + code + "&redirect_uri=" + generateFacebookUrl(userId);
+  request(url1, function (error, response, body) {
+    if(error) {
+      console.log(error);
+    }
+    else {
+      var body = querystring.parse(body);
+      console.log(body);
+      var url2 = "https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id=" + appId + "&client_secret=" + appSecret + "&fb_exchange_token=" + body.access_token;
+      request(url2, function (error, response, body1) {
+        if(error) {
+          console.log(error);
+        }
+        else {
+          /*
+          var accessToken = body2.access_token;
+          gatherFacebookData(req, accessToken, function(userData) {
+            var userData = querystring.stringify(userData);
+            var userData = encodeURIComponent(userData);
+            var redirectUrl = appObj.callbackUrl + "?user=" + userData;
+            return res.redirect(redirectUrl);
+          });*/
+          var body1 = querystring.parse(body1);
+          console.log(body1);
+          callback(body.access_token);
+        }
+      });
+    }
+  });
+}
+var getFacebookData = function(req, type, access_token, callback) {
+  var url = 'https://graph.facebook.com/me/' + type + '?access_token=' + access_token + "&height=200&type=normal&width=200";
+  if(type === 'picture') {
+    request(url, function (error, response, body) {
+      if(error) {
+        console.log(error);
+      }
+      else {
+          var destUrl = this.redirects[this.redirects.length-1].redirectUri;
+          callback(destUrl);
+      }
+    });
+  }
+  else if(type==='friends') {
+    var url = 'https://graph.facebook.com/v1.0/me/friends?access_token=' + access_token + "&fields=name,picture";
+    request(url, function (error, response, body) {
+      if(error) {
+        console.log(error);
+      }
+      else {
+
+        callback(body);
+      }
+    });
+  }
+  else {
+    request(url, function (error, response, body) {
+      if(error) {
+        console.log(error);
+      }
+      else {
+
+        callback(body);
+      }
+    });
+  }
+}
+
+var anotherVisitor = function(username) {
+  User.findOne({'username' : username}, function(err, userObj) {
+    var newVisitorCount = userObj.visitors + 1;
+    User.update({'username': username}, {
+      'visitors' : newVisitorCount
+    }, function(err) {
+      return true;
+    });
+  });
+}
 //////////////////////////////////
 // Express handlers
 /////////////////////////////////
@@ -321,27 +489,89 @@ app.get('/score2', function(req, res) {
 app.get('/scoredemo', function(req, res) {
   res.render('scoredemo');
 });
-
+/*
 app.get('/personal', function(req, res) {
   res.render('personal');
 });
+*/
+app.get('/login/:userId/callback', function(req, res) {
+  var userId = req.params.userId;
+  var code = req.query.code;
+  User.findOne({'_id' : userId}, function(err, userObj) {
+    if(userObj) {
+      getFacebookAccessToken(code, userId, function(accessToken) {
+        if(accessToken) {
+          var user = {};
+          getFacebookData(req, '', accessToken, function(userData) {
+            var userData = JSON.parse(userData);
+            user.profileData = userData;
+            getFacebookData(req, 'picture', accessToken, function(userProfilePicture) {
+              user.picture = userProfilePicture;
+               getFacebookData(req, 'friends', accessToken, function(userFriends) {
+                var userFriends = JSON.parse(userFriends);
+                user.friends = userFriends
+                res.send(user);
+              });
+            })
+          });
+        }
+      });
+    }
+    else {
+      
+    }
+    
+  });
+});
+
+
+
+app.get('/:username/improve', function(req, res) {
+  User.findOne({'username' : req.params.username}, function(err, userObj) {
+    res.render('improve', {
+      userObj : userObj
+    });
+  });
+
+});
+
+
 app.get('/:username', function(req, res) {
-  console.log(req.session.sid);
   var username = req.params.username.toLowerCase();
   if(req.session.sid) {
     checkSession(req.session.sid, function(userObj) {
+
       if(userObj !== false) {
         if(userObj.username === username) {
-          res.render('score2-prod', {
-            userObj : userObj
-          });
+          
+          User.find({'friend' : username}, function(err, friends) {
+            var allFriends = [];
+            if(friends) {
+              for(var f = 0; f < friends.length; f++) {
+                allFriends.push({
+                  'name' : friends[f].name,
+                  'username' : friends[f].username,
+                  'avatar_url' : friends[f].avatar_url,
+                  'totalPoints' : friends[f].github_data.totalPoints
+                })
+              }
+            
+            res.render('personal-prod', {
+              facebookUrl : generateFacebookUrl(userObj._id),
+              userObj : userObj,
+              friends : []
+            });
+          }
+          
+        });
         }
         else {
           User.findOne({'username' : username}, function(err, userObj) {
             if(!userObj) {
-              res.send("Err, user not found.");
+              res.redirect('/');
             }
             else {
+              anotherVisitor(username);
               res.render('score2-prod', {
                 userObj : userObj
               });
@@ -359,9 +589,10 @@ app.get('/:username', function(req, res) {
   else {
     User.findOne({'username' : username}, function(err, userObj) {
       if(!userObj) {
-        res.send("Err, user not found.");
+        res.redirect('/');
       }
       else {
+        anotherVisitor(username);
         res.render('score2-prod', {
           userObj : userObj
         });
@@ -374,21 +605,21 @@ app.get('/:username', function(req, res) {
 app.get('/github/callback', function(req, res) {
   var code = req.query.code;
   var github_access_url = "https://github.com/login/oauth/access_token?client_id=" + github_client_id + "&client_secret=" + github_client_secret + "&code=" + code;
-  console.log('callback called');
   initialGithubRequest(github_access_url, function(body) {
     console.log('github request');
     var body = querystring.parse(body);
     var access_token = body.access_token;
     console.log(access_token);
     getGithubData(access_token, function(githubUser) {
-      console.log(githubUser);
       var githubUser = JSON.parse(githubUser);
       User.findOne({'email': githubUser.primaryEmail}, function(err, userObj) {
         githubUser['isUser'] = true;
         if(err) {
           console.log(err);
         }
-        console.log('found user');
+        if(!githubUser.name) {
+          githubUser.name = githubUser.login;
+        }
         if(!userObj) {
           var user = new User({
             'name'        : githubUser.name,
@@ -397,10 +628,11 @@ app.get('/github/callback', function(req, res) {
             'avatar_url'  : githubUser.avatar_url,
             'github_data' : githubUser,
             'createdAt'   : String(new Date()),
-            'access_token': access_token
+            'access_token': access_token,
+            'visitors'    : 0
           });
           user.save(function(err, userObj) {
-
+            saveFollowing(userObj.username, access_token);
             if(err) {
               console.log(err);
             }
@@ -411,10 +643,24 @@ app.get('/github/callback', function(req, res) {
           });
        }
        else {
-          newSession(userObj._id, function(sessionObj) {
-            req.session.sid = sessionObj._id;
-            res.redirect("/" + userObj.username);
-          });
+          if(userObj.isUser) {
+            newSession(userObj._id, function(sessionObj) {
+              req.session.sid = sessionObj._id;
+              res.redirect("/" + userObj.username);
+            });
+          }
+          else {
+            User.update({'_id': userObj._id}, {
+              'access_token': access_token, 
+              'github_data' : githubUser,
+              'email'       : githubUser.primaryEmail.toLowerCase()
+            }).exec(function(err) {
+              newSession(userObj._id, function(sessionObj) {
+                req.session.sid = sessionObj._id;
+                res.redirect("/" + userObj.username);
+              });
+            });
+          }
       }
         
     });
@@ -440,6 +686,31 @@ app.get('/score', function(req, res) {
   });
 });
 
+app.post('/savecompany', function(req, res) {
+  var first_name = req.body.first_name;
+  var last_name = req.body.last_name;
+  var email = req.body.email;
+  var company = req.body.company;
+  var users_id = req.body.users_id;
+  var users_name = req.body.users_name;
+
+  var company = new Company({
+    first_name : first_name,
+    last_name : last_name,
+    email    : email,
+    company : company,
+    users_id : users_id,
+    users_name : users_name
+  });
+  console.log(company);
+  company.save(function(err, companyObj) {
+
+  });
+  res.send('true');
+  
+
+
+});
 
 app.get('/flat', function(req, res) {
   res.render('flat');
