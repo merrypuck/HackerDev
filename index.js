@@ -555,13 +555,13 @@ app.get('/:username', function(req, res) {
                   'totalPoints' : friends[f].github_data.totalPoints
                 })
               }
-            
+            }
             res.render('personal-prod', {
               facebookUrl : generateFacebookUrl(userObj._id),
               userObj : userObj,
-              friends : []
+              friends : allFriends
             });
-          }
+          
           
         });
         }
