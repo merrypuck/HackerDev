@@ -535,7 +535,6 @@ app.get('/:username/improve', function(req, res) {
 
 });
 
-
 app.get('/:username', function(req, res) {
   var username = req.params.username.toLowerCase();
   if(req.session.sid) {
