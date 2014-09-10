@@ -76,6 +76,11 @@ var Company = mongoose.model('Company', {
   users_name : String
 });
 
+var Website = mongoose.model('Website', {
+  website : String,
+  email : String
+});
+
 //////////////////////////////////
 // Express handlers
 /////////////////////////////////
@@ -84,6 +89,22 @@ var Company = mongoose.model('Company', {
 app.get('/', function(req, res) {
 	res.render('index');
 	
+});
+
+app.post('/newwebsite', function(req, res) {
+  var website_url = req.body.website_url;
+  var email = req.body.email;
+  var website = new Website({
+    website : website_url,
+    email : email
+  });
+  website.save(function(err) {
+    if(err) {
+      console.log(err);
+    }
+    res.send('true');
+  });
+  
 });
 
 

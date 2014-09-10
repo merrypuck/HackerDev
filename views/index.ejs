@@ -37,7 +37,7 @@
 					<div class="simform-inner">
 						<ol class="questions">
 							<li>
-								<span><label for="q1">Website URL?</label></span>
+								<span><label for="q1">Website?</label></span>
 								<input id="q1" name="q1" type="text"/>
 							</li>
 							
@@ -65,22 +65,36 @@
 		<script src="js/minimalForm/stepsForm.js"></script>
 		<script>
 			var theForm = document.getElementById( 'theForm' );
+			var q1 = document.getElementById('q1');
+			var q2 = document.getElementById('q2');
+
 
 			new stepsForm( theForm, {
 				onSubmit : function( form ) {
 					// hide form
 					classie.addClass( theForm.querySelector( '.simform-inner' ), 'hide' );
-
+					var wentThrough = 0;
 					/*
 					form.submit()
 					or
 					AJAX request (maybe show loading indicator while we don't have an answer..)
 					*/
-
-					// let's just simulate something...
 					var messageEl = theForm.querySelector( '.final-message' );
 					messageEl.innerHTML = 'Thank you! We\'ll be in touch.';
 					classie.addClass( messageEl, 'show' );
+					
+					var xhr = new XMLHttpRequest();
+					var data = new FormData();
+			        data.append('website_url', q1.value);
+			        data.append('email', q2.value);
+			        xhr.onreadystatechange = function() {
+			            if (xhr.readyState == 4) {
+			              // let's just simulate something...
+							
+			            }
+			        }
+			        xhr.open('POST', 'http://localhost:5000/newwebsite', true);
+			        xhr.send(data);
 				}
 			} );
 		</script>
