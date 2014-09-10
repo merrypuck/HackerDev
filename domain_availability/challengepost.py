@@ -11,7 +11,7 @@ challengepostListing = client.hack.challengepostListing
 
 driver = webdriver.Chrome('../chromedriver')
 def domainAvailDomainr(query, extension):
-		query = query.replace(" ", "").replace("\"", "").replace("\n", "").replace(u"“", "").replace(u"”", "").replace(u'\xa0', u'').replace(u'\u2022', u'').replace(u'\u2026', '').replace(u"\u2018", '').replace(u"\u2019", '').replace(u'\xe9', '').replace(u'\xb4', '')
+		query = query.replace(" ", "").replace("\"", "").replace("\n", "").replace(u"“", "").replace(u"”", "").replace(u'\xa0', u'').replace(u'\u2022', u'').replace(u'\u2026', '').replace(u"\u2018", '').replace(u"\u2019", '').replace(u'\xe9', '').replace(u'\xb4', '').replace('+', '')
 
 		if len(query) == 0:
 			return ""
