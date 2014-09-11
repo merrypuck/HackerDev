@@ -14,15 +14,41 @@
 		<link rel="stylesheet" type="text/css" href="css/minimalForm/component.css" />
 		<script src="js/minimalForm/modernizr.custom.js"></script>
 		<style>
+			body {
+				background-image:url(images/wood_pattern.jpg) !important;
+				background-color: #E1C192;
+			}
 			.codrops-header {
 				background: #6c71c4;
 				color: #fff;
+				
+
+				font-weight: 300;
+				color: #fff;
+				
 			}
+			.codrops-header h1 {
+				font-size: 4em;
+			}
+			.codrops-header span {
+				color: #000;
+				text-shadow: 0 1px 1px rgba(255,255,255,0.6);
+				font-family: Cambria, Georgia, serif;
+				font-style: italic;
+				letter-spacing: 3px;
+			}
+			
 			.questions li {
 				color:#fff;
 			}
 			.questions li input {
 
+			}
+			.questions li span {
+				font-size: 1.5em;
+			}
+			.final-message {
+				display: none;
 			}
 		</style>
 	</head>
@@ -57,7 +83,10 @@
 							<span class="error-message"></span>
 						</div><!-- / controls -->
 					</div><!-- /simform-inner -->
-					<span class="final-message"></span>
+					<div class="final-message">
+						<a class="btn btn-block btn-social btn-github" onclick="_gaq.push(['_trackEvent', 'btn-social', 'click', 'btn-github']);">
+      					</a>
+					</div>
 				</form><!-- /simform -->			
 			</section>
 		</div><!-- /container -->
@@ -80,7 +109,9 @@
 					AJAX request (maybe show loading indicator while we don't have an answer..)
 					*/
 					var messageEl = theForm.querySelector( '.final-message' );
-					messageEl.innerHTML = 'Thank you! We\'ll be in touch.';
+					messageEl.style.display = 'block';
+					messageEl.textContent = 'Thank you! We\'ll be in touch.';
+					
 					classie.addClass( messageEl, 'show' );
 					
 					var xhr = new XMLHttpRequest();

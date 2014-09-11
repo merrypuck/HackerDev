@@ -12,6 +12,12 @@ var bodyParser 		= require('body-parser')
 var csv 			= require("fast-csv");
 var querystring 	= require('querystring');
 
+var webdriver = require('selenium-webdriver');
+
+var driver = new webdriver.Builder().
+   withCapabilities(webdriver.Capabilities.phantomjs()).
+   build();
+
 
 //////////////////////////////////
 // Express app config
@@ -81,6 +87,8 @@ var Website = mongoose.model('Website', {
   email : String
 });
 
+function parseData() {}
+
 //////////////////////////////////
 // Express handlers
 /////////////////////////////////
@@ -90,6 +98,17 @@ app.get('/', function(req, res) {
 	res.render('index');
 	
 });
+
+
+app.post('/webdetails', function(req, res) {
+  var website_url = req.body.website_url;
+  driver.get(website_url);
+  driver.getPageSource().then(function(source) {
+    console.log(source);
+    
+  });
+});
+
 
 app.post('/newwebsite', function(req, res) {
   var website_url = req.body.website_url;
@@ -106,6 +125,8 @@ app.post('/newwebsite', function(req, res) {
   });
   
 });
+
+
 
 
 
