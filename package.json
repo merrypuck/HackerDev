@@ -20,7 +20,8 @@
     "path": "",
     "querystring ": "",
     "request": "",
-    "socket.io": "0.9.x"
+    "socket.io": "0.9.x",
+    "utils-merge":""
   },
   "description": "parkour",
   "main": "index.js",

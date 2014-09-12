@@ -1,16 +1,16 @@
-var express 		= require('express.io');
-var app 			= express();
-var request 		= require('request');
-var moment 			= require('moment');
-var _ 				= require('lodash');
-var fs				= require('fs');
-var http			= require('http');
-var mongoose		= require('mongoose');
-var connect 		= require('connect');
-var json 			= require('json');
-var bodyParser 		= require('body-parser')
-var querystring 	= require('querystring');
-
+var express     = require('express.io');
+var app       = express();
+var request     = require('request');
+var moment      = require('moment');
+var _         = require('lodash');
+var fs        = require('fs');
+var http      = require('http');
+var mongoose    = require('mongoose');
+var connect     = require('connect');
+var json      = require('json');
+var bodyParser    = require('body-parser')
+var csv       = require("fast-csv");
+var querystring   = require('querystring');
 var webdriver = require('selenium-webdriver');
 
 var driver = new webdriver.Builder().
