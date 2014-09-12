@@ -129,6 +129,8 @@
 
 		// current question
 		var currentQuestion = this.questions[ this.current ];
+		passDataToServer(this.current, currentQuestion.children[1].value);
+		// console.log(currentQuestion.children[1].value);
 
 		// increment current question iterator
 		++this.current;

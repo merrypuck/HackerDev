@@ -1,140 +1,513 @@
 0 info it worked if it ends with ok
-1 verbose cli [ 'node',
-1 verbose cli   '/usr/local/bin/npm',
-1 verbose cli   'install',
-1 verbose cli   'selenium-webdriver',
-1 verbose cli   '-g' ]
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', 'socket.io' ]
 2 info using npm@1.4.9
 3 info using node@v0.10.28
-4 verbose cache add [ 'selenium-webdriver', null ]
-5 verbose cache add name=undefined spec="selenium-webdriver" args=["selenium-webdriver",null]
-6 verbose parsed url { protocol: null,
-6 verbose parsed url   slashes: null,
-6 verbose parsed url   auth: null,
-6 verbose parsed url   host: null,
-6 verbose parsed url   port: null,
-6 verbose parsed url   hostname: null,
-6 verbose parsed url   hash: null,
-6 verbose parsed url   search: null,
-6 verbose parsed url   query: null,
-6 verbose parsed url   pathname: 'selenium-webdriver',
-6 verbose parsed url   path: 'selenium-webdriver',
-6 verbose parsed url   href: 'selenium-webdriver' }
-7 silly lockFile 2800069c-selenium-webdriver selenium-webdriver
-8 verbose lock selenium-webdriver /Users/aaron/.npm/2800069c-selenium-webdriver.lock
-9 silly lockFile 2800069c-selenium-webdriver selenium-webdriver
-10 silly lockFile 2800069c-selenium-webdriver selenium-webdriver
-11 verbose addNamed [ 'selenium-webdriver', '' ]
-12 verbose addNamed [ null, '*' ]
-13 silly lockFile 0cf90123-selenium-webdriver selenium-webdriver@
-14 verbose lock selenium-webdriver@ /Users/aaron/.npm/0cf90123-selenium-webdriver.lock
-15 silly addNameRange { name: 'selenium-webdriver', range: '*', hasData: false }
-16 verbose url raw selenium-webdriver
-17 verbose url resolving [ 'https://registry.npmjs.org/', './selenium-webdriver' ]
-18 verbose url resolved https://registry.npmjs.org/selenium-webdriver
-19 info trying registry request attempt 1 at 21:20:01
-20 verbose etag "1O7UAS595T2BJNOQPJ06DJFUI"
-21 http GET https://registry.npmjs.org/selenium-webdriver
-22 http 200 https://registry.npmjs.org/selenium-webdriver
-23 silly registry.get cb [ 200,
-23 silly registry.get   { date: 'Thu, 11 Sep 2014 01:20:02 GMT',
-23 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
-23 silly registry.get     etag: '"3MOK6L2TM24UPXT4RCCD0RCA3"',
-23 silly registry.get     'content-type': 'application/json',
-23 silly registry.get     'cache-control': 'max-age=60',
-23 silly registry.get     'content-length': '22599',
-23 silly registry.get     'accept-ranges': 'bytes',
-23 silly registry.get     via: '1.1 varnish',
-23 silly registry.get     age: '69526',
-23 silly registry.get     'x-served-by': 'cache-jfk1034-JFK',
-23 silly registry.get     'x-cache': 'HIT',
-23 silly registry.get     'x-cache-hits': '1',
-23 silly registry.get     'x-timer': 'S1410398402.173856,VS0,VE0',
-23 silly registry.get     vary: 'Accept',
-23 silly registry.get     'keep-alive': 'timeout=10, max=50',
-23 silly registry.get     connection: 'Keep-Alive' } ]
-24 silly addNameRange number 2 { name: 'selenium-webdriver', range: '*', hasData: true }
-25 silly addNameRange versions [ 'selenium-webdriver',
-25 silly addNameRange   [ '2.29.0',
-25 silly addNameRange     '2.29.1',
-25 silly addNameRange     '2.30.0',
-25 silly addNameRange     '2.31.0',
-25 silly addNameRange     '2.32.0',
-25 silly addNameRange     '2.32.1',
-25 silly addNameRange     '2.33.0',
-25 silly addNameRange     '2.34.0',
-25 silly addNameRange     '2.34.1',
-25 silly addNameRange     '2.35.0',
-25 silly addNameRange     '2.35.1',
-25 silly addNameRange     '2.35.2',
-25 silly addNameRange     '2.37.0',
-25 silly addNameRange     '2.38.0',
-25 silly addNameRange     '2.38.1',
-25 silly addNameRange     '2.39.0',
-25 silly addNameRange     '2.40.0',
-25 silly addNameRange     '2.41.0',
-25 silly addNameRange     '2.42.0',
-25 silly addNameRange     '2.42.1' ] ]
-26 verbose addNamed [ 'selenium-webdriver', '2.42.1' ]
-27 verbose addNamed [ '2.42.1', '2.42.1' ]
-28 silly lockFile afd5c8d8-selenium-webdriver-2-42-1 selenium-webdriver@2.42.1
-29 verbose lock selenium-webdriver@2.42.1 /Users/aaron/.npm/afd5c8d8-selenium-webdriver-2-42-1.lock
-30 silly lockFile afd5c8d8-selenium-webdriver-2-42-1 selenium-webdriver@2.42.1
-31 silly lockFile afd5c8d8-selenium-webdriver-2-42-1 selenium-webdriver@2.42.1
-32 silly lockFile 0cf90123-selenium-webdriver selenium-webdriver@
-33 silly lockFile 0cf90123-selenium-webdriver selenium-webdriver@
-34 silly resolved [ { name: 'selenium-webdriver',
-34 silly resolved     version: '2.42.1',
-34 silly resolved     description: 'The official WebDriver JavaScript bindings from the Selenium project',
-34 silly resolved     keywords: [ 'automation', 'selenium', 'testing', 'webdriver', 'webdriverjs' ],
-34 silly resolved     homepage: 'https://code.google.com/p/selenium/',
-34 silly resolved     bugs: { url: 'https://code.google.com/p/selenium/issues/list' },
-34 silly resolved     main: './index',
-34 silly resolved     repository: { type: 'git', url: 'https://code.google.com/p/selenium/' },
-34 silly resolved     engines: { node: '>= 0.8.x' },
-34 silly resolved     devDependencies: { mocha: '~1.10.0' },
-34 silly resolved     scripts: { test: 'node_modules/mocha/bin/mocha -R list --recursive test' },
-34 silly resolved     readme: '# selenium-webdriver\n\n## Installation\n\nInstall the latest published version using `npm`:\n\n    npm install selenium-webdriver\n\nIn addition to the npm package, you will to download the WebDriver\nimplementations you wish to utilize. As of 2.34.0, `selenium-webdriver`\nnatively supports the [ChromeDriver](http://chromedriver.storage.googleapis.com/index.html).\nSimply download a copy and make sure it can be found on your `PATH`. The other\ndrivers (e.g. Firefox, Internet Explorer, and Safari), still require the\n[standalone Selenium server](http://selenium-release.storage.googleapis.com/index.html).\n\n### Running the tests\n\nTo run the tests, you will need to download a copy of the\n[ChromeDriver](http://chromedriver.storage.googleapis.com/index.html) and make\nsure it can be found on your `PATH`.\n\n    npm test selenium-webdriver\n\nTo run the tests against multiple browsers, download the\n[Selenium server](http://selenium-release.storage.googleapis.com/index.html) and\nspecify its location through the `SELENIUM_SERVER_JAR` environment variable.\nYou can use the `SELENIUM_BROWSER` environment variable to define a\ncomma-separated list of browsers you wish to test against. For example:\n\n    export SELENIUM_SERVER_JAR=path/to/selenium-server-standalone-2.33.0.jar\n    SELENIUM_BROWSER=chrome,firefox npm test selenium-webdriver\n\n## Usage\n\n\n    var webdriver = require(\'selenium-webdriver\');\n\n    var driver = new webdriver.Builder().\n        withCapabilities(webdriver.Capabilities.chrome()).\n        build();\n\n    driver.get(\'http://www.google.com\');\n    driver.findElement(webdriver.By.name(\'q\')).sendKeys(\'webdriver\');\n    driver.findElement(webdriver.By.name(\'btnG\')).click();\n    driver.wait(function() {\n      return driver.getTitle().then(function(title) {\n        return title === \'webdriver - Google Search\';\n      });\n    }, 1000);\n\n    driver.quit();\n\n## Documentation\n\nAPI documentation is included in the docs module. The API documentation for the\ncurrent release are also available online from the [Selenium project](http://selenium.googlecode.com/git/docs/api/javascript/index.html "API docs"). A full user guide is available on the\n[Selenium project wiki](http://code.google.com/p/selenium/wiki/WebDriverJs "User guide").\n\n## Issues\n\nPlease report any issues using the [Selenium issue tracker](https://code.google.com/p/selenium/issues/list).\n\n## License\n\nCopyright 2009-2014 Software Freedom Conservancy\n\nLicensed under the Apache License, Version 2.0 (the "License");\nyou may not use this file except in compliance with the License.\nYou may obtain a copy of the License at\n\n     http://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software\ndistributed under the License is distributed on an "AS IS" BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\nSee the License for the specific language governing permissions and\nlimitations under the License.\n',
-34 silly resolved     readmeFilename: 'README.md',
-34 silly resolved     _id: 'selenium-webdriver@2.42.1',
-34 silly resolved     _shasum: '61984d1583b89c80a9f3bf31623d00bcc82a8d0e',
-34 silly resolved     _from: 'selenium-webdriver@',
-34 silly resolved     _resolved: 'https://registry.npmjs.org/selenium-webdriver/-/selenium-webdriver-2.42.1.tgz' } ]
-35 info install selenium-webdriver@2.42.1 into /usr/local/lib
-36 info installOne selenium-webdriver@2.42.1
-37 info /usr/local/lib/node_modules/selenium-webdriver unbuild
-38 verbose tar unpack /Users/aaron/.npm/selenium-webdriver/2.42.1/package.tgz
-39 silly lockFile 6d1a73b8--node-modules-selenium-webdriver tar:///usr/local/lib/node_modules/selenium-webdriver
-40 verbose lock tar:///usr/local/lib/node_modules/selenium-webdriver /Users/aaron/.npm/6d1a73b8--node-modules-selenium-webdriver.lock
-41 silly lockFile ddd27fb1-ium-webdriver-2-42-1-package-tgz tar:///Users/aaron/.npm/selenium-webdriver/2.42.1/package.tgz
-42 verbose lock tar:///Users/aaron/.npm/selenium-webdriver/2.42.1/package.tgz /Users/aaron/.npm/ddd27fb1-ium-webdriver-2-42-1-package-tgz.lock
-43 silly gunzTarPerm modes [ '755', '644' ]
-44 error Error: EACCES, mkdir '/usr/local/lib/node_modules/selenium-webdriver'
-44 error  { [Error: EACCES, mkdir '/usr/local/lib/node_modules/selenium-webdriver']
-44 error   errno: 3,
-44 error   code: 'EACCES',
-44 error   path: '/usr/local/lib/node_modules/selenium-webdriver',
-44 error   fstream_type: 'Directory',
-44 error   fstream_path: '/usr/local/lib/node_modules/selenium-webdriver',
-44 error   fstream_class: 'DirWriter',
-44 error   fstream_stack:
-44 error    [ '/usr/local/lib/node_modules/npm/node_modules/fstream/lib/dir-writer.js:36:23',
-44 error      '/usr/local/lib/node_modules/npm/node_modules/mkdirp/index.js:37:53',
-44 error      'Object.oncomplete (fs.js:107:15)' ] }
-45 error Please try running this command again as root/Administrator.
-46 error System Darwin 13.3.0
-47 error command "node" "/usr/local/bin/npm" "install" "selenium-webdriver" "-g"
-48 error cwd /Users/aaron/code/nodejs/hackerDev
-49 error node -v v0.10.28
-50 error npm -v 1.4.9
-51 error path /usr/local/lib/node_modules/selenium-webdriver
-52 error fstream_path /usr/local/lib/node_modules/selenium-webdriver
-53 error fstream_type Directory
-54 error fstream_class DirWriter
-55 error code EACCES
-56 error errno 3
-57 error stack Error: EACCES, mkdir '/usr/local/lib/node_modules/selenium-webdriver'
-58 error fstream_stack /usr/local/lib/node_modules/npm/node_modules/fstream/lib/dir-writer.js:36:23
-58 error fstream_stack /usr/local/lib/node_modules/npm/node_modules/mkdirp/index.js:37:53
-58 error fstream_stack Object.oncomplete (fs.js:107:15)
-59 verbose exit [ 3, true ]
+4 warn package.json http@0.0.0 http is also the name of a node core module.
+5 warn package.json http@0.0.0 No description
+6 warn package.json http@0.0.0 No repository field.
+7 warn package.json path@0.4.9 path is also the name of a node core module.
+8 warn package.json querystring@0.2.0 querystring is also the name of a node core module.
+9 verbose readDependencies using package.json deps
+10 verbose cache add [ 'socket.io@0.9.x', null ]
+11 verbose cache add name=undefined spec="socket.io@0.9.x" args=["socket.io@0.9.x",null]
+12 verbose parsed url { protocol: null,
+12 verbose parsed url   slashes: null,
+12 verbose parsed url   auth: null,
+12 verbose parsed url   host: null,
+12 verbose parsed url   port: null,
+12 verbose parsed url   hostname: null,
+12 verbose parsed url   hash: null,
+12 verbose parsed url   search: null,
+12 verbose parsed url   query: null,
+12 verbose parsed url   pathname: 'socket.io@0.9.x',
+12 verbose parsed url   path: 'socket.io@0.9.x',
+12 verbose parsed url   href: 'socket.io@0.9.x' }
+13 verbose cache add name="socket.io" spec="0.9.x" args=["socket.io","0.9.x"]
+14 verbose parsed url { protocol: null,
+14 verbose parsed url   slashes: null,
+14 verbose parsed url   auth: null,
+14 verbose parsed url   host: null,
+14 verbose parsed url   port: null,
+14 verbose parsed url   hostname: null,
+14 verbose parsed url   hash: null,
+14 verbose parsed url   search: null,
+14 verbose parsed url   query: null,
+14 verbose parsed url   pathname: '0.9.x',
+14 verbose parsed url   path: '0.9.x',
+14 verbose parsed url   href: '0.9.x' }
+15 verbose addNamed [ 'socket.io', '0.9.x' ]
+16 verbose addNamed [ null, '>=0.9.0-0 <0.10.0-0' ]
+17 silly lockFile 4eb97b2b-socket-io-0-9-x socket.io@0.9.x
+18 verbose lock socket.io@0.9.x /Users/aaron/.npm/4eb97b2b-socket-io-0-9-x.lock
+19 silly addNameRange { name: 'socket.io',
+19 silly addNameRange   range: '>=0.9.0-0 <0.10.0-0',
+19 silly addNameRange   hasData: false }
+20 verbose url raw socket.io
+21 verbose url resolving [ 'https://registry.npmjs.org/', './socket.io' ]
+22 verbose url resolved https://registry.npmjs.org/socket.io
+23 info trying registry request attempt 1 at 18:04:47
+24 verbose etag "5UWRYI85LKEY320PB1MZJIO"
+25 http GET https://registry.npmjs.org/socket.io
+26 http 200 https://registry.npmjs.org/socket.io
+27 silly registry.get cb [ 200,
+27 silly registry.get   { date: 'Thu, 11 Sep 2014 22:04:56 GMT',
+27 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+27 silly registry.get     etag: '"8685F832IEPYNR6OEY6FL772X"',
+27 silly registry.get     'content-type': 'application/json',
+27 silly registry.get     'cache-control': 'max-age=60',
+27 silly registry.get     'content-length': '98414',
+27 silly registry.get     'accept-ranges': 'bytes',
+27 silly registry.get     via: '1.1 varnish',
+27 silly registry.get     age: '4639',
+27 silly registry.get     'x-served-by': 'cache-ord1731-ORD',
+27 silly registry.get     'x-cache': 'HIT',
+27 silly registry.get     'x-cache-hits': '1',
+27 silly registry.get     'x-timer': 'S1410473096.177849,VS0,VE0',
+27 silly registry.get     vary: 'Accept',
+27 silly registry.get     'keep-alive': 'timeout=10, max=50',
+27 silly registry.get     connection: 'Keep-Alive' } ]
+28 silly addNameRange number 2 { name: 'socket.io',
+28 silly addNameRange   range: '>=0.9.0-0 <0.10.0-0',
+28 silly addNameRange   hasData: true }
+29 silly addNameRange versions [ 'socket.io',
+29 silly addNameRange   [ '0.3.8',
+29 silly addNameRange     '0.4.0',
+29 silly addNameRange     '0.4.1',
+29 silly addNameRange     '0.5.1',
+29 silly addNameRange     '0.5.3',
+29 silly addNameRange     '0.6.0',
+29 silly addNameRange     '0.6.1',
+29 silly addNameRange     '0.6.3',
+29 silly addNameRange     '0.6.4',
+29 silly addNameRange     '0.6.5',
+29 silly addNameRange     '0.6.6',
+29 silly addNameRange     '0.6.7',
+29 silly addNameRange     '0.6.8',
+29 silly addNameRange     '0.6.9',
+29 silly addNameRange     '0.6.10',
+29 silly addNameRange     '0.6.11',
+29 silly addNameRange     '0.6.12',
+29 silly addNameRange     '0.6.14',
+29 silly addNameRange     '0.6.15',
+29 silly addNameRange     '0.6.16',
+29 silly addNameRange     '0.6.17',
+29 silly addNameRange     '0.6.18',
+29 silly addNameRange     '0.7.0',
+29 silly addNameRange     '0.7.1',
+29 silly addNameRange     '0.7.2',
+29 silly addNameRange     '0.7.3',
+29 silly addNameRange     '0.7.4',
+29 silly addNameRange     '0.7.5',
+29 silly addNameRange     '0.7.6',
+29 silly addNameRange     '0.7.7',
+29 silly addNameRange     '0.7.8',
+29 silly addNameRange     '0.7.9',
+29 silly addNameRange     '0.7.10',
+29 silly addNameRange     '0.7.11',
+29 silly addNameRange     '0.8.0',
+29 silly addNameRange     '0.8.1',
+29 silly addNameRange     '0.8.2',
+29 silly addNameRange     '0.8.3',
+29 silly addNameRange     '0.8.4',
+29 silly addNameRange     '0.8.5',
+29 silly addNameRange     '0.8.6',
+29 silly addNameRange     '0.8.7',
+29 silly addNameRange     '0.9.0',
+29 silly addNameRange     '0.9.1',
+29 silly addNameRange     '0.9.1-1',
+29 silly addNameRange     '0.9.2',
+29 silly addNameRange     '0.9.3',
+29 silly addNameRange     '0.9.4',
+29 silly addNameRange     '0.9.5',
+29 silly addNameRange     '0.9.6',
+29 silly addNameRange     '0.9.7',
+29 silly addNameRange     '0.9.8',
+29 silly addNameRange     '0.9.9',
+29 silly addNameRange     '0.9.10',
+29 silly addNameRange     '0.9.11',
+29 silly addNameRange     '0.9.12',
+29 silly addNameRange     '0.9.13',
+29 silly addNameRange     '0.9.14',
+29 silly addNameRange     '0.9.15',
+29 silly addNameRange     '0.9.16',
+29 silly addNameRange     '1.0.0-pre',
+29 silly addNameRange     '1.0.0-pre2',
+29 silly addNameRange     '1.0.0-pre3',
+29 silly addNameRange     '1.0.0-pre4',
+29 silly addNameRange     '1.0.0-pre5',
+29 silly addNameRange     '0.9.17',
+29 silly addNameRange     '1.0.0',
+29 silly addNameRange     '1.0.1',
+29 silly addNameRange     '1.0.2',
+29 silly addNameRange     '1.0.3',
+29 silly addNameRange     '1.0.4',
+29 silly addNameRange     '1.0.5',
+29 silly addNameRange     '1.0.6',
+29 silly addNameRange     '1.1.0' ] ]
+30 verbose addNamed [ 'socket.io', '0.9.17' ]
+31 verbose addNamed [ '0.9.17', '0.9.17' ]
+32 silly lockFile 1593240a-socket-io-0-9-17 socket.io@0.9.17
+33 verbose lock socket.io@0.9.17 /Users/aaron/.npm/1593240a-socket-io-0-9-17.lock
+34 silly lockFile 1593240a-socket-io-0-9-17 socket.io@0.9.17
+35 silly lockFile 1593240a-socket-io-0-9-17 socket.io@0.9.17
+36 silly lockFile 4eb97b2b-socket-io-0-9-x socket.io@0.9.x
+37 silly lockFile 4eb97b2b-socket-io-0-9-x socket.io@0.9.x
+38 silly resolved [ { name: 'socket.io',
+38 silly resolved     version: '0.9.17',
+38 silly resolved     description: 'Real-time apps made cross-browser & easy with a WebSocket-like API',
+38 silly resolved     homepage: 'http://socket.io',
+38 silly resolved     keywords: [ 'websocket', 'socket', 'realtime', 'socket.io', 'comet', 'ajax' ],
+38 silly resolved     author: { name: 'Guillermo Rauch', email: 'guillermo@learnboost.com' },
+38 silly resolved     contributors: [ [Object], [Object], [Object], [Object] ],
+38 silly resolved     repository:
+38 silly resolved      { type: 'git',
+38 silly resolved        url: 'https://github.com/LearnBoost/socket.io.git' },
+38 silly resolved     dependencies:
+38 silly resolved      { 'socket.io-client': '0.9.16',
+38 silly resolved        policyfile: '0.0.4',
+38 silly resolved        base64id: '0.1.0',
+38 silly resolved        redis: '0.7.3' },
+38 silly resolved     devDependencies:
+38 silly resolved      { expresso: '0.9.2',
+38 silly resolved        should: '*',
+38 silly resolved        benchmark: '0.2.2',
+38 silly resolved        microtime: '0.1.3-1',
+38 silly resolved        colors: '0.5.1' },
+38 silly resolved     optionalDependencies: { redis: '0.7.3' },
+38 silly resolved     main: 'index',
+38 silly resolved     engines: { node: '>= 0.4.0' },
+38 silly resolved     scripts: { test: 'make test' },
+38 silly resolved     readme: '# Socket.IO\n\nSocket.IO is a Node.JS project that makes WebSockets and realtime possible in\nall browsers. It also enhances WebSockets by providing built-in multiplexing,\nhorizontal scalability, automatic JSON encoding/decoding, and more.\n\n## How to Install\n\n```bash\nnpm install socket.io\n```\n\n## How to use\n\nFirst, require `socket.io`:\n\n```js\nvar io = require(\'socket.io\');\n```\n\nNext, attach it to a HTTP/HTTPS server. If you\'re using the fantastic `express`\nweb framework:\n\n#### Express 3.x\n\n```js\nvar app = express()\n  , server = require(\'http\').createServer(app)\n  , io = io.listen(server);\n\nserver.listen(80);\n\nio.sockets.on(\'connection\', function (socket) {\n  socket.emit(\'news\', { hello: \'world\' });\n  socket.on(\'my other event\', function (data) {\n    console.log(data);\n  });\n});\n```\n\n#### Express 2.x\n\n```js\nvar app = express.createServer()\n  , io = io.listen(app);\n\napp.listen(80);\n\nio.sockets.on(\'connection\', function (socket) {\n  socket.emit(\'news\', { hello: \'world\' });\n  socket.on(\'my other event\', function (data) {\n    console.log(data);\n  });\n});\n```\n\nFinally, load it from the client side code:\n\n```html\n<script src="/socket.io/socket.io.js"></script>\n<script>\n  var socket = io.connect(\'http://localhost\');\n  socket.on(\'news\', function (data) {\n    console.log(data);\n    socket.emit(\'my other event\', { my: \'data\' });\n  });\n</script>\n```\n\nFor more thorough examples, look at the `examples/` directory.\n\n## Short recipes\n\n### Sending and receiving events.\n\nSocket.IO allows you to emit and receive custom events.\nBesides `connect`, `message` and `disconnect`, you can emit custom events:\n\n```js\n// note, io.listen(<port>) will create a http server for you\nvar io = require(\'socket.io\').listen(80);\n\nio.sockets.on(\'connection\', function (socket) {\n  io.sockets.emit(\'this\', { will: \'be received by everyone\' });\n\n  socket.on(\'private message\', function (from, msg) {\n    console.log(\'I received a private message by \', from, \' saying \', msg);\n  });\n\n  socket.on(\'disconnect\', function () {\n    io.sockets.emit(\'user disconnected\');\n  });\n});\n```\n\n### Storing data associated to a client\n\nSometimes it\'s necessary to store data associated with a client that\'s\nnecessary for the duration of the session.\n\n#### Server side\n\n```js\nvar io = require(\'socket.io\').listen(80);\n\nio.sockets.on(\'connection\', function (socket) {\n  socket.on(\'set nickname\', function (name) {\n    socket.set(\'nickname\', name, function () { socket.emit(\'ready\'); });\n  });\n\n  socket.on(\'msg\', function () {\n    socket.get(\'nickname\', function (err, name) {\n      console.log(\'Chat message by \', name);\n    });\n  });\n});\n```\n\n#### Client side\n\n```html\n<script>\n  var socket = io.connect(\'http://localhost\');\n\n  socket.on(\'connect\', function () {\n    socket.emit(\'set nickname\', prompt(\'What is your nickname?\'));\n    socket.on(\'ready\', function () {\n      console.log(\'Connected !\');\n      socket.emit(\'msg\', prompt(\'What is your message?\'));\n    });\n  });\n</script>\n```\n\n### Restricting yourself to a namespace\n\nIf you have control over all the messages and events emitted for a particular\napplication, using the default `/` namespace works.\n\nIf you want to leverage 3rd-party code, or produce code to share with others,\nsocket.io provides a way of namespacing a `socket`.\n\nThis has the benefit of `multiplexing` a single connection. Instead of\nsocket.io using two `WebSocket` connections, it\'ll use one.\n\nThe following example defines a socket that listens on \'/chat\' and one for\n\'/news\':\n\n#### Server side\n\n```js\nvar io = require(\'socket.io\').listen(80);\n\nvar chat = io\n  .of(\'/chat\')\n  .on(\'connection\', function (socket) {\n    socket.emit(\'a message\', { that: \'only\', \'/chat\': \'will get\' });\n    chat.emit(\'a message\', { everyone: \'in\', \'/chat\': \'will get\' });\n  });\n\nvar news = io\n  .of(\'/news\');\n  .on(\'connection\', function (socket) {\n    socket.emit(\'item\', { news: \'item\' });\n  });\n```\n\n#### Client side:\n\n```html\n<script>\n  var chat = io.connect(\'http://localhost/chat\')\n    , news = io.connect(\'http://localhost/news\');\n\n  chat.on(\'connect\', function () {\n    chat.emit(\'hi!\');\n  });\n\n  news.on(\'news\', function () {\n    news.emit(\'woot\');\n  });\n</script>\n```\n\n### Sending volatile messages.\n\nSometimes certain messages can be dropped. Let\'s say you have an app that\nshows realtime tweets for the keyword `bieber`. \n\nIf a certain client is not ready to receive messages (because of network slowness\nor other issues, or because he\'s connected through long polling and is in the\nmiddle of a request-response cycle), if he doesn\'t receive ALL the tweets related\nto bieber your application won\'t suffer.\n\nIn that case, you might want to send those messages as volatile messages.\n\n#### Server side\n\n```js\nvar io = require(\'socket.io\').listen(80);\n\nio.sockets.on(\'connection\', function (socket) {\n  var tweets = setInterval(function () {\n    getBieberTweet(function (tweet) {\n      socket.volatile.emit(\'bieber tweet\', tweet);\n    });\n  }, 100);\n\n  socket.on(\'disconnect\', function () {\n    clearInterval(tweets);\n  });\n});\n```\n\n#### Client side\n\nIn the client side, messages are received the same way whether they\'re volatile\nor not.\n\n### Getting acknowledgements\n\nSometimes, you might want to get a callback when the client confirmed the message\nreception.\n\nTo do this, simply pass a function as the last parameter of `.send` or `.emit`.\nWhat\'s more, when you use `.emit`, the acknowledgement is done by you, which\nmeans you can also pass data along:\n\n#### Server side\n\n```js\nvar io = require(\'socket.io\').listen(80);\n\nio.sockets.on(\'connection\', function (socket) {\n  socket.on(\'ferret\', function (name, fn) {\n    fn(\'woot\');\n  });\n});\n```\n\n#### Client side\n\n```html\n<script>\n  var socket = io.connect(); // TIP: .connect with no args does auto-discovery\n  socket.on(\'connect\', function () { // TIP: you can avoid listening on `connect` and listen on events directly too!\n    socket.emit(\'ferret\', \'tobi\', function (data) {\n      console.log(data); // data will be \'woot\'\n    });\n  });\n</script>\n```\n\n### Broadcasting messages\n\nTo broadcast, simply add a `broadcast` flag to `emit` and `send` method calls.\nBroadcasting means sending a message to everyone else except for the socket\nthat starts it.\n\n#### Server side\n\n```js\nvar io = require(\'socket.io\').listen(80);\n\nio.sockets.on(\'connection\', function (socket) {\n  socket.broadcast.emit(\'user connected\');\n  socket.broadcast.json.send({ a: \'message\' });\n});\n```\n\n### Rooms\n\nSometimes you want to put certain sockets in the same room, so that it\'s easy\nto broadcast to all of them together.\n\nThink of this as built-in channels for sockets. Sockets `join` and `leave`\nrooms in each socket.\n\n#### Server side\n\n```js\nvar io = require(\'socket.io\').listen(80);\n\nio.sockets.on(\'connection\', function (socket) {\n  socket.join(\'justin bieber fans\');\n  socket.broadcast.to(\'justin bieber fans\').emit(\'new fan\');\n  io.sockets.in(\'rammstein fans\').emit(\'new non-fan\');\n});\n```\n\n### Using it just as a cross-browser WebSocket\n\nIf you just want the WebSocket semantics, you can do that too.\nSimply leverage `send` and listen on the `message` event:\n\n#### Server side\n\n```js\nvar io = require(\'socket.io\').listen(80);\n\nio.sockets.on(\'connection\', function (socket) {\n  socket.on(\'message\', function () { });\n  socket.on(\'disconnect\', function () { });\n});\n```\n\n#### Client side\n\n```html\n<script>\n  var socket = io.connect(\'http://localhost/\');\n  socket.on(\'connect\', function () {\n    socket.send(\'hi\');\n\n    socket.on(\'message\', function (msg) {\n      // my msg\n    });\n  });\n</script>\n```\n\n### Changing configuration\n\nConfiguration in socket.io is TJ-style:\n\n#### Server side\n\n```js\nvar io = require(\'socket.io\').listen(80);\n\nio.configure(function () {\n  io.set(\'transports\', [\'websocket\', \'flashsocket\', \'xhr-polling\']);\n});\n\nio.configure(\'development\', function () {\n  io.set(\'transports\', [\'websocket\', \'xhr-polling\']);\n  io.enable(\'log\');\n});\n```\n\n## License \n\n(The MIT License)\n\nCopyright (c) 2011 Guillermo Rauch &lt;guillermo@learnboost.com&gt;\n\nPermission is hereby granted, free of charge, to any person obtaining\na copy of this software and associated documentation files (the\n\'Software\'), to deal in the Software without restriction, including\nwithout limitation the rights to use, copy, modify, merge, publish,\ndistribute, sublicense, and/or sell copies of the Software, and to\npermit persons to whom the Software is furnished to do so, subject to\nthe following conditions:\n\nThe above copyright notice and this permission notice shall be\nincluded in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \'AS IS\', WITHOUT WARRANTY OF ANY KIND,\nEXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF\nMERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.\nIN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY\nCLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,\nTORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE\nSOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n',
+38 silly resolved     readmeFilename: 'Readme.md',
+38 silly resolved     bugs: { url: 'https://github.com/LearnBoost/socket.io/issues' },
+38 silly resolved     _id: 'socket.io@0.9.17',
+38 silly resolved     _shasum: 'ca389268fb2cd5df4b59218490a08c907581c9ec',
+38 silly resolved     _from: 'socket.io@0.9.x',
+38 silly resolved     _resolved: 'https://registry.npmjs.org/socket.io/-/socket.io-0.9.17.tgz' } ]
+39 info install socket.io@0.9.17 into /Users/aaron/code/nodejs/hackerDev
+40 info installOne socket.io@0.9.17
+41 info /Users/aaron/code/nodejs/hackerDev/node_modules/socket.io unbuild
+42 info preuninstall socket.io@0.9.17
+43 info uninstall socket.io@0.9.17
+44 verbose true,/Users/aaron/code/nodejs/hackerDev/node_modules,/Users/aaron/code/nodejs/hackerDev/node_modules unbuild socket.io@0.9.17
+45 info postuninstall socket.io@0.9.17
+46 verbose tar unpack /Users/aaron/.npm/socket.io/0.9.17/package.tgz
+47 silly lockFile 278af2db-hackerDev-node-modules-socket-io tar:///Users/aaron/code/nodejs/hackerDev/node_modules/socket.io
+48 verbose lock tar:///Users/aaron/code/nodejs/hackerDev/node_modules/socket.io /Users/aaron/.npm/278af2db-hackerDev-node-modules-socket-io.lock
+49 silly lockFile e8b6bb82-npm-socket-io-0-9-17-package-tgz tar:///Users/aaron/.npm/socket.io/0.9.17/package.tgz
+50 verbose lock tar:///Users/aaron/.npm/socket.io/0.9.17/package.tgz /Users/aaron/.npm/e8b6bb82-npm-socket-io-0-9-17-package-tgz.lock
+51 silly gunzTarPerm modes [ '755', '644' ]
+52 silly gunzTarPerm extractEntry package.json
+53 silly gunzTarPerm extractEntry .npmignore
+54 silly gunzTarPerm extractEntry LICENSE
+55 silly gunzTarPerm extractEntry index.js
+56 silly gunzTarPerm extractEntry History.md
+57 silly gunzTarPerm extractEntry Makefile
+58 silly gunzTarPerm extractEntry Readme.md
+59 silly gunzTarPerm extractEntry .travis.yml
+60 silly gunzTarPerm extractEntry latest
+61 silly gunzTarPerm extractEntry lib/logger.js
+62 silly gunzTarPerm extractEntry lib/namespace.js
+63 silly gunzTarPerm extractEntry lib/parser.js
+64 silly gunzTarPerm extractEntry lib/socket.io.js
+65 silly gunzTarPerm extractEntry lib/socket.js
+66 silly gunzTarPerm extractEntry lib/manager.js
+67 silly gunzTarPerm extractEntry lib/store.js
+68 silly gunzTarPerm extractEntry lib/transport.js
+69 silly gunzTarPerm extractEntry lib/util.js
+70 silly gunzTarPerm extractEntry lib/static.js
+71 silly gunzTarPerm extractEntry lib/stores/memory.js
+72 silly gunzTarPerm extractEntry lib/stores/redis.js
+73 silly gunzTarPerm extractEntry lib/transports/flashsocket.js
+74 silly gunzTarPerm extractEntry lib/transports/htmlfile.js
+75 silly gunzTarPerm extractEntry lib/transports/http-polling.js
+76 silly gunzTarPerm extractEntry lib/transports/http.js
+77 silly gunzTarPerm extractEntry lib/transports/index.js
+78 silly gunzTarPerm extractEntry lib/transports/jsonp-polling.js
+79 silly gunzTarPerm extractEntry lib/transports/websocket.js
+80 silly gunzTarPerm extractEntry lib/transports/xhr-polling.js
+81 silly gunzTarPerm extractEntry lib/transports/websocket/default.js
+82 silly gunzTarPerm extractEntry lib/transports/websocket/hybi-07-12.js
+83 silly gunzTarPerm extractEntry lib/transports/websocket/hybi-16.js
+84 silly gunzTarPerm extractEntry lib/transports/websocket/index.js
+85 silly gunzTarPerm extractEntry benchmarks/decode.bench.js
+86 silly gunzTarPerm extractEntry benchmarks/encode.bench.js
+87 silly gunzTarPerm extractEntry benchmarks/runner.js
+88 silly lockFile 278af2db-hackerDev-node-modules-socket-io tar:///Users/aaron/code/nodejs/hackerDev/node_modules/socket.io
+89 silly lockFile 278af2db-hackerDev-node-modules-socket-io tar:///Users/aaron/code/nodejs/hackerDev/node_modules/socket.io
+90 silly lockFile e8b6bb82-npm-socket-io-0-9-17-package-tgz tar:///Users/aaron/.npm/socket.io/0.9.17/package.tgz
+91 silly lockFile e8b6bb82-npm-socket-io-0-9-17-package-tgz tar:///Users/aaron/.npm/socket.io/0.9.17/package.tgz
+92 info preinstall socket.io@0.9.17
+93 verbose readDependencies using package.json deps
+94 verbose readDependencies using package.json deps
+95 verbose cache add [ 'socket.io-client@0.9.16', null ]
+96 verbose cache add name=undefined spec="socket.io-client@0.9.16" args=["socket.io-client@0.9.16",null]
+97 verbose parsed url { protocol: null,
+97 verbose parsed url   slashes: null,
+97 verbose parsed url   auth: null,
+97 verbose parsed url   host: null,
+97 verbose parsed url   port: null,
+97 verbose parsed url   hostname: null,
+97 verbose parsed url   hash: null,
+97 verbose parsed url   search: null,
+97 verbose parsed url   query: null,
+97 verbose parsed url   pathname: 'socket.io-client@0.9.16',
+97 verbose parsed url   path: 'socket.io-client@0.9.16',
+97 verbose parsed url   href: 'socket.io-client@0.9.16' }
+98 verbose cache add name="socket.io-client" spec="0.9.16" args=["socket.io-client","0.9.16"]
+99 verbose parsed url { protocol: null,
+99 verbose parsed url   slashes: null,
+99 verbose parsed url   auth: null,
+99 verbose parsed url   host: null,
+99 verbose parsed url   port: null,
+99 verbose parsed url   hostname: null,
+99 verbose parsed url   hash: null,
+99 verbose parsed url   search: null,
+99 verbose parsed url   query: null,
+99 verbose parsed url   pathname: '0.9.16',
+99 verbose parsed url   path: '0.9.16',
+99 verbose parsed url   href: '0.9.16' }
+100 verbose addNamed [ 'socket.io-client', '0.9.16' ]
+101 verbose addNamed [ '0.9.16', '0.9.16' ]
+102 silly lockFile c81dc0af-socket-io-client-0-9-16 socket.io-client@0.9.16
+103 verbose lock socket.io-client@0.9.16 /Users/aaron/.npm/c81dc0af-socket-io-client-0-9-16.lock
+104 verbose cache add [ 'policyfile@0.0.4', null ]
+105 verbose cache add name=undefined spec="policyfile@0.0.4" args=["policyfile@0.0.4",null]
+106 verbose parsed url { protocol: null,
+106 verbose parsed url   slashes: null,
+106 verbose parsed url   auth: null,
+106 verbose parsed url   host: null,
+106 verbose parsed url   port: null,
+106 verbose parsed url   hostname: null,
+106 verbose parsed url   hash: null,
+106 verbose parsed url   search: null,
+106 verbose parsed url   query: null,
+106 verbose parsed url   pathname: 'policyfile@0.0.4',
+106 verbose parsed url   path: 'policyfile@0.0.4',
+106 verbose parsed url   href: 'policyfile@0.0.4' }
+107 verbose cache add name="policyfile" spec="0.0.4" args=["policyfile","0.0.4"]
+108 verbose parsed url { protocol: null,
+108 verbose parsed url   slashes: null,
+108 verbose parsed url   auth: null,
+108 verbose parsed url   host: null,
+108 verbose parsed url   port: null,
+108 verbose parsed url   hostname: null,
+108 verbose parsed url   hash: null,
+108 verbose parsed url   search: null,
+108 verbose parsed url   query: null,
+108 verbose parsed url   pathname: '0.0.4',
+108 verbose parsed url   path: '0.0.4',
+108 verbose parsed url   href: '0.0.4' }
+109 verbose addNamed [ 'policyfile', '0.0.4' ]
+110 verbose addNamed [ '0.0.4', '0.0.4' ]
+111 silly lockFile 8b99131a-policyfile-0-0-4 policyfile@0.0.4
+112 verbose lock policyfile@0.0.4 /Users/aaron/.npm/8b99131a-policyfile-0-0-4.lock
+113 verbose cache add [ 'base64id@0.1.0', null ]
+114 verbose cache add name=undefined spec="base64id@0.1.0" args=["base64id@0.1.0",null]
+115 verbose parsed url { protocol: null,
+115 verbose parsed url   slashes: null,
+115 verbose parsed url   auth: null,
+115 verbose parsed url   host: null,
+115 verbose parsed url   port: null,
+115 verbose parsed url   hostname: null,
+115 verbose parsed url   hash: null,
+115 verbose parsed url   search: null,
+115 verbose parsed url   query: null,
+115 verbose parsed url   pathname: 'base64id@0.1.0',
+115 verbose parsed url   path: 'base64id@0.1.0',
+115 verbose parsed url   href: 'base64id@0.1.0' }
+116 verbose cache add name="base64id" spec="0.1.0" args=["base64id","0.1.0"]
+117 verbose parsed url { protocol: null,
+117 verbose parsed url   slashes: null,
+117 verbose parsed url   auth: null,
+117 verbose parsed url   host: null,
+117 verbose parsed url   port: null,
+117 verbose parsed url   hostname: null,
+117 verbose parsed url   hash: null,
+117 verbose parsed url   search: null,
+117 verbose parsed url   query: null,
+117 verbose parsed url   pathname: '0.1.0',
+117 verbose parsed url   path: '0.1.0',
+117 verbose parsed url   href: '0.1.0' }
+118 verbose addNamed [ 'base64id', '0.1.0' ]
+119 verbose addNamed [ '0.1.0', '0.1.0' ]
+120 silly lockFile b2185bf4-base64id-0-1-0 base64id@0.1.0
+121 verbose lock base64id@0.1.0 /Users/aaron/.npm/b2185bf4-base64id-0-1-0.lock
+122 verbose cache add [ 'redis@0.7.3', null ]
+123 verbose cache add name=undefined spec="redis@0.7.3" args=["redis@0.7.3",null]
+124 verbose parsed url { protocol: null,
+124 verbose parsed url   slashes: null,
+124 verbose parsed url   auth: null,
+124 verbose parsed url   host: null,
+124 verbose parsed url   port: null,
+124 verbose parsed url   hostname: null,
+124 verbose parsed url   hash: null,
+124 verbose parsed url   search: null,
+124 verbose parsed url   query: null,
+124 verbose parsed url   pathname: 'redis@0.7.3',
+124 verbose parsed url   path: 'redis@0.7.3',
+124 verbose parsed url   href: 'redis@0.7.3' }
+125 verbose cache add name="redis" spec="0.7.3" args=["redis","0.7.3"]
+126 verbose parsed url { protocol: null,
+126 verbose parsed url   slashes: null,
+126 verbose parsed url   auth: null,
+126 verbose parsed url   host: null,
+126 verbose parsed url   port: null,
+126 verbose parsed url   hostname: null,
+126 verbose parsed url   hash: null,
+126 verbose parsed url   search: null,
+126 verbose parsed url   query: null,
+126 verbose parsed url   pathname: '0.7.3',
+126 verbose parsed url   path: '0.7.3',
+126 verbose parsed url   href: '0.7.3' }
+127 verbose addNamed [ 'redis', '0.7.3' ]
+128 verbose addNamed [ '0.7.3', '0.7.3' ]
+129 silly lockFile 10399cfa-redis-0-7-3 redis@0.7.3
+130 verbose lock redis@0.7.3 /Users/aaron/.npm/10399cfa-redis-0-7-3.lock
+131 verbose url raw base64id
+132 verbose url resolving [ 'https://registry.npmjs.org/', './base64id' ]
+133 verbose url resolved https://registry.npmjs.org/base64id
+134 info trying registry request attempt 1 at 18:04:57
+135 verbose etag "C8SEU3Y5KIDOF9UT7F7ZJR1I3"
+136 http GET https://registry.npmjs.org/base64id
+137 verbose url raw socket.io-client
+138 verbose url resolving [ 'https://registry.npmjs.org/', './socket.io-client' ]
+139 verbose url resolved https://registry.npmjs.org/socket.io-client
+140 info trying registry request attempt 1 at 18:04:57
+141 verbose etag "3ZYDOBZU2AJ4KW0I0H3BWGL2K"
+142 http GET https://registry.npmjs.org/socket.io-client
+143 verbose url raw policyfile
+144 verbose url resolving [ 'https://registry.npmjs.org/', './policyfile' ]
+145 verbose url resolved https://registry.npmjs.org/policyfile
+146 info trying registry request attempt 1 at 18:04:57
+147 verbose etag "DZ96WZ6R17E7PKVCDAAOGBJ5I"
+148 http GET https://registry.npmjs.org/policyfile
+149 verbose url raw redis
+150 verbose url resolving [ 'https://registry.npmjs.org/', './redis' ]
+151 verbose url resolved https://registry.npmjs.org/redis
+152 info trying registry request attempt 1 at 18:04:57
+153 verbose etag "75JGYDO7WI2T3MC83T2ULRQK8"
+154 http GET https://registry.npmjs.org/redis
+155 http 200 https://registry.npmjs.org/policyfile
+156 silly registry.get cb [ 200,
+156 silly registry.get   { date: 'Thu, 11 Sep 2014 22:05:00 GMT',
+156 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+156 silly registry.get     etag: '"356X8HMHTDMMG3132VUTN4B9Z"',
+156 silly registry.get     'content-type': 'application/json',
+156 silly registry.get     'cache-control': 'max-age=60',
+156 silly registry.get     'content-length': '5911',
+156 silly registry.get     'accept-ranges': 'bytes',
+156 silly registry.get     via: '1.1 varnish',
+156 silly registry.get     age: '243',
+156 silly registry.get     'x-served-by': 'cache-ord1725-ORD',
+156 silly registry.get     'x-cache': 'HIT',
+156 silly registry.get     'x-cache-hits': '1',
+156 silly registry.get     'x-timer': 'S1410473100.603278,VS0,VE36',
+156 silly registry.get     vary: 'Accept',
+156 silly registry.get     'keep-alive': 'timeout=10, max=50',
+156 silly registry.get     connection: 'Keep-Alive' } ]
+157 silly lockFile 38b97101--policyfile-policyfile-0-0-4-tgz https://registry.npmjs.org/policyfile/-/policyfile-0.0.4.tgz
+158 verbose lock https://registry.npmjs.org/policyfile/-/policyfile-0.0.4.tgz /Users/aaron/.npm/38b97101--policyfile-policyfile-0-0-4-tgz.lock
+159 verbose addRemoteTarball [ 'https://registry.npmjs.org/policyfile/-/policyfile-0.0.4.tgz',
+159 verbose addRemoteTarball   'd6b82ead98ae79ebe228e2daf5903311ec982e4d' ]
+160 info retry fetch attempt 1 at 18:04:59
+161 verbose fetch to= /var/folders/5b/23m1v1jx7jgcvtq2718t7rnc0000gn/T/npm-679-ZkGwTGrN/1410473099990-0.34510552347637713/tmp.tgz
+162 http GET https://registry.npmjs.org/policyfile/-/policyfile-0.0.4.tgz
+163 http 304 https://registry.npmjs.org/base64id
+164 silly registry.get cb [ 304,
+164 silly registry.get   { date: 'Thu, 11 Sep 2014 22:05:00 GMT',
+164 silly registry.get     server: 'Apache',
+164 silly registry.get     via: '1.1 varnish',
+164 silly registry.get     'last-modified': 'Thu, 11 Sep 2014 22:05:00 GMT',
+164 silly registry.get     'cache-control': 'max-age=60',
+164 silly registry.get     etag: '"C8SEU3Y5KIDOF9UT7F7ZJR1I3"',
+164 silly registry.get     'x-served-by': 'cache-ord1733-ORD',
+164 silly registry.get     'x-cache': 'HIT',
+164 silly registry.get     'x-cache-hits': '1',
+164 silly registry.get     'x-timer': 'S1410473100.496538,VS0,VE347',
+164 silly registry.get     vary: 'Accept',
+164 silly registry.get     'content-length': '0',
+164 silly registry.get     'keep-alive': 'timeout=10, max=50',
+164 silly registry.get     connection: 'Keep-Alive' } ]
+165 verbose etag base64id from cache
+166 silly lockFile b2185bf4-base64id-0-1-0 base64id@0.1.0
+167 silly lockFile b2185bf4-base64id-0-1-0 base64id@0.1.0
+168 http 200 https://registry.npmjs.org/socket.io-client
+169 silly registry.get cb [ 200,
+169 silly registry.get   { date: 'Thu, 11 Sep 2014 22:05:00 GMT',
+169 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+169 silly registry.get     etag: '"BM9CR608TOPG1O31R3GBMR6K6"',
+169 silly registry.get     'content-type': 'application/json',
+169 silly registry.get     'cache-control': 'max-age=60',
+169 silly registry.get     'content-length': '73410',
+169 silly registry.get     'accept-ranges': 'bytes',
+169 silly registry.get     via: '1.1 varnish',
+169 silly registry.get     age: '1167',
+169 silly registry.get     'x-served-by': 'cache-ord1733-ORD',
+169 silly registry.get     'x-cache': 'HIT',
+169 silly registry.get     'x-cache-hits': '34',
+169 silly registry.get     'x-timer': 'S1410473100.844888,VS0,VE0',
+169 silly registry.get     vary: 'Accept',
+169 silly registry.get     'keep-alive': 'timeout=10, max=50',
+169 silly registry.get     connection: 'Keep-Alive' } ]
+170 silly lockFile 83592abd-ient-socket-io-client-0-9-16-tgz https://registry.npmjs.org/socket.io-client/-/socket.io-client-0.9.16.tgz
+171 verbose lock https://registry.npmjs.org/socket.io-client/-/socket.io-client-0.9.16.tgz /Users/aaron/.npm/83592abd-ient-socket-io-client-0-9-16-tgz.lock
+172 verbose addRemoteTarball [ 'https://registry.npmjs.org/socket.io-client/-/socket.io-client-0.9.16.tgz',
+172 verbose addRemoteTarball   '4da7515c5e773041d1b423970415bcc430f35fc6' ]
+173 info retry fetch attempt 1 at 18:05:16
+174 verbose fetch to= /var/folders/5b/23m1v1jx7jgcvtq2718t7rnc0000gn/T/npm-679-ZkGwTGrN/1410473116624-0.01623883005231619/tmp.tgz
+175 http GET https://registry.npmjs.org/socket.io-client/-/socket.io-client-0.9.16.tgz
+176 http 200 https://registry.npmjs.org/socket.io-client/-/socket.io-client-0.9.16.tgz
+177 http 200 https://registry.npmjs.org/redis
+178 silly registry.get cb [ 200,
+178 silly registry.get   { date: 'Thu, 11 Sep 2014 22:05:00 GMT',
+178 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+178 silly registry.get     etag: '"4NQ0IT42360GH5NKRU5UIJ4G1"',
+178 silly registry.get     'content-type': 'application/json',
+178 silly registry.get     'cache-control': 'max-age=60',
+178 silly registry.get     'content-length': '89356',
+178 silly registry.get     'accept-ranges': 'bytes',
+178 silly registry.get     via: '1.1 varnish',
+178 silly registry.get     age: '145',
+178 silly registry.get     'x-served-by': 'cache-ord1725-ORD',
+178 silly registry.get     'x-cache': 'HIT',
+178 silly registry.get     'x-cache-hits': '1',
+178 silly registry.get     'x-timer': 'S1410473100.629990,VS0,VE31',
+178 silly registry.get     vary: 'Accept',
+178 silly registry.get     'keep-alive': 'timeout=10, max=50',
+178 silly registry.get     connection: 'Keep-Alive' } ]
+179 silly lockFile c3ea32a4--npmjs-org-redis-redis-0-7-3-tgz https://registry.npmjs.org/redis/-/redis-0.7.3.tgz
+180 verbose lock https://registry.npmjs.org/redis/-/redis-0.7.3.tgz /Users/aaron/.npm/c3ea32a4--npmjs-org-redis-redis-0-7-3-tgz.lock
+181 verbose addRemoteTarball [ 'https://registry.npmjs.org/redis/-/redis-0.7.3.tgz',
+181 verbose addRemoteTarball   'ee57b7a44d25ec1594e44365d8165fa7d1d4811a' ]
+182 info retry fetch attempt 1 at 18:05:18
+183 verbose fetch to= /var/folders/5b/23m1v1jx7jgcvtq2718t7rnc0000gn/T/npm-679-ZkGwTGrN/1410473118815-0.6951406057924032/tmp.tgz
+184 http GET https://registry.npmjs.org/redis/-/redis-0.7.3.tgz
+185 silly lockFile 83592abd-ient-socket-io-client-0-9-16-tgz https://registry.npmjs.org/socket.io-client/-/socket.io-client-0.9.16.tgz
+186 silly lockFile 83592abd-ient-socket-io-client-0-9-16-tgz https://registry.npmjs.org/socket.io-client/-/socket.io-client-0.9.16.tgz
+187 silly lockFile c81dc0af-socket-io-client-0-9-16 socket.io-client@0.9.16
+188 silly lockFile c81dc0af-socket-io-client-0-9-16 socket.io-client@0.9.16
+189 verbose about to build /Users/aaron/code/nodejs/hackerDev/node_modules/socket.io
+190 info /Users/aaron/code/nodejs/hackerDev/node_modules/socket.io unbuild
+191 info preuninstall socket.io@0.9.17
+192 info uninstall socket.io@0.9.17
+193 verbose true,/Users/aaron/code/nodejs/hackerDev/node_modules,/Users/aaron/code/nodejs/hackerDev/node_modules unbuild socket.io@0.9.17
+194 info postuninstall socket.io@0.9.17
+195 error Error: shasum check failed for /var/folders/5b/23m1v1jx7jgcvtq2718t7rnc0000gn/T/npm-679-ZkGwTGrN/1410473116624-0.01623883005231619/tmp.tgz
+195 error Expected: 4da7515c5e773041d1b423970415bcc430f35fc6
+195 error Actual:   f8c23877371a7c66057fe3655dacf5fc23ee67bb
+195 error From:     https://registry.npmjs.org/socket.io-client/-/socket.io-client-0.9.16.tgz
+195 error     at /usr/local/lib/node_modules/npm/node_modules/sha/index.js:38:8
+195 error     at ReadStream.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/sha/index.js:85:7)
+195 error     at ReadStream.EventEmitter.emit (events.js:117:20)
+195 error     at _stream_readable.js:919:16
+195 error     at process._tickCallback (node.js:419:13)
+196 error If you need help, you may report this *entire* log,
+196 error including the npm and node versions, at:
+196 error     <http://github.com/npm/npm/issues>
+197 error System Darwin 13.3.0
+198 error command "node" "/usr/local/bin/npm" "install" "socket.io"
+199 error cwd /Users/aaron/code/nodejs/hackerDev
+200 error node -v v0.10.28
+201 error npm -v 1.4.9
+202 verbose exit [ 1, true ]

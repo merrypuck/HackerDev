@@ -18,28 +18,40 @@
 				background-image:url(images/wood_pattern.jpg) !important;
 				background-color: #E1C192;
 			}
-			.codrops-header {
-				background: #6c71c4;
-				color: #fff;
+			.codrops-header {				color: #fff;
 				
 
 				font-weight: 300;
 				color: #fff;
+				text-shadow: 0 1px 1px rgba(0,0,0,0.6);
 				
 			}
 			.codrops-header h1 {
-				font-size: 4em;
+				font-size: 5em;
 			}
+
+
+
+
 			.codrops-header span {
-				color: #000;
-				text-shadow: 0 1px 1px rgba(255,255,255,0.6);
+				font-size: 2em;
+				font-weight: 300;
+				margin: 0;
+				padding: 15px 0 5px 0;
+				color: #666;
 				font-family: Cambria, Georgia, serif;
 				font-style: italic;
-				letter-spacing: 3px;
+				text-shadow: 0 1px 1px rgba(255,255,255,0.6);
+				
+
+			}
+			.simform {
+				padding: 0 !important;
 			}
 			
 			.questions li {
 				color:#fff;
+				text-shadow: 0 1px 1px rgba(0,0,0,0.6);
 			}
 			.questions li input {
 
@@ -50,13 +62,14 @@
 			.final-message {
 				display: none;
 			}
+
 		</style>
 	</head>
 	<body>
 		<div class="container">
 			<!-- Top Navigation -->
 			<header class="codrops-header">
-				<h1>HackerScore <span>Instant website feedback.</span></h1>	
+				<h1>HackerScore <span><!--Instant feedback to--> Become a better hacker</span></h1>	
 			</header>
 			<section>
 				<form id="theForm" class="simform" autocomplete="off">
@@ -90,16 +103,39 @@
 				</form><!-- /simform -->			
 			</section>
 		</div><!-- /container -->
+
+		<script>
+			function passDataToServer(currentQ, value) {
+				if(currentQ === 0) {
+					var xhr = new XMLHttpRequest();
+					var data = new FormData();
+			        data.append('email', value);
+			        xhr.onreadystatechange = function() {
+			            if (xhr.readyState == 4) {
+			              // let's just simulate something
+			              var response = xhr.responseText;
+
+							
+			            }
+			        }
+			        xhr.open('POST', 'http://hackerscore.herokuapp.com/easyform/email', true);
+			        xhr.send(data);
+				}
+				else if(currentQ === 1) {
+
+				}
+			}
+		</script>
 		<script src="js/minimalForm/classie.js"></script>
 		<script src="js/minimalForm/stepsForm.js"></script>
 		<script>
+
 			var theForm = document.getElementById( 'theForm' );
 			var q1 = document.getElementById('q1');
 			var q2 = document.getElementById('q2');
 
-
 			new stepsForm( theForm, {
-				onSubmit : function( form ) {
+ 				onSubmit : function( form ) {
 					// hide form
 					classie.addClass( theForm.querySelector( '.simform-inner' ), 'hide' );
 					var wentThrough = 0;
@@ -120,14 +156,15 @@
 			        data.append('email', q2.value);
 			        xhr.onreadystatechange = function() {
 			            if (xhr.readyState == 4) {
-			              // let's just simulate something...
+			              // let's just simulate something
+
 							
 			            }
 			        }
 			        xhr.open('POST', 'http://hackerscore.herokuapp.com/newwebsite', true);
 			        xhr.send(data);
 				}
-			} );
+			});
 		</script>
 	</body>
 </html>

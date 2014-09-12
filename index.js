@@ -99,6 +99,9 @@ app.get('/', function(req, res) {
 	
 });
 
+app.get('/fullscreen', function(req, res) {
+  res.render('fullscreenform');
+});
 
 app.post('/webdetails', function(req, res) {
   var website_url = req.body.website_url;
@@ -107,6 +110,18 @@ app.post('/webdetails', function(req, res) {
     console.log(source);
     
   });
+});
+
+app.post('/easyform/email', function(req, res) {
+  var email = req.body.email;
+});
+app.get('/easyform/website', function(req, res) {
+  var website = req.query.website;
+  driver.get(website);
+  driver.getPageSource().then(function(source) {
+    res.send(page);
+  });
+
 });
 
 
