@@ -9,7 +9,6 @@ var mongoose		= require('mongoose');
 var connect 		= require('connect');
 var json 			= require('json');
 var bodyParser 		= require('body-parser')
-var csv 			= require("fast-csv");
 var querystring 	= require('querystring');
 
 var webdriver = require('selenium-webdriver');
@@ -40,7 +39,7 @@ app.configure(function(){
   app.use(express.methodOverride());
 });
 /********************* MONGOOSE INIT ****************************/
-
+/*
 mongoose.connect('mongodb://dave:aaron@candidate.37.mongolayer.com:10376,candidate.36.mongolayer.com:10376/lets_hack');
 
 var db = mongoose.connection;
@@ -86,7 +85,7 @@ var Website = mongoose.model('Website', {
   website : String,
   email : String
 });
-
+*/
 function parseData() {}
 
 //////////////////////////////////
@@ -97,6 +96,10 @@ function parseData() {}
 app.get('/', function(req, res) {
 	res.render('index');
 	
+});
+
+app.get('/pennapps', function(req, res) {
+  res.render('index');
 });
 
 app.get('/fullscreen', function(req, res) {

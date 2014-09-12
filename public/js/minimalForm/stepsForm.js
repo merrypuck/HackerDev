@@ -115,9 +115,11 @@
 	};
 
 	stepsForm.prototype._nextQuestion = function() {
-		if( !this._validade() ) {
-			return false;
-		}
+		//if(this.current === 1) {
+			if( !this._validade() ) {
+				return false;
+			}
+		//}
 
 		// check if form is filled
 		if( this.current === this.questionsCount - 1 ) {
@@ -129,7 +131,8 @@
 
 		// current question
 		var currentQuestion = this.questions[ this.current ];
-		passDataToServer(this.current, currentQuestion.children[1].value);
+		//console.log(currentQuestion);
+		//renderSteps(this.current, currentQuestion.children[1].value);
 		// console.log(currentQuestion.children[1].value);
 
 		// increment current question iterator

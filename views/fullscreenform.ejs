@@ -4,7 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
 		<meta name="viewport" content="width=device-width, initial-scale=1"> 
-		<title>Fullscreen Form Interface</title>
+		<title>HackerPage</title>
 		<meta name="description" content="Fullscreen Form Interface: A distraction-free form concept with fancy animations" />
 		<meta name="keywords" content="fullscreen form, css animations, distraction-free, web design" />
 		<meta name="author" content="Codrops" />
@@ -15,24 +15,81 @@
 		<link rel="stylesheet" type="text/css" href="fullscreenform/css/cs-select.css" />
 		<link rel="stylesheet" type="text/css" href="fullscreenform/css/cs-skin-boxes.css" />
 		<script src="fullscreenform/js/modernizr.custom.js"></script>
+
+		<style>
+			body {
+				background-image:url(images/wood_pattern.jpg) !important;
+			}
+			.codrops-header {				
+				font-weight: 300;
+				color: #fff;
+				text-shadow: 0 1px 1px rgba(0,0,0,0.6);
+				margin: 0 auto;
+				padding: 3em 1em;
+				text-align: center;
+				
+			}
+			.codrops-header h1 {
+				font-size: 5em;
+				font-weight: 400;
+			}
+
+			.codrops-header span {
+				font-size: 2em;
+				font-weight: 300;
+				margin: 0;
+				padding: 15px 0 5px 0;
+				color: #666;
+				font-family: Cambria, Georgia, serif;
+				text-shadow: 0 1px 1px rgba(255,255,255,0.6);
+				font-style: italic;
+
+			}
+			.fs-current {
+				top: 120px;
+			}
+			.fs-current input {
+				color: #666;
+				font-size: 2em;
+				font-weight: 300;
+				margin: 0;
+				padding: 15px 0 5px 0;
+				color: #666;
+				font-family: Cambria, Georgia, serif;
+				
+				text-shadow: 0 1px 1px rgba(255,255,255,.6);
+			}
+			.fs-current input:active {
+				color: #666;
+				background: none;
+			}
+			.fs-current input:focus {
+				color: #666;
+				background: none;
+			}
+			.fs-current label {
+				color: #fff;
+				text-shadow: 0 1px 1px rgba(0,0,0,0.6);
+			}
+		</style>
 	</head>
 	<body>
 		<div class="container">
-
+			
 			<div class="fs-form-wrap" id="fs-form-wrap">
+
 				<div class="fs-title">
-					<h1>Project Worksheet</h1>
-					<div class="codrops-top">
-						<a class="codrops-icon codrops-icon-prev" href="http://tympanus.net/Development/NotificationStyles/"><span>Previous Demo</span></a>
-						<a class="codrops-icon codrops-icon-drop" href="http://tympanus.net/codrops/?p=19520"><span>Back to the Codrops Article</span></a>
-						<a class="codrops-icon codrops-icon-info" href="#"><span>This is a demo for a fullscreen form</span></a>
-					</div>
+					<header class="codrops-header">
+						<h1 class='name'>HackerPage</h1>	
+						<span class='title'><!--Instant feedback to--> Become a better hacker</span>
+					</header>
+					
 				</div>
 				<form id="myform" class="fs-form fs-form-full" autocomplete="off">
 					<ol class="fs-fields">
 						<li>
 							<label class="fs-field-label fs-anim-upper" for="q1">What's your name?</label>
-							<input class="fs-anim-lower" id="q1" name="q1" type="text" placeholder="Dean Moriarty" required/>
+							<input class="fs-anim-lower" id="q1" name="q1" type="text" placeholder="Dave Fontenot" required/>
 						</li>
 						<li>
 							<label class="fs-field-label fs-anim-upper" for="q2" data-info="We won't send you spam, we promise...">What's your email address?</label>
@@ -41,9 +98,9 @@
 						<li data-input-trigger>
 							<label class="fs-field-label fs-anim-upper" for="q3" data-info="This will help us know what kind of service you need">What's your priority for your new website?</label>
 							<div class="fs-radio-group fs-radio-custom clearfix fs-anim-lower">
-								<span><input id="q3b" name="q3" type="radio" value="conversion"/><label for="q3b" class="radio-conversion">Sell things</label></span>
-								<span><input id="q3c" name="q3" type="radio" value="social"/><label for="q3c" class="radio-social">Become famous</label></span>
-								<span><input id="q3a" name="q3" type="radio" value="mobile"/><label for="q3a" class="radio-mobile">Mobile market</label></span>
+								<span><input id="q3b" name="q3" type="radio" value="conversion"/><label for="q3b" class="radio-conversion">Developer</label></span>
+								<span><input id="q3c" name="q3" type="radio" value="social"/><label for="q3c" class="radio-social">Designer</label></span>
+								<span><input id="q3a" name="q3" type="radio" value="mobile"/><label for="q3a" class="radio-mobile">Growth</label></span>
 							</div>
 						</li>
 						<li data-input-trigger>
@@ -85,18 +142,6 @@
 				</form><!-- /fs-form -->
 			</div><!-- /fs-form-wrap -->
 
-			<!-- Related demos -->
-			<div class="related">
-				<p>If you enjoyed this demo you might also like:</p>
-				<a href="http://tympanus.net/Development/MinimalForm/">
-					<img src="img/relatedposts/minimalform1-300x162.png" />
-					<h3>Minimal Form Interface</h3>
-				</a>
-				<a href="http://tympanus.net/Development/ButtonComponentMorph/">
-					<img src="img/relatedposts/MorphingButtons-300x162.png" />
-					<h3>Morphing Buttons Concept</h3>
-				</a>
-			</div>
 
 		</div><!-- /container -->
 		<script src="fullscreenform/js/classie.js"></script>
