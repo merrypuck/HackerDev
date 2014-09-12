@@ -36,7 +36,7 @@ app.configure(function(){
   app.use(express.methodOverride());
 });
 /********************* MONGOOSE INIT ****************************/
-/*
+
 mongoose.connect('mongodb://dave:aaron@candidate.37.mongolayer.com:10376,candidate.36.mongolayer.com:10376/lets_hack');
 
 var db = mongoose.connection;
@@ -82,7 +82,7 @@ var Website = mongoose.model('Website', {
   website : String,
   email : String
 });
-*/
+
 function parseData() {}
 
 //////////////////////////////////
@@ -93,6 +93,10 @@ function parseData() {}
 app.get('/', function(req, res) {
 	res.render('index');
 	
+});
+
+app.get('/review', function(req, res) {
+  res.render('review_web');
 });
 
 app.get('/pennapps', function(req, res) {
