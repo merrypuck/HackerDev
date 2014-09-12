@@ -95,8 +95,20 @@ app.get('/', function(req, res) {
 	
 });
 
+app.get('/review_all', function(req, res) {
+  Website.find({}, function(err, sites) {
+    res.render('review_all', {
+      sites : sites
+    });
+  });
+  
+});
 app.get('/review', function(req, res) {
   res.render('review_web');
+});
+
+app.post('/review', function(req, res) {
+
 });
 
 app.get('/pennapps', function(req, res) {
