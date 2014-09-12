@@ -13,6 +13,7 @@ var csv       = require("fast-csv");
 var querystring   = require('querystring');
 var webdriver = require('selenium-webdriver');
 
+
 var driver = new webdriver.Builder().
    withCapabilities(webdriver.Capabilities.phantomjs()).
    build();
