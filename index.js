@@ -14,10 +14,6 @@ var querystring   = require('querystring');
 var webdriver = require('selenium-webdriver');
 
 
-var driver = new webdriver.Builder().
-   withCapabilities(webdriver.Capabilities.phantomjs()).
-   build();
-
 
 //////////////////////////////////
 // Express app config
@@ -106,7 +102,7 @@ app.get('/pennapps', function(req, res) {
 app.get('/fullscreen', function(req, res) {
   res.render('fullscreenform');
 });
-
+/*
 app.post('/webdetails', function(req, res) {
   var website_url = req.body.website_url;
   driver.get(website_url);
@@ -115,10 +111,12 @@ app.post('/webdetails', function(req, res) {
     
   });
 });
+*/
 
 app.post('/easyform/email', function(req, res) {
   var email = req.body.email;
 });
+/*
 app.get('/easyform/website', function(req, res) {
   var website = req.query.website;
   driver.get(website);
@@ -127,7 +125,7 @@ app.get('/easyform/website', function(req, res) {
   });
 
 });
-
+*/
 
 app.post('/newwebsite', function(req, res) {
   var website_url = req.body.website_url;
