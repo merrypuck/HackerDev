@@ -36,8 +36,8 @@ app.configure(function(){
   app.use(express.methodOverride());
 });
 /********************* MONGOOSE INIT ****************************/
+mongoose.connect('mongodb://dave:aaron@kahana.mongohq.com:10046/hack');
 
-client = MongoClient('mongodb://dave:aaron@kahana.mongohq.com:10046/hack')
 
 var db = mongoose.connection;
 
@@ -97,14 +97,13 @@ function parseData() {}
 
 app.get('/', function(req, res) {
   var allSites = [];
+  var threeSites = [];
+  var count = 0;
   Pennappsponsors.find({}, function(err, sites) {
-    var threeSites = [];
-    var count = 0;
-
     for(var s in sites) {
       if(count < 3) {
         threeSites.push(sites[s]);
-
+        count = count + 1;
       }
       else {
         allSites.push(threeSites);
@@ -113,7 +112,7 @@ app.get('/', function(req, res) {
 
     }
     res.render('index', {
-      sites : sites
+      sites : allSites
     });
   });
 	
@@ -129,7 +128,7 @@ app.get('/review_all', function(req, res) {
   
 });
 app.get('/review', function(req, res) {
-  
+
   res.render('review_web');
 });
 
