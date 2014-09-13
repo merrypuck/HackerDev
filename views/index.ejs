@@ -151,6 +151,9 @@
 			.final-message {
 				display: none;
 			}
+			.fb-like {
+				display: block !important;
+			}
 			.allBoxes {
 				width: 100%;
 				
@@ -169,10 +172,18 @@
 				height: 100%;
 				width: 100%;
 			}
-
 		</style>
 	</head>
 	<body>
+		<div id="fb-root"></div>
+		<script>(function(d, s, id) {
+		  var js, fjs = d.getElementsByTagName(s)[0];
+			  if (d.getElementById(id)) return;
+			  js = d.createElement(s); js.id = id;
+			  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=379701412164889&version=v2.0";
+			  fjs.parentNode.insertBefore(js, fjs);
+			}(document, 'script', 'facebook-jssdk'));
+		</script>
 		<div class="container">
 			<!-- Top Navigation -->
 			<header class="codrops-header">
@@ -257,12 +268,13 @@
 						</div><!-- / controls -->
 					</div><!-- /simform-inner -->
 					<div class="final-message">
+						Thank you! We'll be in touch.
 						<a class="btn btn-block btn-social btn-github" onclick="_gaq.push(['_trackEvent', 'btn-social', 'click', 'btn-github']);">
       					</a>
+						<div class="fb-like" data-href="https://hackathonhacker.com" data-layout="button_count" data-action="like" data-show-faces="true" data-share="false"></div>
 					</div>
 				</form><!-- /simform -->	
 				<!-- Columns start at 50% wide on mobile and bump up to 33.3% wide on desktop -->
-
 			</section>
 				
 		</div><!-- /container -->
@@ -330,9 +342,13 @@
 					*/
 					var messageEl = theForm.querySelector( '.final-message' );
 					messageEl.style.display = 'block';
-					messageEl.textContent = 'Thank you! We\'ll be in touch.';
+					//messageEl.textContent = 'Thank you! We\'ll be in touch.';
 					
+					//var messageLike = theForm.querySelector( '.fb-like' );
+					//messageLike.style.display = 'block';
+
 					classie.addClass( messageEl, 'show' );
+					//classie.addClass( messageLike, 'show' );
 					
 					var xhr = new XMLHttpRequest();
 					var data = new FormData();
