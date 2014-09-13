@@ -37,7 +37,7 @@ app.configure(function(){
 });
 /********************* MONGOOSE INIT ****************************/
 
-mongoose.connect('mongodb://dave:aaron@candidate.37.mongolayer.com:10376,candidate.36.mongolayer.com:10376/lets_hack');
+client = MongoClient('mongodb://dave:aaron@kahana.mongohq.com:10046/hack')
 
 var db = mongoose.connection;
 
@@ -83,6 +83,11 @@ var Website = mongoose.model('Website', {
   email : String
 });
 
+var Pennappsponsors = mongoose.model('pennappsponsors', {
+  companyImage: String,
+  companyWebsite : String
+});
+
 function parseData() {}
 
 //////////////////////////////////
@@ -91,7 +96,27 @@ function parseData() {}
 
 
 app.get('/', function(req, res) {
-	res.render('index');
+  var allSites = [];
+  Pennappsponsors.find({}, function(err, sites) {
+    var threeSites = [];
+    var count = 0;
+
+    for(var s in sites) {
+      if(count < 3) {
+        threeSites.push(sites[s]);
+
+      }
+      else {
+        allSites.push(threeSites);
+        count = 0;
+      }
+
+    }
+    res.render('index', {
+      sites : sites
+    });
+  });
+	
 	
 });
 
@@ -104,6 +129,7 @@ app.get('/review_all', function(req, res) {
   
 });
 app.get('/review', function(req, res) {
+  
   res.render('review_web');
 });
 
