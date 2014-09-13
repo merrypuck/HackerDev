@@ -167,6 +167,11 @@ app.get('/easyform/website', function(req, res) {
 
 });
 */
+/*
+Company.findOne({'company_url' : 'quicxey'}, function(err, obj) {
+  console.log(obj);
+});
+*/
 app.post('/newcompany', function(req, res) {
 
   var email = req.body.email;
