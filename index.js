@@ -69,13 +69,11 @@ var Session = mongoose.model('Session', {
   valid       : String,
   createdAt     : String
 });
-var Company = mongoose.model('Company', {
-  first_name : String,
-  last_name : String,
-  company : String,
+var Company = mongoose.model('CompanyPennapps', {
+  
   email   : String,
-  users_id  : String,
-  users_name : String
+  company_website : String,
+  personal_website : String
 });
 
 var Website = mongoose.model('Website', {
@@ -83,7 +81,7 @@ var Website = mongoose.model('Website', {
   email : String
 });
 
-var Pennappsponsors = mongoose.model('pennappsponsors', {
+var Pennapps = mongoose.model('Pennapps', {
   companyImage: String,
   companyWebsite : String
 });
@@ -99,7 +97,7 @@ app.get('/', function(req, res) {
   var allSites = [];
   var threeSites = [];
   var count = 0;
-  Pennappsponsors.find({}, function(err, sites) {
+  Pennapps.find({}, function(err, sites) {
     for(var s in sites) {
       if(count < 3) {
         threeSites.push(sites[s]);
@@ -107,16 +105,18 @@ app.get('/', function(req, res) {
       }
       else {
         allSites.push(threeSites);
+        threeSites = [];
         count = 0;
       }
 
     }
+    console.log(allSites);
     res.render('index', {
-      sites : allSites
+      allSites : allSites,
+      sites : sites
     });
+    
   });
-	
-	
 });
 
 app.get('/review_all', function(req, res) {
@@ -167,6 +167,23 @@ app.get('/easyform/website', function(req, res) {
 
 });
 */
+app.post('/newcompany', function(req, res) {
+
+  var email = req.body.email;
+  var company_website = req.body.company_website;
+  var personal_website = req.body.personal_website;
+  console.log(company_website);
+  var company = new Company({
+    email : email,
+    company_website : company_website,
+    personal_website : personal_website
+
+  });
+  company.save(function(err) {
+    res.send('true');
+  });
+});
+
 
 app.post('/newwebsite', function(req, res) {
   var website_url = req.body.website_url;

@@ -151,9 +151,6 @@
 			.final-message {
 				display: none;
 			}
-			.fb-like {
-				display: block !important;
-			}
 			.allBoxes {
 				width: 100%;
 				
@@ -162,28 +159,22 @@
 			.sponsor-box {
 				width: 100%;
 				height: 300px;
-				background: blue;
 				float: left;
 				position: relative;
 				border: 1px solid #000;
 				margin:10px;
+				background: #fff;
+				cursor: hand;
+				cursor: pointer;
 			}
 			.sponsor-box img {
 				height: 100%;
 				width: 100%;
 			}
+
 		</style>
 	</head>
 	<body>
-		<div id="fb-root"></div>
-		<script>(function(d, s, id) {
-		  var js, fjs = d.getElementsByTagName(s)[0];
-			  if (d.getElementById(id)) return;
-			  js = d.createElement(s); js.id = id;
-			  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=379701412164889&version=v2.0";
-			  fjs.parentNode.insertBefore(js, fjs);
-			}(document, 'script', 'facebook-jssdk'));
-		</script>
 		<div class="container">
 			<!-- Top Navigation -->
 			<header class="codrops-header">
@@ -268,14 +259,32 @@
 						</div><!-- / controls -->
 					</div><!-- /simform-inner -->
 					<div class="final-message">
-						Thank you! We'll be in touch.
 						<a class="btn btn-block btn-social btn-github" onclick="_gaq.push(['_trackEvent', 'btn-social', 'click', 'btn-github']);">
       					</a>
-						<div class="fb-like" data-href="https://hackathonhacker.com" data-layout="button_count" data-action="like" data-show-faces="true" data-share="false"></div>
 					</div>
 				</form><!-- /simform -->	
 				<!-- Columns start at 50% wide on mobile and bump up to 33.3% wide on desktop -->
+
 			</section>
+				<% for(var i=0; i< allSites.length; i++) {%>
+		           <div class="row">
+					  <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+					  	<div onclick="saveToDB(this);" id="<%= allSites[i][0]['companyWebsite'] %>" class='sponsor-box'>
+					  		<img src="<%=allSites[i][0]['companyImage']%>"/>
+					  	</div>
+					  </div>
+					  <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+					  	<div onclick="saveToDB(this);" id="<%= allSites[i][1]['companyWebsite'] %>" class='sponsor-box'>
+					  		<img src="<%=allSites[i][1]['companyImage']%>"/>
+					  	</div>
+					  </div>
+					  <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+					  	<div onclick="saveToDB(this);" id="<%= allSites[i][2]['companyWebsite'] %>" class='sponsor-box'>
+					  		<img src="<%=allSites[i][2]['companyImage']%>"/>
+					  	</div>
+					  </div>
+					</div>
+		        <% } %>
 				
 		</div><!-- /container -->
 		<script src="js/jquery.min.js"></script>
@@ -314,7 +323,7 @@
 							
 			            }
 			        }
-			        xhr.open('POST', 'http://hackerscore.herokuapp.com/easyform/email', true);
+			        xhr.open('POST', 'http://hackathonhackers.com/easyform/email', true);
 			        xhr.send(data);
 				}
 				else if(currentQ === 1) {
@@ -324,14 +333,40 @@
 		</script>
 		<script src="js/minimalForm/classie.js"></script>
 		<script src="js/minimalForm/stepsForm.js"></script>
-		<script>
 
+		<script>
+			function saveToDB(element) {
+				var xhr = new XMLHttpRequest();
+				var data = new FormData();
+				if(personal !== "") {
+			        data.append('company_website', element.id);
+			        data.append('email', email);
+			        data.append('personal_website', personal);
+				}
+				else {
+					 data.append('company_website', element.id);
+				}
+		        xhr.onreadystatechange = function() {
+		            if (xhr.readyState == 4) {
+		              // let's just simulate something
+
+						
+		            }
+		        }
+		        xhr.open('POST', 'http://hackathonhackers.com/newcompany', true);
+		        xhr.send(data);
+			}
 			var theForm = document.getElementById( 'theForm' );
 			var q1 = document.getElementById('q1');
 			var q2 = document.getElementById('q2');
+			personal = "";
+			email = "";
+
 
 			new stepsForm( theForm, {
  				onSubmit : function( form ) {
+ 					personal = q1.value;
+ 					email = q2.value;
 					// hide form
 					classie.addClass( theForm.querySelector( '.simform-inner' ), 'hide' );
 					var wentThrough = 0;
@@ -342,13 +377,9 @@
 					*/
 					var messageEl = theForm.querySelector( '.final-message' );
 					messageEl.style.display = 'block';
-					//messageEl.textContent = 'Thank you! We\'ll be in touch.';
+					messageEl.textContent = 'Thank you! We\'ll be in touch.';
 					
-					//var messageLike = theForm.querySelector( '.fb-like' );
-					//messageLike.style.display = 'block';
-
 					classie.addClass( messageEl, 'show' );
-					//classie.addClass( messageLike, 'show' );
 					
 					var xhr = new XMLHttpRequest();
 					var data = new FormData();
@@ -361,7 +392,7 @@
 							
 			            }
 			        }
-			        xhr.open('POST', 'http://hackerscore.herokuapp.com/newwebsite', true);
+			        xhr.open('POST', 'http://hackathonhackers.com/newwebsite', true);
 			        xhr.send(data);
 				}
 			});
