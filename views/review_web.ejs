@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1"> 
+		<title>Hacker</title>
+		<meta name="description" content="Minimal Form Interface: Simplistic, single input view form" />
+		<meta name="keywords" content="form, minimal, interface, single input, big form, responsive form, transition" />
+		<meta name="author" content="Codrops" />
+		<link rel="shortcut icon" href="../favicon.ico">
+
+		<style>
+			body {
+				background-image:url(images/wood_pattern.jpg) !important;
+				background-color: #E1C192;
+			}
+			#websiteTitle {
+				margin: 0 auto;
+				font-size:20px;
+			}
+			#website {
+				height: 350px;
+				width: 350px;
+				margin: 0 auto;
+				border:2px solid #000;
+			}
+			#feedbackWrapper {
+				width: 350px;
+				height:150px;
+				border:2px solid #000;
+
+			}
+			#feedbackWrapper form textarea {
+				width: 100%;
+				height: 100%;
+			}
+		</style>
+	</head>
+	<body>
+		<div id='websiteTitle'><%= website %></div>
+		<div id='website'>
+			<iframe src='<%= website %>'></iframe>	
+		</div>
+		<div id='feedbackWrapper'>
+			<form action='/review' method='post'>
+				<textarea></textarea>
+			</form>
+		</div>
+	</body>
+
+</html>

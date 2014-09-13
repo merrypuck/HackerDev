@@ -1,22 +1,18 @@
-var express 		= require('express.io');
-var app 			= express();
-var request 		= require('request');
-var moment 			= require('moment');
-var _ 				= require('lodash');
-var fs				= require('fs');
-var http			= require('http');
-var mongoose		= require('mongoose');
-var connect 		= require('connect');
-var json 			= require('json');
-var bodyParser 		= require('body-parser')
-var csv 			= require("fast-csv");
-var querystring 	= require('querystring');
-
+var express     = require('express.io');
+var app       = express();
+var request     = require('request');
+var moment      = require('moment');
+var _         = require('lodash');
+var fs        = require('fs');
+var http      = require('http');
+var mongoose    = require('mongoose');
+var connect     = require('connect');
+var json      = require('json');
+var bodyParser    = require('body-parser')
+var csv       = require("fast-csv");
+var querystring   = require('querystring');
 var webdriver = require('selenium-webdriver');
 
-var driver = new webdriver.Builder().
-   withCapabilities(webdriver.Capabilities.phantomjs()).
-   build();
 
 
 //////////////////////////////////
@@ -41,7 +37,7 @@ app.configure(function(){
 });
 /********************* MONGOOSE INIT ****************************/
 
-mongoose.connect('mongodb://dave:aaron@candidate.37.mongolayer.com:10376,candidate.36.mongolayer.com:10376/lets_hack');
+client = MongoClient('mongodb://dave:aaron@kahana.mongohq.com:10046/hack')
 
 var db = mongoose.connection;
 
@@ -87,6 +83,11 @@ var Website = mongoose.model('Website', {
   email : String
 });
 
+var Pennappsponsors = mongoose.model('pennappsponsors', {
+  companyImage: String,
+  companyWebsite : String
+});
+
 function parseData() {}
 
 //////////////////////////////////
@@ -95,11 +96,55 @@ function parseData() {}
 
 
 app.get('/', function(req, res) {
-	res.render('index');
+  var allSites = [];
+  Pennappsponsors.find({}, function(err, sites) {
+    var threeSites = [];
+    var count = 0;
+
+    for(var s in sites) {
+      if(count < 3) {
+        threeSites.push(sites[s]);
+
+      }
+      else {
+        allSites.push(threeSites);
+        count = 0;
+      }
+
+    }
+    res.render('index', {
+      sites : sites
+    });
+  });
+	
 	
 });
 
+app.get('/review_all', function(req, res) {
+  Website.find({}, function(err, sites) {
+    res.render('review_all', {
+      sites : sites
+    });
+  });
+  
+});
+app.get('/review', function(req, res) {
+  
+  res.render('review_web');
+});
 
+app.post('/review', function(req, res) {
+
+});
+
+app.get('/pennapps', function(req, res) {
+  res.render('index');
+});
+
+app.get('/fullscreen', function(req, res) {
+  res.render('fullscreenform');
+});
+/*
 app.post('/webdetails', function(req, res) {
   var website_url = req.body.website_url;
   driver.get(website_url);
@@ -108,7 +153,21 @@ app.post('/webdetails', function(req, res) {
     
   });
 });
+*/
 
+app.post('/easyform/email', function(req, res) {
+  var email = req.body.email;
+});
+/*
+app.get('/easyform/website', function(req, res) {
+  var website = req.query.website;
+  driver.get(website);
+  driver.getPageSource().then(function(source) {
+    res.send(page);
+  });
+
+});
+*/
 
 app.post('/newwebsite', function(req, res) {
   var website_url = req.body.website_url;
