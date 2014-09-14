@@ -11,7 +11,6 @@ var json      = require('json');
 var bodyParser    = require('body-parser')
 var csv       = require("fast-csv");
 var querystring   = require('querystring');
-var webdriver = require('selenium-webdriver');
 
 
 
@@ -110,7 +109,6 @@ app.get('/', function(req, res) {
       }
 
     }
-    console.log(allSites);
     res.render('index', {
       allSites : allSites,
       sites : sites

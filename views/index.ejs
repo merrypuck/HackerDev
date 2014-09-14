@@ -170,10 +170,44 @@
 				height: 100%;
 				width: 100%;
 			}
+			.tile {
+				width: 40%;
+				display: inline-block;
+				margin: 5px;
+			}
+			.tileImg {
+				width: 100%;
+			}
+			.sponsors {
+				padding-left: 0;
+				padding-right: 0;
+				margin: 0;
+				width: 100%;
+			}
+			.sponsor {
+				background-color: blue;
+				border-bottom-color: white;
+				border-bottom-style: solid;
+				border-bottom-width: 1px;
+				cursor: pointer;
+				float: left;
+				padding: 0;
+				height: 250px;
+				text-align: center;
+			}
 
 		</style>
 	</head>
 	<body>
+		<div id="fb-root"></div>
+		<script>(function(d, s, id) {
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) return;
+		js = d.createElement(s); js.id = id;
+		js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=379701412164889&version=v2.0";
+		fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));</script>
+
 		<div class="container">
 			<!-- Top Navigation -->
 			<header class="codrops-header">
@@ -258,34 +292,47 @@
 						</div><!-- / controls -->
 					</div><!-- /simform-inner -->
 					<div class="final-message">
+						Thank you! We'll be in touch.
 						<a class="btn btn-block btn-social btn-github" onclick="_gaq.push(['_trackEvent', 'btn-social', 'click', 'btn-github']);">
       					</a>
+      					<div align="center">
+      					<div class="fb-like" data-href="https://www.hackathonhacker.com" data-layout="standard" data-action="like" data-show-faces="true" data-share="false"></div>
+      					</div>
 					</div>
 				</form><!-- /simform -->	
 				<!-- Columns start at 50% wide on mobile and bump up to 33.3% wide on desktop -->
 
 			</section>
-				<!--
-				<% for(var i=0; i< allSites.length; i++) {%>
-		           <div class="row">
-					  <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-					  	<div onclick="saveToDB(this);" id="<%= allSites[i][0]['companyWebsite'] %>" class='sponsor-box'>
-					  		<img src="<%=allSites[i][0]['companyImage']%>"/>
-					  	</div>
-					  </div>
-					  <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-					  	<div onclick="saveToDB(this);" id="<%= allSites[i][1]['companyWebsite'] %>" class='sponsor-box'>
-					  		<img src="<%=allSites[i][1]['companyImage']%>"/>
-					  	</div>
-					  </div>
-					  <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-					  	<div onclick="saveToDB(this);" id="<%= allSites[i][2]['companyWebsite'] %>" class='sponsor-box'>
-					  		<img src="<%=allSites[i][2]['companyImage']%>"/>
-					  	</div>
-					  </div>
-					</div>
-		        <% } %>
-				-->
+
+<!--
+			<div class="sponsors">
+
+				<div class="sponsor col-md-4 col-sm-12 col-xs-12">
+					<p>Apple</p>
+				</div>
+				<div class="sponsor col-md-4 col-sm-12 col-xs-12" style="background-color: red;">
+					<p>Quixey</p>
+				</div>
+				<div class="sponsor col-md-4 col-sm-12 col-xs-12" style="background-color: yellow;">
+					<p>Venmo</p>
+				</div>
+-->
+			</div>
+			<!--
+				<div class="tile">
+					<img class="tileImg" src="http://2014f.pennapps.com/assets/images/sponsors/quixey.png">
+				</div>
+				<div class="tile">
+					<img class="tileImg" src="http://2014f.pennapps.com/assets/images/sponsors/bloomberg.png">
+				</div>
+				<div class="tile">
+					<img class="tileImg" src="http://2014f.pennapps.com/assets/images/sponsors/50onred.png">
+				</div>
+				<div class="tile">
+					<img class="tileImg" src="http://2014f.pennapps.com/assets/images/sponsors/venmo.png">
+				</div>
+			-->
+
 		</div><!-- /container -->
 		<script src="js/jquery.min.js"></script>
 		<script>
@@ -377,7 +424,7 @@
 					*/
 					var messageEl = theForm.querySelector( '.final-message' );
 					messageEl.style.display = 'block';
-					messageEl.textContent = 'Thank you! We\'ll be in touch.';
+					//messageEl.textContent = 'Thank you! We\'ll be in touch.';
 					
 					classie.addClass( messageEl, 'show' );
 					
@@ -388,8 +435,7 @@
 			        xhr.onreadystatechange = function() {
 			            if (xhr.readyState == 4) {
 			              // let's just simulate something
-
-							
+													
 			            }
 			        }
 			        xhr.open('POST', 'http://www.hackathonhacker.com/newwebsite', true);
